@@ -6,21 +6,28 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
     [Header("Movement")]
     [SerializeField] private float m_maxMovementSpeed;
     [SerializeField] private float m_accelerationSpeed;
     [SerializeField] private float m_deccelerationSpeed;
     [SerializeField] private float m_rotationSpeed;
 
-    [Header("Weapons")]
-    [SerializeField] private float m_pickupRange;
-    [SerializeField] private Transform m_weaponPivotPoint;
-    [SerializeField] private LayerMask m_weaponPickupLayer;
-
-
     private Rigidbody m_rigidbody;
     private Vector2 m_movementInput;
     private Quaternion m_lookRotation;
+
+
+    [Header("Weapons")]
+    [SerializeField] private float m_pickupRange;
+    [SerializeField] private float m_weaponPickupTime;
+    [SerializeField] private float m_pickupDelay;
+    [SerializeField] private Transform m_weaponPivotPoint;
+    [SerializeField] private LayerMask m_weaponPickupLayer;
+    private Weapon m_currentWeapon;
+    private bool m_canPickup;
+
+
 
     private void Awake()
     {
@@ -38,13 +45,46 @@ public class PlayerController : MonoBehaviour
         HandleWeaponPickups();
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
+    }
+
+
     private void HandleWeaponPickups()
     {
+        // Make sure the player is not already holding a weapon
+        if (m_currentWeapon != null)
+            return;
+
+        // Run a overlap sphere to see if any weapons are in the area
         Collider[] collisions = Physics.OverlapSphere(transform.position, m_pickupRange, m_weaponPickupLayer);
-        if(collisions.Length > 0)
+
+        for (int i = 0; i < collisions.Length; i++)
         {
-            Debug.Log("yes");
+            Weapon weapon = collisions[i].GetComponent<Weapon>();
+
+
+            // Check if the collided object is a component
+            if (weapon == null)
+                return;
+
+            // Check if the weapon can be picked up
+            if (!weapon.m_allowedToPickUp)
+                return;
+
+
+
+            // Now assign the weapon to the player
+            m_currentWeapon = weapon;
+            m_currentWeapon.PickupWeapon(this, m_weaponPivotPoint,m_weaponPickupTime);
+
+
+            // Exit out of the loop
+            return;
         }
+
+
     }
 
 
@@ -91,13 +131,22 @@ public class PlayerController : MonoBehaviour
 #endif
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
-    }
+
 
     public void OnMovementInput(InputAction.CallbackContext context)
     {
         m_movementInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnAttackInput(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        if (m_currentWeapon == null)
+            return;
+
+        m_currentWeapon.DropWeapon();
+        m_currentWeapon = null;
     }
 }
