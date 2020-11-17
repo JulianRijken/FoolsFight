@@ -1,15 +1,20 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
+    [Header("Movement")]
     [SerializeField] private float m_maxMovementSpeed;
     [SerializeField] private float m_accelerationSpeed;
     [SerializeField] private float m_deccelerationSpeed;
     [SerializeField] private float m_rotationSpeed;
+
+    [Header("Weapons")]
+    [SerializeField] private float m_pickupRange;
+
 
     private Rigidbody m_rigidbody;
     private Vector2 m_movementInput;
