@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapons")]
     [SerializeField] private float m_pickupRange;
+    [SerializeField] private Transform m_weaponPivotPoint;
+    [SerializeField] private LayerMask m_weaponPickupLayer;
 
 
     private Rigidbody m_rigidbody;
@@ -30,6 +32,21 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleRotation();
     }
+
+    private void FixedUpdate()
+    {
+        HandleWeaponPickups();
+    }
+
+    private void HandleWeaponPickups()
+    {
+        Collider[] collisions = Physics.OverlapSphere(transform.position, m_pickupRange, m_weaponPickupLayer);
+        if(collisions.Length > 0)
+        {
+            Debug.Log("yes");
+        }
+    }
+
 
     private void HandleRotation()
     {
