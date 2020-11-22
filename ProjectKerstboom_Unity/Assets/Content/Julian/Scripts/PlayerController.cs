@@ -1,10 +1,11 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
 
     [Header("Movement")]
@@ -24,35 +25,54 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_pickupDelay;
     [SerializeField] private Transform m_weaponPivotPoint;
     [SerializeField] private LayerMask m_weaponPickupLayer;
+    [SerializeField] private LayerMask m_damageLayer;
     private Weapon m_currentWeapon;
-    private bool m_canPickup;
+    private bool m_canPickup = true;
+
+    [Header("Animator")]
+    [SerializeField] private Animator m_animator;
 
 
+    [Header("Multiplayer")]
+    [SerializeField] private bool isMine = true;
 
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+
+        if(isMine)
+            PlayerAnimatorPass.m_onWeaponUsed += OnWeaponUsed;
+    }
+
+    private void OnDestroy()
+    {
+        if (isMine)
+            PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
     }
 
     private void Update()
     {
         HandleMovement();
         HandleRotation();
-    }
-
-    private void FixedUpdate()
-    {
         HandleWeaponPickups();
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, m_pickupRange);
     }
-
+#endif
 
     private void HandleWeaponPickups()
     {
+        // Check if the player is allowed to pickup a weapon
+        if (!m_canPickup)
+            return;
+
         // Make sure the player is not already holding a weapon
         if (m_currentWeapon != null)
             return;
@@ -73,12 +93,7 @@ public class PlayerController : MonoBehaviour
             if (!weapon.m_allowedToPickUp)
                 return;
 
-
-
-            // Now assign the weapon to the player
-            m_currentWeapon = weapon;
-            m_currentWeapon.PickupWeapon(this, m_weaponPivotPoint,m_weaponPickupTime);
-
+            PickupWeapon(weapon);
 
             // Exit out of the loop
             return;
@@ -86,7 +101,6 @@ public class PlayerController : MonoBehaviour
 
 
     }
-
 
     private void HandleRotation()
     {
@@ -132,6 +146,74 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void PickupWeapon(Weapon weapon)
+    {
+        // Now assign the weapon to the player
+        m_currentWeapon = weapon;
+        m_currentWeapon.PickupWeapon(m_weaponPivotPoint);
+    }
+
+    private void DropCurrentWeapon()
+    {
+        // Check if the player has a weapon
+        if (m_currentWeapon == null)
+            return;
+
+        m_currentWeapon.DropWeapon();
+        m_currentWeapon = null;
+    }
+
+    private void FireWeapon()
+    {
+        if (m_currentWeapon == null)
+            return;
+
+        m_animator.SetTrigger("Fire");
+    }
+
+
+    private void OnWeaponUsed()
+    {
+        // Get all the colliders in the box cast
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position, Vector3.one, transform.forward, Quaternion.identity, 2, m_damageLayer);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            // Check if it's not this player
+            if (hits[i].transform == transform)
+                continue;
+
+            // Check if what is hit is a damageble object
+            IDamageable damageable = hits[i].collider.GetComponent<IDamageable>();
+            if (damageable == null)
+                continue;
+
+            // then hit the object
+            damageable.OnHit(gameObject.name);
+        }
+
+        DropCurrentWeapon();
+        AddPickupDelay();
+    }
+
+    public void OnHit(string damagedBy)
+    {
+        Destroy(gameObject);
+    }
+
+
+    private void AddPickupDelay()
+    {
+        StartCoroutine(PickupDelay());
+    }
+
+    private IEnumerator PickupDelay()
+    {
+        m_canPickup = false;
+        yield return new WaitForSeconds(m_pickupDelay);
+        m_canPickup = true;
+    }
+
+
 
     public void OnMovementInput(InputAction.CallbackContext context)
     {
@@ -143,10 +225,6 @@ public class PlayerController : MonoBehaviour
         if (!context.performed)
             return;
 
-        if (m_currentWeapon == null)
-            return;
-
-        m_currentWeapon.DropWeapon();
-        m_currentWeapon = null;
+        FireWeapon();
     }
 }

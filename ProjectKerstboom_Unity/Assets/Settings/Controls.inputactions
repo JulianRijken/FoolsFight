@@ -26,7 +26,7 @@
                 {
                     "name": "",
                     "id": "4b77cd71-0e85-4878-b5c8-efe48a15b33c",
-                    "path": "<Gamepad>/rightStick",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -148,6 +148,17 @@
                     "name": "",
                     "id": "accec854-a152-4246-8560-c829a7d70688",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "987d4011-69c2-4b24-a7b2-0b06d1f6f296",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
