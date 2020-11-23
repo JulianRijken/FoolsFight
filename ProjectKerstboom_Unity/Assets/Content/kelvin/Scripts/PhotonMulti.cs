@@ -26,13 +26,13 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 	void Start()
 	{
-		Debug.Log("Connecting to Master");
+		//Debug.Log("Connecting to Master");
 		PhotonNetwork.ConnectUsingSettings();
 	}
 
 	public override void OnConnectedToMaster()
 	{
-		Debug.Log("Connected to Master");
+		//Debug.Log("Connected to Master");
 		PhotonNetwork.JoinLobby();
 		PhotonNetwork.AutomaticallySyncScene = true;
 	}
@@ -40,7 +40,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	public override void OnJoinedLobby()
 	{
 		mainCanvas.SetActive(true);
-		Debug.Log("Joined Lobby");
+		//Debug.Log("Joined Lobby");
 	}
 
 	public void CreateRoom()
@@ -80,9 +80,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	{
 		PhotonNetwork.JoinRoom(info.Name);
 		hostCanvas.SetActive(false);
-		optionCanvas.SetActive(false);
 		findRoomCanvas.SetActive(false);
-		mainCanvas.SetActive(false);
 	}
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
