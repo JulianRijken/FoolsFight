@@ -174,10 +174,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void OnWeaponUsed()
     {
+        Vector3 orgin = transform.position;
+        Vector3 halfExtends = Vector3.one;
+        Vector3 direction = transform.forward;
+        Quaternion rotation = Quaternion.identity;
+        float distance = 2;
+
+        RaycastHit[] hits = Physics.BoxCastAll(orgin, halfExtends, direction, rotation, distance, m_damageLayer);
 
 
-        // Get all the colliders in the box cast
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position, Vector3.one, transform.forward, Quaternion.identity, 2, m_damageLayer);
         for (int i = 0; i < hits.Length; i++)
         {
             // Check if it's not this player
