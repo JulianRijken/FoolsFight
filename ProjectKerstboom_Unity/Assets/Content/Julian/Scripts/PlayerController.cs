@@ -1,7 +1,5 @@
-﻿using DG.Tweening;
-using Photon.Pun;
+﻿using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,6 +35,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [Header("Multiplayer")]
     [SerializeField] private bool isMine = true;
 
+    // Action for other scripts to use to check when new players spawn
+    public static System.Action<Transform> m_onPlayerStarted;
+
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -58,6 +59,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             m_rigidbody.interpolation = RigidbodyInterpolation.None;
             m_rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
         }
+    }
+
+    private void Start()
+    {
+        m_onPlayerStarted?.Invoke(transform);
     }
 
     private void OnDestroy()
