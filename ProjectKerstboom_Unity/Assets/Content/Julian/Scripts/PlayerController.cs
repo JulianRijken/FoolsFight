@@ -54,17 +54,25 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         else
         {
             m_playerInput.enabled = false;
+            m_rigidbody.isKinematic = true;
+            m_rigidbody.interpolation = RigidbodyInterpolation.None;
+            m_rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
         }
     }
 
     private void OnDestroy()
     {
-        if (isMine)
-            PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
+        if (!isMine)
+            return;
+
+        PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
     }
 
     private void Update()
     {
+        if (!isMine)
+            return;
+
         HandleMovement();
         HandleRotation();
         HandleWeaponPickups();
@@ -216,8 +224,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
     public void OnHit(string damagedBy)
+    {     
+        photonView.RPC("OnHitRPC", RpcTarget.All,photonView.ViewID);
+    }
+
+    [PunRPC]
+    private void OnHitRPC(int viewID)
     {
-        Destroy(gameObject);
+        Transform diedPlayer = PhotonView.Find(viewID).transform;
+        diedPlayer.position = new Vector3(Random.Range(-5,5),0, Random.Range(-5, 5));
     }
 
 

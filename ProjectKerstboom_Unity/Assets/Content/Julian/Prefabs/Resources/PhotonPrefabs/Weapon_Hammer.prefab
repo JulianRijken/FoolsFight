@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 143540299083599944}
   - component: {fileID: 143540299083599945}
   - component: {fileID: 143540299083599950}
+  - component: {fileID: 5831070956521333627}
+  - component: {fileID: 642269825848786417}
   m_Layer: 8
-  m_Name: Hammer Weapon
+  m_Name: Weapon_Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +64,7 @@ MonoBehaviour:
   m_bobScale: 0.5
   m_bobSpeed: 2
   m_bobOffset: 1
-  m_pickupSpeed: 2
+  m_pickupSpeed: 0.25
   m_toRotationSpeed: 100
   m_timesRotationSpeedAfterDrop: 10
 --- !u!54 &143540299083599950
@@ -81,6 +83,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5831070956521333627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143540299083599946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 2
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 642269825848786417}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &642269825848786417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143540299083599946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &143540299700481433
 GameObject:
   m_ObjectHideFlags: 0

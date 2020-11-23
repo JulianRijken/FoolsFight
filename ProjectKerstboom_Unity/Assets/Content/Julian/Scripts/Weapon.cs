@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Photon.Pun;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviourPunCallbacks
 {
 
     [Header("Ground Settings")]
@@ -20,6 +21,7 @@ public class Weapon : MonoBehaviour
 
     private Transform m_weaponModel;
     private Rigidbody m_rigidbody;
+    private PhotonRigidbodyView m_rigidbodyView;
     private SphereCollider m_collider;
     private float m_rotateSpeed;
 
@@ -28,6 +30,7 @@ public class Weapon : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
         m_collider = GetComponent<SphereCollider>();
+        m_rigidbodyView = GetComponent<PhotonRigidbodyView>();
         m_weaponModel = transform.GetChild(0);
 
         m_allowedToPickUp = true;
@@ -49,9 +52,20 @@ public class Weapon : MonoBehaviour
 
     public void PickupWeapon(Transform parent)
     {
+        photonView.RPC("PickupWeaponRPC", RpcTarget.All, parent.gameObject.GetPhotonView().ViewID);
+    }
+
+    [PunRPC]
+    private void PickupWeaponRPC(int targetView)
+    {
+        Transform parent = PhotonView.Find(targetView).transform;
+
+        Debug.Log(parent.name);
+
         // Set the parant of the weapon
         transform.SetParent(parent);
         m_rigidbody.isKinematic = true;
+        m_rigidbodyView.enabled = false;
         m_collider.enabled = false;
 
         m_weaponModel.DOLocalMove(Vector3.zero, m_pickupSpeed);
@@ -64,6 +78,12 @@ public class Weapon : MonoBehaviour
 
     public void DropWeapon()
     {
+        photonView.RPC("DropWeaponRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void DropWeaponRPC()
+    {
         float sidewaysForce = 4f;
         float upwardsForce = 11f;
 
@@ -72,6 +92,7 @@ public class Weapon : MonoBehaviour
 
         transform.SetParent(null);
         m_rigidbody.isKinematic = false;
+        m_rigidbodyView.enabled = true;
         m_collider.enabled = true;
 
         m_rigidbody.velocity = new Vector3(Random.Range(-1f, 1f) * sidewaysForce, upwardsForce, Random.Range(-1f, 1f) * sidewaysForce);
@@ -83,7 +104,6 @@ public class Weapon : MonoBehaviour
         m_weaponModel.localRotation = Quaternion.identity;
         transform.localRotation = Quaternion.identity;
     }
-
 }
 
 public enum WeaponType
