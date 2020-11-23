@@ -86,7 +86,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{
-		
+
 		foreach (Transform trans in roomListContent)
 		{
 			Destroy(trans.gameObject);
@@ -96,7 +96,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		{
 			if (roomList[i].RemovedFromList)
 				continue;
-			
+
 			Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListing>().SetRoomInfo(roomList[i]);
 			Debug.Log("list update");
 		}

@@ -57,6 +57,11 @@ public class MainMenu : MonoBehaviourPunCallbacks
         Application.Quit();
     }
 
+    public void Startgame()
+    {
+        PhotonNetwork.LoadLevel(1);
+    }
+
     public void BackToMain()
     {
         hostCanvas.SetActive(false);
