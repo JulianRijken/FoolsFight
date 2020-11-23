@@ -48,8 +48,9 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 		if (string.IsNullOrEmpty(roomNameInputField.text))
 		{
-			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s"+ "game");
+			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s"+ " game");
 		}
+		else
 		PhotonNetwork.CreateRoom(roomNameInputField.text);
 		
 	}

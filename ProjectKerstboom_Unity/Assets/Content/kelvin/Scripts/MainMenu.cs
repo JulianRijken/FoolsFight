@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Permissions;
 using TMPro;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
     [Header("Main canvas")]
-    [SerializeField] GameObject mainCanvas, optionCanvas, hostCanvas, findRoomCanvas, RoomCanvas;
+    [SerializeField] GameObject mainMenu, optionMenu, hostMenu, findRoomMenu, RoomMenu;
+    [Header("RectTransform")]
+    [SerializeField] RectTransform mainMenuTran, optionMenuTran, hostMenuTran, findRoomMenuTran, RoomMenuTran;
     public TMP_InputField NameInput;
 
     [Header("host room")]
     public TMP_InputField roomNameInputField;
-
 
 
     public void HostGame()
@@ -27,8 +30,10 @@ public class MainMenu : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = NameInput.text;
         }
-        mainCanvas.SetActive(false);
-        hostCanvas.SetActive(true);
+        mainMenuTran.DOAnchorPos(new Vector2(-1500, 0), 0.50f);
+        mainMenu.SetActive(false);
+        hostMenu.SetActive(true);
+        hostMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
     }
    
     public void JoinGame()
@@ -41,14 +46,18 @@ public class MainMenu : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = NameInput.text;
         }
-        mainCanvas.SetActive(false);
-        findRoomCanvas.SetActive(true);
+        mainMenuTran.DOAnchorPos(new Vector2(-1500, 0), 0.50f);
+        mainMenu.SetActive(false);
+        findRoomMenu.SetActive(true);
+        findRoomMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
     }
 
     public void Options()
     {
-        mainCanvas.SetActive(false);
-        optionCanvas.SetActive(true);
+        mainMenuTran.DOAnchorPos(new Vector2(-1500, 0), 0.50f);
+        mainMenu.SetActive(false);
+        optionMenu.SetActive(true);
+        optionMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
     }
 
     public void Quit()
@@ -64,11 +73,19 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     public void BackToMain()
     {
-        hostCanvas.SetActive(false);
-        optionCanvas.SetActive(false);
-        findRoomCanvas.SetActive(false);
-        RoomCanvas.SetActive(false);
-        mainCanvas.SetActive(true);
-        PhotonNetwork.Disconnect();
+        hostMenu.SetActive(false);
+        optionMenu.SetActive(false);
+        findRoomMenu.SetActive(false);
+        RoomMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        mainMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
+    }
+    public void LeaveRoom()
+    {
+        RoomMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
+        RoomMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        mainMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
+        PhotonNetwork.LeaveRoom();
     }
 }
