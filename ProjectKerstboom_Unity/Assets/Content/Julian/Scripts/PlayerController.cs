@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private float m_rotationSpeed;
 
     private Rigidbody m_rigidbody;
+    private PlayerInput m_playerInput;
     private Vector2 m_movementInput;
     private Quaternion m_lookRotation;
 
@@ -39,9 +40,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+        m_playerInput = GetComponent<PlayerInput>();
 
-        if(isMine)
+
+        if (photonView != null)
+            isMine = photonView.IsMine;
+
+
+        if (isMine)
+        {
             PlayerAnimatorPass.m_onWeaponUsed += OnWeaponUsed;
+        }
+        else
+        {
+            m_playerInput.enabled = false;
+        }
     }
 
     private void OnDestroy()
