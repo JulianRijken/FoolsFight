@@ -47,9 +47,14 @@ public class Weapon : MonoBehaviourPunCallbacks
             // Make the Weapon Bob up and down
             m_weaponModel.localPosition = new Vector3(0, (Mathf.Sin(Time.time * m_bobSpeed) * m_bobScale) + m_bobOffset, 0);
 
-            if (transform.position.y < 5)
+            if (transform.position.y < -5)
+                transform.position = Vector3.zero + Vector3.up * 5f;
+
+            // Remove after testing!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (m_rigidbody.velocity.magnitude < 1 && transform.position.y > 1)
                 transform.position = Vector3.zero + Vector3.up * 5f;
         }
+
     }
 
 
