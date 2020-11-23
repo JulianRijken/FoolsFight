@@ -7,7 +7,9 @@ public class Weapon : MonoBehaviour
 {
 
     [Header("Ground Settings")]
-    [SerializeField] private float m_bobScale, m_bobSpeed, m_bobOffset;
+    [SerializeField] private float m_bobScale;
+    [SerializeField] private float m_bobSpeed;
+    [SerializeField] private float m_bobOffset;
     [SerializeField] private float m_pickupSpeed;
     [SerializeField] private float m_toRotationSpeed;
     [SerializeField] private float m_timesRotationSpeedAfterDrop;

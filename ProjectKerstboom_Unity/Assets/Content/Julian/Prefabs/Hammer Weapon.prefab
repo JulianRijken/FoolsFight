@@ -62,9 +62,9 @@ MonoBehaviour:
   m_bobScale: 0.5
   m_bobSpeed: 2
   m_bobOffset: 1
+  m_pickupSpeed: 2
   m_toRotationSpeed: 100
   m_timesRotationSpeedAfterDrop: 10
-  m_pickupDelay: 11
 --- !u!54 &143540299083599950
 Rigidbody:
   m_ObjectHideFlags: 0

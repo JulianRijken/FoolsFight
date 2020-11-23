@@ -174,6 +174,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void OnWeaponUsed()
     {
+
+
         // Get all the colliders in the box cast
         RaycastHit[] hits = Physics.BoxCastAll(transform.position, Vector3.one, transform.forward, Quaternion.identity, 2, m_damageLayer);
         for (int i = 0; i < hits.Length; i++)
