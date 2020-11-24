@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (m_currentWeapon == null)
             return;
 
-        m_animator.SetTrigger("Fire");
+        m_animator.SetTrigger("Fire");      
     }
 
 

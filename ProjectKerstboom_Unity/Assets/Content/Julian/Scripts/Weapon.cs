@@ -34,6 +34,9 @@ public class Weapon : MonoBehaviourPunCallbacks
         m_weaponModel = transform.GetChild(0);
 
         m_allowedToPickUp = true;
+
+        if (!PhotonNetwork.IsMasterClient)
+            m_rigidbody.isKinematic = true;
     }
 
     private void Update()
