@@ -22,6 +22,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     public void HostGame()
     {
+        
         if (string.IsNullOrEmpty(NameInput.text))
         {
             PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
@@ -76,13 +77,12 @@ public class MainMenu : MonoBehaviourPunCallbacks
         hostMenu.SetActive(false);
         optionMenu.SetActive(false);
         findRoomMenu.SetActive(false);
-        RoomMenu.SetActive(false);
         mainMenu.SetActive(true);
         mainMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
     }
     public void LeaveRoom()
     {
-        RoomMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
+        RoomMenuTran.DOAnchorPos(new Vector2(0, -1500), 0.50f);
         RoomMenu.SetActive(false);
         mainMenu.SetActive(true);
         mainMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
