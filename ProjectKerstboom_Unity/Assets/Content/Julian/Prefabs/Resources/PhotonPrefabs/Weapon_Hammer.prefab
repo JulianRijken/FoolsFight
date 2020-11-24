@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 143540299083599945}
   - component: {fileID: 143540299083599950}
   - component: {fileID: 5831070956521333627}
-  - component: {fileID: 7091000831359584368}
+  - component: {fileID: 4469240414231541935}
   m_Layer: 8
   m_Name: Weapon_Hammer
   m_TagString: Untagged
@@ -102,11 +102,11 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 7091000831359584368}
+  - {fileID: 4469240414231541935}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7091000831359584368
+--- !u!114 &4469240414231541935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

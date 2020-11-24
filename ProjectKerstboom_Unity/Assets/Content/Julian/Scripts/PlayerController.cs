@@ -55,9 +55,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         else
         {
             m_playerInput.enabled = false;
-            m_rigidbody.isKinematic = true;
-            m_rigidbody.interpolation = RigidbodyInterpolation.None;
-            m_rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            Destroy(m_rigidbody);
         }
     }
 

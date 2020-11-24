@@ -63,7 +63,8 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public void PickupWeapon(Transform parent)
     {
-        photonView.RPC("PickupWeaponRPC", RpcTarget.All, parent.gameObject.GetPhotonView().ViewID);
+        if (m_allowedToPickUp) 
+            photonView.RPC("PickupWeaponRPC", RpcTarget.All, parent.gameObject.GetPhotonView().ViewID);
     }
 
     [PunRPC]
@@ -89,7 +90,8 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public void DropWeapon()
     {
-        photonView.RPC("DropWeaponRPC", RpcTarget.All);
+        if (!m_allowedToPickUp)
+            photonView.RPC("DropWeaponRPC", RpcTarget.All);
     }
 
     [PunRPC]
