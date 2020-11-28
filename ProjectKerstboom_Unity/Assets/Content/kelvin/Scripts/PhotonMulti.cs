@@ -43,8 +43,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 	public override void OnJoinedLobby()
 	{
-		mainCanvas.SetActive(true);
 		//Debug.Log("Joined Lobby");
+		mainCanvas.SetActive(true);
 	}
 
 	public void CreateRoom()
@@ -76,6 +76,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 		Player[] players = PhotonNetwork.PlayerList;
 
+		SetPlayerName();
+
 		foreach (Transform child in playerListContent)
 		{
 			Destroy(child.gameObject);
@@ -84,15 +86,12 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 		for (int i = 0; i < players.Count(); i++)
 		{
-			PhotonNetwork.NickName = players.ToString();
+			//PhotonNetwork.NickName = players.ToString();
 			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
 		}
 		
-
-		if (players.Count() >= 2)
-		{
 			startGameButton.SetActive(PhotonNetwork.IsMasterClient);
-		}
+
 		
 	}
 
@@ -101,7 +100,56 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		PhotonNetwork.JoinRoom(info.Name);
 		hostCanvas.SetActive(false);
 		findRoomCanvas.SetActive(false);
-	}
+        
+    }
+	
+	private void SetPlayerName()
+	{
+        int timesNicknameFound = 0;
+        string origenalName = PhotonNetwork.NickName;
+        bool sameNickname = false;
+
+        do
+		{
+             sameNickname = false;
+
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+			{
+
+                Debug.Log(" 1 ----------------------");
+                Debug.Log(PhotonNetwork.PlayerList[i].UserId);
+                Debug.Log(PhotonNetwork.LocalPlayer.UserId);
+                Debug.Log("----------------------");
+
+                Debug.Log(" 2 ----------------------");
+                Debug.Log(PhotonNetwork.NickName);
+                Debug.Log(PhotonNetwork.PlayerList[i].NickName);
+                Debug.Log("----------------------");
+
+                if (PhotonNetwork.PlayerList[i].UserId == PhotonNetwork.LocalPlayer.UserId)
+                    continue;
+
+				if (PhotonNetwork.PlayerList[i].NickName != PhotonNetwork.NickName)
+                    continue;
+
+                
+
+                timesNicknameFound++;
+				PhotonNetwork.NickName = $"{origenalName} {timesNicknameFound}";
+				sameNickname = true;
+				
+			}
+
+			if(timesNicknameFound > 20)
+            {
+                Debug.LogError("While Loop Stuck");
+                break;
+            }
+		}
+		while (sameNickname);
+
+
+    }
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{

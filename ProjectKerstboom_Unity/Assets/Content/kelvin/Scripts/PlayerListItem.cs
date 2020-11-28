@@ -13,8 +13,8 @@ public class PlayerListItem : MonoBehaviour
 	public void SetUp(Player _player)
 	{
 		player = _player;
-		text.text = _player.NickName;
-	}
+		text.text = PhotonNetwork.NickName;
+    }
 
 	//public override void OnPlayerLeftRoom(Player otherPlayer)
 	//{
