@@ -291,16 +291,11 @@ MonoBehaviour:
   m_accelerationSpeed: 100
   m_deccelerationSpeed: 200
   m_rotationSpeed: 15
-  m_pickupRange: 1.5
-  m_weaponPickupTime: 0.3
-  m_pickupDelay: 0.5
-  m_weaponPivotPoint: {fileID: 565116829705944942}
-  m_weaponPickupLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  m_pickupCooldown: 1
   m_damageLayer:
     serializedVersion: 2
     m_Bits: 512
+  m_weaponPivotPoint: {fileID: 565116829705944942}
   m_animator: {fileID: 5190420692798660474}
   isMine: 1
 --- !u!114 &565116830397706917

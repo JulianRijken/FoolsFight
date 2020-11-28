@@ -7,39 +7,44 @@ using Photon.Pun;
 public class Weapon : MonoBehaviourPunCallbacks
 {
 
-    [Header("Ground Settings")]
+    [Header("Weapon Style")]
     [SerializeField] private float m_bobScale;
     [SerializeField] private float m_bobSpeed;
     [SerializeField] private float m_bobOffset;
     [SerializeField] private float m_pickupSpeed;
     [SerializeField] private float m_toRotationSpeed;
     [SerializeField] private float m_timesRotationSpeedAfterDrop;
+    private float m_rotateSpeed;
+    private Transform m_weaponModel;
 
-    [Header("Jump Settings")]
+
+    [Header("Drop Movement")]
     [SerializeField] private float m_moveSpeed;
     [SerializeField] private float m_jumpHight;
     [SerializeField] private float m_minimalDistance;
     [SerializeField] private string m_spawnPointsParentTag;
     [SerializeField] private LayerMask m_blockLayer;
     [SerializeField] private AnimationCurve m_verticalCurve;
-
     private List<Vector3> m_points;
     private Transform m_spawnPointParent;
 
-    [Header("Weapon Pickup")]
-    private Transform m_weaponModel;
-    private SphereCollider m_collider;
-    private float m_rotateSpeed;
+
+    [Header("Picking Up Weapon")]
+    [SerializeField] private float m_pickupRange;
+    [SerializeField] private LayerMask m_pickupLayer;
+    private bool m_allowedToPickUp;
+
 
     public WeaponType m_WeaponType { get; private set; }
-    public bool m_allowedToPickUp { get; private set; }
+
 
 
     private void Awake()
     {
-        m_collider = GetComponent<SphereCollider>();
         m_weaponModel = transform.GetChild(0);
         m_spawnPointParent = GameObject.FindGameObjectWithTag(m_spawnPointsParentTag).transform;
+
+        Debug.LogWarning("Zorg dat de hammer lerping naar point gefixed word, animatie sync en je kan ook als de andere speler de hammer slaan ook al heb je hem neit");
 
         m_allowedToPickUp = true;
     }
@@ -55,7 +60,11 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        HandleBobEffect();
+        if(m_allowedToPickUp)
+        {
+            HandleBobEffect();
+            HandlePickingUpWeapon();
+        }
     }
 
     private void OnDrawGizmos()
@@ -71,11 +80,9 @@ public class Weapon : MonoBehaviourPunCallbacks
     }
 
 
+
     private void HandleBobEffect()
     {
-        if (!m_allowedToPickUp)
-            return;
-
         // Rotate the weapon
         m_rotateSpeed = Mathf.Lerp(m_rotateSpeed, m_toRotationSpeed, Time.deltaTime);
         m_weaponModel.Rotate(0, m_rotateSpeed * Time.deltaTime, 0);
@@ -85,22 +92,52 @@ public class Weapon : MonoBehaviourPunCallbacks
     }
 
 
-
-    public void PickupWeapon(Transform parent)
+    private void HandlePickingUpWeapon()
     {
-        if (m_allowedToPickUp) 
-            photonView.RPC("PickupWeaponRPC", RpcTarget.All, parent.gameObject.GetPhotonView().ViewID);
+        // Run a overlap sphere to see if any weapons are in the area
+        Collider[] collisions = Physics.OverlapSphere(transform.position, m_pickupRange, m_pickupLayer);
+
+        for (int i = 0; i < collisions.Length; i++)
+        {
+            PlayerController player = collisions[i].GetComponent<PlayerController>();
+
+
+            // Check if the collider is an player
+            if (player == null)
+                return;
+
+            // Check if the player is the local one
+            if (!player.photonView.IsMine)
+                return;
+
+            // Check if the player is the local one
+            if (!player.CanPickupWeapon())
+                return;
+
+            PickupWeapon(player);
+
+            // Exit out of the loop
+            return;
+        }
+    }
+
+
+    public void PickupWeapon(PlayerController player)
+    {
+        photonView.RPC("PickupWeaponRPC", RpcTarget.All, player.gameObject.GetPhotonView().ViewID);    
     }
     [PunRPC]
     private void PickupWeaponRPC(int targetView)
     {
-        Transform parent = PhotonView.Find(targetView).transform;
+        if (!m_allowedToPickUp)
+            return;
 
-        Debug.Log(parent.name);
+        PlayerController player = PhotonView.Find(targetView).GetComponent<PlayerController>();
+
+        player.SetCurrentWeapon(this);
 
         // Set the parant of the weapon
-        transform.SetParent(parent);
-        m_collider.enabled = false;
+        transform.SetParent(player.GetWeaponPivotPoint());
 
         m_weaponModel.DOLocalMove(Vector3.zero, m_pickupSpeed);
         m_weaponModel.DOLocalRotateQuaternion(Quaternion.identity, m_pickupSpeed);
@@ -109,7 +146,6 @@ public class Weapon : MonoBehaviourPunCallbacks
 
         m_allowedToPickUp = false;
     }
-
 
 
     public void DropWeapon()
@@ -125,7 +161,6 @@ public class Weapon : MonoBehaviourPunCallbacks
 
         // Reset Weapon to fit the ground state
         transform.SetParent(null);
-        m_collider.enabled = true;
 
         m_rotateSpeed = m_timesRotationSpeedAfterDrop * m_toRotationSpeed;
 
@@ -139,6 +174,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         // Start the corutine to move the hammer
         StartCoroutine(MoveToPoint(nextPoint));
     }
+
 
 
     private Vector3 GetNextPoint()
@@ -188,6 +224,8 @@ public class Weapon : MonoBehaviourPunCallbacks
 
         transform.position = toPoint;
     }
+
+
 
 
 
