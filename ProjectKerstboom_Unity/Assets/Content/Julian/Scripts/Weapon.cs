@@ -38,13 +38,10 @@ public class Weapon : MonoBehaviourPunCallbacks
     public WeaponType m_WeaponType { get; private set; }
 
 
-
     private void Awake()
     {
         m_weaponModel = transform.GetChild(0);
         m_spawnPointParent = GameObject.FindGameObjectWithTag(m_spawnPointsParentTag).transform;
-
-        Debug.LogWarning("Zorg dat de hammer lerping naar point gefixed word, animatie sync en je kan ook als de andere speler de hammer slaan ook al heb je hem neit");
 
         m_allowedToPickUp = true;
     }
@@ -55,7 +52,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         for (int i = 0; i < m_spawnPointParent.childCount; i++)
             m_points.Add(m_spawnPointParent.GetChild(i).position);
 
-        transform.position = m_points[Random.Range(0, m_points.Count)];
+        transform.position = Vector3.zero;
     }
 
     private void Update()
@@ -126,53 +123,63 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         photonView.RPC("PickupWeaponRPC", RpcTarget.All, player.gameObject.GetPhotonView().ViewID);    
     }
-    [PunRPC]
-    private void PickupWeaponRPC(int targetView)
+
+    [PunRPC] private void PickupWeaponRPC(int targetView)
     {
         if (!m_allowedToPickUp)
             return;
 
-        PlayerController player = PhotonView.Find(targetView).GetComponent<PlayerController>();
+        // Kill old movement
+        m_weaponModel.DOKill();
+        transform.DOKill();
+        StopAllCoroutines();
 
+        // Set the current weapon to the player
+        PlayerController player = PhotonView.Find(targetView).GetComponent<PlayerController>();
         player.SetCurrentWeapon(this);
 
         // Set the parant of the weapon
         transform.SetParent(player.GetWeaponPivotPoint());
 
+        // Move to hand
         m_weaponModel.DOLocalMove(Vector3.zero, m_pickupSpeed);
         m_weaponModel.DOLocalRotateQuaternion(Quaternion.identity, m_pickupSpeed);
         transform.DOLocalMove(Vector3.zero, m_pickupSpeed);
         transform.DOLocalRotateQuaternion(Quaternion.identity, m_pickupSpeed);
 
+        // Make sure the weapon is not allowed to be picked up again
         m_allowedToPickUp = false;
     }
 
 
     public void DropWeapon()
     {
-        if (!m_allowedToPickUp)
-            photonView.RPC("DropWeaponRPC", RpcTarget.All, GetNextPoint());
+        photonView.RPC("DropWeaponRPC", RpcTarget.All, GetNextPoint());
     }
-    [PunRPC]
-    private void DropWeaponRPC(Vector3 nextPoint)
+
+    [PunRPC] private void DropWeaponRPC(Vector3 nextPoint)
     {
+        if (m_allowedToPickUp)
+            return;
+
+        // Kill old movement
         m_weaponModel.DOKill();
         transform.DOKill();
+        StopAllCoroutines();
 
-        // Reset Weapon to fit the ground state
+        // Reset the local weapon transform rotations
         transform.SetParent(null);
-
-        m_rotateSpeed = m_timesRotationSpeedAfterDrop * m_toRotationSpeed;
-
-        m_allowedToPickUp = true;
-
-
         m_weaponModel.localRotation = Quaternion.identity;
         transform.localRotation = Quaternion.identity;
-        // =================================
+
+        // Set the rotation speed to extra so the hammer movement has more effect
+        m_rotateSpeed = m_timesRotationSpeedAfterDrop * m_toRotationSpeed;
 
         // Start the corutine to move the hammer
         StartCoroutine(MoveToPoint(nextPoint));
+
+        // Make sure the weapon is allowed to be picked up again
+        m_allowedToPickUp = true;
     }
 
 

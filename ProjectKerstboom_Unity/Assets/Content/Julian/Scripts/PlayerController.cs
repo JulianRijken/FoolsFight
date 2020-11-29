@@ -66,6 +66,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!isMine)
             return;
 
+        if (m_currentWeapon != null)
+            m_currentWeapon.DropWeapon();
+
         PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
     }
 
@@ -85,6 +88,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
     }
 #endif
+
 
 
     private void HandleRotation()
@@ -146,6 +150,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (m_currentWeapon == null)
             return;
 
+        m_animator.SetTrigger("Fire");
+
+        photonView.RPC("FireWeaponRPC", RpcTarget.Others);
+    }
+
+    [PunRPC] private void FireWeaponRPC()
+    {
         m_animator.SetTrigger("Fire");
     }
 
