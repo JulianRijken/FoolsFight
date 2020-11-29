@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
-            m_playerInput.enabled = false;
+            Destroy(m_playerInput);
             Destroy(m_rigidbody);
         }
     }
@@ -130,7 +130,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // Add the acceleration
         finalVelocity.x = Mathf.MoveTowards(finalVelocity.x, toVelocity.x, speedX * Time.deltaTime);
         finalVelocity.z = Mathf.MoveTowards(finalVelocity.z, toVelocity.y, speedZ * Time.deltaTime);
-
 
 
         // Apply the velocitys
