@@ -8,12 +8,12 @@ using UnityEngine;
 public class PlayerListItem : MonoBehaviour
 {
 	[SerializeField] TMP_Text text;
-	public Player player { get; private set; }
+	Player player;
 
 	public void SetUp(Player _player)
 	{
 		player = _player;
-		text.text = PhotonNetwork.NickName;
+		text.text = player.NickName;
     }
 
 	//public override void OnPlayerLeftRoom(Player otherPlayer)
