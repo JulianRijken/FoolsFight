@@ -167,7 +167,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 				continue;
 
 			Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListing>().SetRoomInfo(roomList[i]);
-			Debug.Log("list update");
+			//Debug.Log("list update");
 		}
 	}
 
@@ -187,10 +187,12 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		if (info == 1)
 		{
 			playerCount = 4;
+			Debug.Log("list 1");
 		}
-		if (info == 3)
+		if (info == 2)
 		{
 			playerCount = 6;
+			Debug.Log("list 2");
 		}
 	}
 }
