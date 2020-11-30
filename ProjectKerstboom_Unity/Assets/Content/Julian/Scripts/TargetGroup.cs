@@ -20,9 +20,9 @@ public class TargetGroup : MonoBehaviour
         PlayerController.m_onPlayerStarted -= OnPlayerJoined;
     }
 
-    private void OnPlayerJoined(Transform newPlayer)
+    private void OnPlayerJoined(PlayerController newPlayer)
     {
-        m_cinemachineTargetGroup.AddMember(newPlayer, 1, 1);
+        m_cinemachineTargetGroup.AddMember(newPlayer.transform, 1, 1);
     }
 
 }

@@ -37,11 +37,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
 
     [Header("Multiplayer")]
-    private bool isMine = true;
+    private bool m_isMine = true;
 
+
+    [Header("General")]
+    private bool m_isAlive = true;
 
     // Action for other scripts to use to check when new players spawn
-    public static System.Action<Transform> m_onPlayerStarted;
+    public static System.Action<PlayerController> m_onPlayerStarted;
+
+    public static System.Action m_onPlayerDeath;
 
 
     private void Awake()
@@ -50,13 +55,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_playerInput = GetComponent<PlayerInput>();
 
         if (photonView != null)
-            isMine = photonView.IsMine;
+            m_isMine = photonView.IsMine;
 
-        if (isMine)
-        {
-            PlayerAnimatorPass.m_onWeaponUsed += OnWeaponUsed;
-        }
-        else
+
+        if (!m_isMine)
         {
             Destroy(m_playerInput);
             Destroy(m_rigidbody);
@@ -65,23 +67,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Start()
     {
-        m_onPlayerStarted?.Invoke(transform);
-    }
-
-    private void OnDestroy()
-    {
-        if (!isMine)
-            return;
-
-        if (m_currentWeapon != null)
-            m_currentWeapon.DropWeapon();
-
-        PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
+        m_onPlayerStarted?.Invoke(this);
     }
 
     private void Update()
     {
-        if (!isMine)
+        if (!m_isMine)
             return;
 
         HandleMovement();
@@ -96,6 +87,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
     }
 #endif
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+
+        if(m_isMine)
+            PlayerAnimatorPass.m_onWeaponUsed += OnWeaponUsed;
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
+        PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
+    }
 
 
 
@@ -177,12 +183,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         photonView.RPC("FireWeaponRPC", RpcTarget.Others);
     }
 
+    public void ReSpawn()
+    {
+        photonView.RPC("ReSpawnRPC", RpcTarget.All);
+    }
+    [PunRPC]
+    private void ReSpawnRPC()
+    {
+        Debug.Log("Player Reset");
+
+        transform.position = Vector3.zero;
+        m_isAlive = true;
+        gameObject.SetActive(true);
+    }
 
 
 
     private void AddPickupDelay()
     {
-        StartCoroutine(PickupDelay());
+        if(gameObject.activeSelf)
+            StartCoroutine(PickupDelay());
     }
 
     private IEnumerator PickupDelay()
@@ -217,7 +237,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 continue;
 
             // then hit the object
-            damageable.OnHit(gameObject.name);
+            damageable.OnHit($"{photonView.Owner.NickName} {gameObject.name} Hammer");
         }
 
         DropCurrentWeapon();
@@ -231,13 +251,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public void OnHit(string damagedBy)
     {
-        photonView.RPC("OnHitRPC", RpcTarget.All, photonView.ViewID);
+        photonView.RPC("OnHitRPC", RpcTarget.All, photonView.ViewID, damagedBy);
     }
     [PunRPC]
-    private void OnHitRPC(int viewID)
+    private void OnHitRPC(int viewID,string damagedBy)
     {
-        Transform diedPlayer = PhotonView.Find(viewID).transform;
-        diedPlayer.position = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+ 
+       DropCurrentWeapon();
+
+        m_isAlive = false;
+        gameObject.SetActive(false);
+        m_onPlayerDeath?.Invoke();
     }
 
 
@@ -257,6 +281,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         return m_weaponPivotPoint;
     }
 
+    public bool IsAlive()
+    {
+        return m_isAlive;
+    }
+
+    public void SetAlive(bool alive)
+    {
+        m_isAlive = alive;
+    }
 
 
     #region Input
