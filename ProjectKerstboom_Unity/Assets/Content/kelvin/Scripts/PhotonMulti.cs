@@ -6,6 +6,8 @@ using TMPro;
 using DG.Tweening;
 using Photon.Realtime;
 using System.Linq;
+using System.Security.Principal;
+using UnityEngine.UIElements;
 
 public class PhotonMulti : MonoBehaviourPunCallbacks 
 {
@@ -52,10 +54,10 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 		if (string.IsNullOrEmpty(roomNameInputField.text))
 		{
-			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s"+ " game", new RoomOptions { MaxPlayers = playerCount });
+			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s"+ " game ", new RoomOptions { MaxPlayers = playerCount});
 		}
 		else
-		PhotonNetwork.CreateRoom(roomNameInputField.text, new RoomOptions { MaxPlayers = playerCount});
+		PhotonNetwork.CreateRoom(roomNameInputField.text + " players: ", new RoomOptions { MaxPlayers = playerCount});
 		
 
 	}
@@ -76,7 +78,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 		Player[] players = PhotonNetwork.PlayerList;
 
-		SetPlayerName();
+		//SetPlayerName();
 
 		foreach (Transform child in playerListContent)
 		{
@@ -174,4 +176,21 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
 	}
 
+	public void DropDownInput(int info)
+	{
+		Debug.Log("list ");
+		if (info == 0)
+		{
+			playerCount = 2;
+			Debug.Log("list 0");
+		}
+		if (info == 1)
+		{
+			playerCount = 4;
+		}
+		if (info == 3)
+		{
+			playerCount = 6;
+		}
+	}
 }

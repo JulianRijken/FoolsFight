@@ -14,22 +14,27 @@ public class MainMenu : MonoBehaviourPunCallbacks
     [SerializeField] GameObject mainMenu, optionMenu, hostMenu, findRoomMenu, RoomMenu;
     [Header("RectTransform")]
     [SerializeField] RectTransform mainMenuTran, optionMenuTran, hostMenuTran, findRoomMenuTran, RoomMenuTran;
-    public TMP_InputField NameInput;
+    public TMP_InputField nameInput;
 
     [Header("host room")]
     public TMP_InputField roomNameInputField;
 
+    private void Start()
+    {
+        roomNameInputField.characterLimit = 10;
+        nameInput.characterLimit = 10;
+    }
 
     public void HostGame()
     {
         
-        if (string.IsNullOrEmpty(NameInput.text))
+        if (string.IsNullOrEmpty(nameInput.text))
         {
             PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
         }
         else
         {
-            PhotonNetwork.NickName = NameInput.text;
+            PhotonNetwork.NickName = nameInput.text;
         }
         mainMenuTran.DOAnchorPos(new Vector2(-1500, 0), 0.50f);
         mainMenu.SetActive(false);
@@ -39,13 +44,13 @@ public class MainMenu : MonoBehaviourPunCallbacks
    
     public void JoinGame()
     {
-        if (string.IsNullOrEmpty(NameInput.text))
+        if (string.IsNullOrEmpty(nameInput.text))
         {
             PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
         }
         else
         {
-            PhotonNetwork.NickName = NameInput.text;
+            PhotonNetwork.NickName = nameInput.text;
         }
         mainMenuTran.DOAnchorPos(new Vector2(-1500, 0), 0.50f);
         mainMenu.SetActive(false);

@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerListItem : MonoBehaviour
 {
 	[SerializeField] TMP_Text text;
-	Player player;
+	public Player player { get; private set; }
 
 	public void SetUp(Player _player)
 	{
