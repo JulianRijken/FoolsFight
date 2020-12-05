@@ -35,14 +35,15 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - DestroyRpc
-  - PickupWeaponRPC
   - DropWeaponRPC
-  - OnHitRPC
   - FireWeaponRPC
-  - NextRondRPC
-  - RestartRPC
-  - ReSpawns
+  - LoadNextRoundRPC
+  - OnHitRPC
+  - OnPlayerWonRoundRPC
+  - PickupWeaponRPC
   - ReSpawnRPC
+  - SetUserId
+  - StartGameRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [Header("Multiplayer")]
     private bool m_isMine = true;
+    private string m_userId;
 
 
     [Header("General")]
@@ -58,12 +59,24 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             m_isMine = photonView.IsMine;
 
 
-        if (!m_isMine)
+        if (m_isMine)
+        {
+            string userId = PhotonNetwork.LocalPlayer.UserId;
+
+            // Send Local
+            SetUserId(userId);
+
+            // Send to other clients
+            photonView.RPC("SetUserId", RpcTarget.Others, userId);
+        }
+        else
         {
             Destroy(m_playerInput);
             Destroy(m_rigidbody);
         }
     }
+
+    
 
     private void Start()
     {
@@ -103,7 +116,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
     }
 
-
+    [PunRPC]
+    private void SetUserId(string userId)
+    {
+        m_userId = userId;
+    }
 
     private void HandleRotation()
     {
@@ -169,7 +186,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (m_currentWeapon == null)
             return;
 
-        m_currentWeapon.DropWeapon();
+        if(m_isMine)
+            m_currentWeapon.DropWeapon();
+
         m_currentWeapon = null;
     }
 
@@ -255,9 +274,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     [PunRPC]
     private void OnHitRPC(int viewID,string damagedBy)
-    {
- 
-       DropCurrentWeapon();
+    {    
+        DropCurrentWeapon();
 
         m_isAlive = false;
         gameObject.SetActive(false);
@@ -289,6 +307,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void SetAlive(bool alive)
     {
         m_isAlive = alive;
+    }
+
+    public string GetUserID()
+    {
+        return m_userId;
     }
 
 
