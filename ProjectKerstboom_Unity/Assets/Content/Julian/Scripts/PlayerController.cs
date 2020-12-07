@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [Header("Multiplayer")]
     private bool m_isMine = true;
-    private string m_userId;
 
 
     [Header("General")]
@@ -62,9 +61,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (m_isMine)
         {
             string userId = PhotonNetwork.LocalPlayer.UserId;
-
-            // Send Local
-            SetUserId(userId);
 
             // Send to other clients
             photonView.RPC("SetUserId", RpcTarget.Others, userId);
@@ -116,11 +112,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
     }
 
-    [PunRPC]
-    private void SetUserId(string userId)
-    {
-        m_userId = userId;
-    }
 
     private void HandleRotation()
     {
@@ -309,10 +300,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_isAlive = alive;
     }
 
-    public string GetUserID()
-    {
-        return m_userId;
-    }
 
 
     #region Input

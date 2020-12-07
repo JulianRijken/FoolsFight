@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (m_playersAlive.Count <= 1)
         {
-            OnPlayerWonRound(m_playersAlive[0].GetUserID());
+            //OnPlayerWonRound(m_playersAlive[0].GetUserID());
         }
     }
 
