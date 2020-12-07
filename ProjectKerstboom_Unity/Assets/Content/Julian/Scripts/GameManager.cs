@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private int m_ammountOfRound;
 
     private int m_currentRound = 1;
-    private List<PlayerController> m_playersPlaying = new List<PlayerController>();
-    private Dictionary<string,int> m_playerScores = new Dictionary<string, int>();
+
+    private List<PlayerData> m_playersInGame = new List<PlayerData>();
+    private Player[] m_playersInRoom;
 
     public static System.Action<int> m_onRoundChange;
     public static System.Action<Dictionary<string, int>> m_onGameStart;
@@ -19,104 +21,60 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if(PhotonNetwork.IsMasterClient)
+        // Only Run On Functions if this is the master client
+        if(PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
-            PlayerController.m_onPlayerDeath += OnPlayerDeath;
-            PlayerController.m_onPlayerStarted += AddPlayer;
+            PlayerController.m_onPlayerStarted += OnPlayerStarted;
+
+            // Create a local variable
+            m_playersInRoom = PhotonNetwork.PlayerList;
         }
     }
+
+
 
     private void OnDestroy()
     {
-        PlayerController.m_onPlayerDeath -= OnPlayerDeath;
-        PlayerController.m_onPlayerStarted -= AddPlayer;
+        PlayerController.m_onPlayerStarted -= OnPlayerStarted;
     }
 
-    private void Start()
+
+
+    private void OnPlayerStarted(PlayerController m_playerController)
     {
-        if (PhotonNetwork.IsMasterClient)
+        // Create a new player data
+        PlayerData playerData = new PlayerData();
+
+        playerData.score = 0;
+        playerData.m_playerController = m_playerController;
+
+        // Add the player data to the list
+        m_playersInGame.Add(playerData);
+
+        // Check if there is a same ammount of players in the game as there sould be based on the room.
+        if(m_playersInRoom.Length == m_playersInGame.Count)
         {
-            StartGame();
+            OnGameReady();
+        }
+        else
+        {
+            Debug.Log("Waiting for more players");
         }
     }
 
-    private void AddPlayer(PlayerController playerController)
+    private void OnGameReady()
     {
-        m_playersPlaying.Add(playerController);
-    }
+        Debug.Log("On Game Ready");
 
-    private void StartGame()
-    {
-        photonView.RPC("StartGameRPC", RpcTarget.All);
-    }
-
-    [PunRPC]
-    private void StartGameRPC()
-    {
-        Player[] players = PhotonNetwork.PlayerList;
-        for (int i = 0; i < players.Length; i++)
-        {
-            m_playerScores.Add(players[i].UserId, 0);
-        }
-
-        m_onGameStart?.Invoke(m_playerScores);
-    }
-
-    // Only Called on the master
-    private void OnPlayerDeath()
-    {
-        List<PlayerController> m_playersAlive = new List<PlayerController>();
-
-        for (int i = 0; i < m_playersPlaying.Count; i++)
-        {
-            // If a player leaves remove him from the list
-            if (m_playersPlaying[i] == null)
-                m_playersPlaying.RemoveAt(i);
-
-            if (m_playersPlaying[i].IsAlive())
-                m_playersAlive.Add(m_playersPlaying[i]);
-        }
-
-        if (m_playersAlive.Count <= 1)
-        {
-            //OnPlayerWonRound(m_playersAlive[0].GetUserID());
-        }
+        // Close the room
+        PhotonNetwork.CurrentRoom.IsOpen = false;
     }
 
 
-    private void OnPlayerWonRound(string winnerUserId)
+    private struct PlayerData
     {
-        photonView.RPC("OnPlayerWonRoundRPC", RpcTarget.All, winnerUserId);
-
-        // Load the next round after adding the score
-        LoadNextRound();
-    }
-    [PunRPC]
-    private void OnPlayerWonRoundRPC(string winnerUserId)
-    {
-        // Add a point to the player
-        m_playerScores[winnerUserId]++;
-
-        // Invoke the player score change action
-        m_onPlayerScoreChange?.Invoke(m_playerScores);
-    }
-
-    private void LoadNextRound()
-    {
-        m_currentRound++;
-
-        photonView.RPC("LoadNextRoundRPC", RpcTarget.All, m_currentRound);
-    }
-
-    [PunRPC]
-    private void LoadNextRoundRPC(int currentRound)
-    {
-        m_currentRound = currentRound;
-        m_onRoundChange?.Invoke(m_currentRound);
-
-        // Respawn Players
-        for (int i = 0; i < m_playersPlaying.Count; i++)
-            m_playersPlaying[i].ReSpawn();
+        public int score;
+        public PlayerController m_playerController;
     }
 
 }

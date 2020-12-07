@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,19 +18,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private PlayerInput m_playerInput;
 
 
+    [Header("Ground Check")]
+    [SerializeField] private float m_maxGroundCheckDistance;
+    [SerializeField] private float m_radius;
+    [SerializeField] private Vector3 m_castOffset;
+    [SerializeField] private LayerMask m_groundLayer;
+
+
     [Header("Weapons")]
     [SerializeField] private float m_pickupCooldown;
     [SerializeField] private LayerMask m_damageLayer;
     [SerializeField] private Transform m_weaponPivotPoint;
     private Weapon m_currentWeapon = null;
     private bool m_canPickup = true;
-
-
-    [Header("Ground Check")]
-    [SerializeField] private float m_maxGroundCheckDistance;
-    [SerializeField] private float m_radius;
-    [SerializeField] private Vector3 m_castOffset;
-    [SerializeField] private LayerMask m_groundLayer;
 
 
     [Header("Animator")]
@@ -43,75 +44,73 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [Header("General")]
     private bool m_isAlive = true;
 
+
     // Action for other scripts to use to check when new players spawn
     public static System.Action<PlayerController> m_onPlayerStarted;
-
+    // Action for other scripts to check if the player died
     public static System.Action m_onPlayerDeath;
 
 
     private void Awake()
     {
+        // Getting All componenets
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
 
+        m_canPickup = true;
+
+        // Checking if this is mine
         if (photonView != null)
-            m_isMine = photonView.IsMine;
-
-
-        if (m_isMine)
         {
-            string userId = PhotonNetwork.LocalPlayer.UserId;
-
-            // Send to other clients
-            photonView.RPC("SetUserId", RpcTarget.Others, userId);
+            m_isMine = photonView.IsMine;
         }
-        else
+
+        if(!m_isMine)
         {
             Destroy(m_playerInput);
             Destroy(m_rigidbody);
         }
     }
 
-    
-
     private void Start()
     {
+        // Always call player started even if not mine
         m_onPlayerStarted?.Invoke(this);
     }
 
     private void Update()
     {
-        if (!m_isMine)
-            return;
-
-        HandleMovement();
-        HandleRotation();
-        HandleGroundCheck();
+        // If this is my character move it
+        if (m_isMine)
+        {
+            HandleMovement();
+            HandleRotation();
+            HandleGroundCheck();
+        }
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
-    }
-#endif
 
     public override void OnEnable()
     {
         base.OnEnable();
 
+        // Only subscribe events if this one is mine
         if(m_isMine)
+        {
             PlayerAnimatorPass.m_onWeaponUsed += OnWeaponUsed;
+        }
     }
 
     public override void OnDisable()
     {
         base.OnDisable();
 
+        // Always unsubscribe all events
         PlayerAnimatorPass.m_onWeaponUsed -= OnWeaponUsed;
     }
 
+
+    #region Movement
 
     private void HandleRotation()
     {
@@ -171,27 +170,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
        
     }
 
-    private void DropCurrentWeapon()
-    {
-        // Check if the player has a weapon
-        if (m_currentWeapon == null)
-            return;
 
-        if(m_isMine)
-            m_currentWeapon.DropWeapon();
-
-        m_currentWeapon = null;
-    }
-
-    private void FireWeapon()
-    {
-        if (m_currentWeapon == null)
-            return;
-
-        m_animator.SetTrigger("Fire");
-
-        photonView.RPC("FireWeaponRPC", RpcTarget.Others);
-    }
 
     public void ReSpawn()
     {
@@ -207,7 +186,32 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         gameObject.SetActive(true);
     }
 
+    #endregion
 
+
+    #region Weapon Handeling
+
+    private void DropCurrentWeapon()
+    {
+        // Check if the player has a weapon
+        if (m_currentWeapon == null)
+            return;
+
+        if (m_isMine)
+            m_currentWeapon.DropWeapon();
+
+        m_currentWeapon = null;
+    }
+
+    private void FireWeapon()
+    {
+        if (m_currentWeapon == null)
+            return;
+
+        m_animator.SetTrigger("Fire");
+
+        photonView.RPC("FireWeaponRPC", RpcTarget.Others);
+    }
 
     private void AddPickupDelay()
     {
@@ -221,7 +225,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         yield return new WaitForSeconds(m_pickupCooldown);
         m_canPickup = true;
     }
-
 
 
     private void OnWeaponUsed()
@@ -274,15 +277,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
 
-
     public void SetCurrentWeapon(Weapon newWeapon)
     {
         m_currentWeapon = newWeapon;
-    }
-
-    public bool CanPickupWeapon()
-    {
-        return m_canPickup;
     }
 
     public Transform GetWeaponPivotPoint()
@@ -290,16 +287,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         return m_weaponPivotPoint;
     }
 
-    public bool IsAlive()
+    public bool CanPickup()
     {
-        return m_isAlive;
+        return m_canPickup;
     }
 
-    public void SetAlive(bool alive)
-    {
-        m_isAlive = alive;
-    }
-
+    #endregion
 
 
     #region Input
@@ -318,5 +311,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
     #endregion
+
+
+#if UNITY_EDITOR
+    // Checking Movement
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
+    }
+#endif
 
 }

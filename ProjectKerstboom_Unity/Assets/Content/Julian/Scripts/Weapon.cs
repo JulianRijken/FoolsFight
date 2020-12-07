@@ -108,7 +108,7 @@ public class Weapon : MonoBehaviourPunCallbacks
                 return;
 
             // Check if the player is the local one
-            if (!player.CanPickupWeapon())
+            if (!player.CanPickup())
                 return;
 
             PickupWeapon(player);
