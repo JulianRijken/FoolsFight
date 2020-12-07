@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
@@ -9,46 +10,42 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private int m_ammountOfRound;
 
     private int m_currentRound = 1;
-    private List<PlayerData> m_playerData = new List<PlayerData>();
+    private PlayerData[] m_playerData = new PlayerData[0];
+    private List<PlayerData> m_playersLoadedIn = new List<PlayerData>();
 
     private Player[] m_playersInRoom;
-
-    public static Action<int> m_onRoundChange;
-    public static Action m_onGameReady;
-    public static Action m_onPlayerScoreChange;
 
     private static GameManager Instance;
 
 
     private void Awake()
     {
-        if (photonView.IsMine)
+        // Create A singelton of this game manager
+        Instance = this;
+
+        // Only Run On Functions if this is the master client
+        if (PhotonNetwork.IsMasterClient)
         {
-            // Create A singelton of this game manager
-            Instance = this;
+            PlayerController.m_onPlayerStarted += OnPlayerStarted;
+            PlayerController.m_onPlayerDeath += OnPlayerDeath;
 
-            // Only Run On Functions if this is the master client
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PlayerController.m_onPlayerStarted += OnPlayerStarted;
-
-                // Create a local variable
-                m_playersInRoom = PhotonNetwork.PlayerList;
-            }
+            // Create a local variable
+            m_playersInRoom = PhotonNetwork.PlayerList;
         }
     }
-
-
 
     private void OnDestroy()
     {
         PlayerController.m_onPlayerStarted -= OnPlayerStarted;
+        PlayerController.m_onPlayerDeath -= OnPlayerDeath;
     }
+
+
 
     /// <summary>
     /// Returns the Player Data
     /// </summary>
-    public static List<PlayerData> GetPlayerData
+    public static PlayerData[] GetPlayerData
     {
         get
         {
@@ -58,7 +55,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                return new List<PlayerData>();
+                return new PlayerData[0];
             }
         }
     }
@@ -83,6 +80,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
 
+    private void OnPlayerDeath()
+    {
+        m_currentRound++;
+        m_playerData[0].score++;
+    }
+
     private void OnPlayerStarted(PlayerController m_playerController)
     {
 
@@ -93,10 +96,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         playerData.m_playerController = m_playerController;
 
         // Add the player data to the list
-        m_playerData.Add(playerData);
+        m_playersLoadedIn.Add(playerData);
 
         // Check if there is a same ammount of players in the game as there sould be based on the room.
-        if (m_playersInRoom.Length == m_playerData.Count)
+        if (m_playersInRoom.Length == m_playersLoadedIn.Count)
         {
             OnGameReady();
         }
@@ -110,34 +113,60 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         Debug.Log("On Game Ready");
 
+        // Set the player data array
+        m_playerData = m_playersLoadedIn.ToArray();
+
         // Close the room
         PhotonNetwork.CurrentRoom.IsOpen = false;
-
-        m_onGameReady?.Invoke();
     }
+
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            // Check if the one sending is the master and the local one
-            if(PhotonNetwork.IsMasterClient && photonView.IsMine)
+            // Send the player data count
+            stream.SendNext(m_playerData.Length);
+
+            for (int i = 0; i < m_playerData.Length; i++)
             {
-                stream.SendNext(m_playerData);
-                stream.SendNext(m_currentRound);
+                // Send the player controller view id
+                stream.SendNext(m_playerData[i].m_playerController.photonView.ViewID);
+
+                // Send the player data score
+                stream.SendNext(m_playerData[i].score);
             }
- 
+
+
+            // send the currend round
+            stream.SendNext(m_currentRound);
         }
         else
         {
-            // Make sure the one receving the data is not the master
-            if (!PhotonNetwork.IsMasterClient)
+            int playerDataCount = (int)stream.ReceiveNext();
+
+            List<PlayerData> playerDataList = new List<PlayerData>();
+            for (int i = 0; i < playerDataCount; i++)
             {
-                m_playerData = (List<PlayerData>)stream.ReceiveNext();
-                m_currentRound = (int)stream.ReceiveNext();
+                PlayerData playerData = new PlayerData();
+
+                // Get the player controller
+                playerData.m_playerController =  PhotonNetwork.GetPhotonView((int)stream.ReceiveNext()).GetComponent<PlayerController>();
+
+                // Get the score 
+                playerData.score = (int)stream.ReceiveNext();
+
+                // Add the player data back
+                playerDataList.Add(playerData);
             }
+
+            // Replace the player data array
+            m_playerData = playerDataList.ToArray();
+
+            m_currentRound = (int)stream.ReceiveNext();
         }
     }
+
 
     public struct PlayerData
     {

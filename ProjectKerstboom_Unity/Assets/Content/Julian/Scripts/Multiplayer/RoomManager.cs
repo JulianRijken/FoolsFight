@@ -43,7 +43,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
         // Spawn All the needed thinks as soon as the game scene is loaded
         if (scene.buildIndex == 1)
         {
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "GameManager"), transform.position, Quaternion.identity);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "GameManager"), transform.position, Quaternion.identity);
+            }
+
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), transform.position, Quaternion.identity);
         }
 
