@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
 public class GUIManager : MonoBehaviour
 {
@@ -12,54 +13,58 @@ public class GUIManager : MonoBehaviour
     private void Awake()
     {
         GameManager.m_onRoundChange += OnNextRound;
-        GameManager.m_onGameStart += OnGameStart;
+        GameManager.m_onGameReady += OnGameReady;
         GameManager.m_onPlayerScoreChange += OnPlayerScoreChange;
     }
 
     private void OnDestroy()
     {
         GameManager.m_onRoundChange -= OnNextRound;
-        GameManager.m_onGameStart -= OnGameStart;
+        GameManager.m_onGameReady -= OnGameReady;
         GameManager.m_onPlayerScoreChange -= OnPlayerScoreChange;
     }
 
-    private void OnPlayerScoreChange(Dictionary<string, int> playerScores)
+    private void OnPlayerScoreChange()
     {
-        SetPlayerScores(playerScores);
+        UpdatePlayerScoresText();
     }
 
-    private void OnGameStart(Dictionary<string, int> playerScores)
+    private void OnGameReady()
     {
-        SetRound(0);
-        SetPlayerScores(playerScores);
+        UpdatePlayerScoresText();
+        UpdateRoundText();
     }
 
     private void OnNextRound(int round)
     {
-        SetRound(round);
+        UpdateRoundText();
     }
 
 
-
-    private void SetPlayerScores(Dictionary<string, int> playerScores)
+    private void UpdatePlayerScoresText()
     {
+        Debug.Log("UpdatePlayerScoresText Called");
+
         string scores = "";
 
-        foreach (KeyValuePair<string, int> attachStat in playerScores)
-        {
-            //Now you can access the key and value both separately from this attachStat as:
-            Debug.Log(attachStat.Key);
-            Debug.Log(attachStat.Value);
+        List<GameManager.PlayerData> playerData = GameManager.GetPlayerData;
 
-            scores += $"UserId:{attachStat.Key} Score: {attachStat.Value}\n";
+        for (int i = 0; i < playerData.Count; i++)
+        {
+            PhotonView playerPhotonView = playerData[i].m_playerController.photonView;
+            string nickName = playerPhotonView.Owner == null ? "Error" : playerPhotonView.Owner.NickName;
+
+            scores += $"Name:{nickName} Score: {playerData[i].score}\n";
         }
 
         m_playerScoresTextGUI.text = scores;
     }
 
-    private void SetRound(int round)
+    private void UpdateRoundText()
     {
-        m_roundTextGUI.text = $"Round {round}";
+        Debug.Log("UpdateRoundText Called");
+
+        m_roundTextGUI.text = $"Round {GameManager.GetCurrentRound}";
     }
 
 }
