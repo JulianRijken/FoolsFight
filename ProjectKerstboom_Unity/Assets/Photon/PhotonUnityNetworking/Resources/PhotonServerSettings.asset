@@ -39,11 +39,8 @@ MonoBehaviour:
   - FireWeaponRPC
   - LoadNextRoundRPC
   - OnHitRPC
-  - OnPlayerWonRoundRPC
   - PickupWeaponRPC
-  - ReSpawnRPC
-  - SetUserId
-  - StartGameRPC
+  - ResetWeaponRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

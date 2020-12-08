@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ammountOfRound: 3
+  m_spawnDistance: 4
 --- !u!114 &2511402091554786408
 MonoBehaviour:
   m_ObjectHideFlags: 0

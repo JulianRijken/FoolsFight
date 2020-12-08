@@ -172,24 +172,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
 
 
-    public void ReSpawn()
+    public void ResetToDefalt()
     {
-        photonView.RPC("ReSpawnRPC", RpcTarget.All);
-    }
-    [PunRPC]
-    private void ReSpawnRPC()
-    {
-        Debug.Log("Player Reset");
-
-        transform.position = Vector3.zero;
+        m_canPickup = true;
+        StopAllCoroutines();
         m_isAlive = true;
         gameObject.SetActive(true);
+        photonView.Synchronization = ViewSynchronization.UnreliableOnChange;
     }
 
     #endregion
 
-
-    #region Weapon Handeling
 
     private void DropCurrentWeapon()
     {
@@ -211,6 +204,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_animator.SetTrigger("Fire");
 
         photonView.RPC("FireWeaponRPC", RpcTarget.Others);
+    }
+    [PunRPC]
+    private void FireWeaponRPC()
+    {
+        m_animator.SetTrigger("Fire");
     }
 
     private void AddPickupDelay()
@@ -256,23 +254,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         DropCurrentWeapon();
         AddPickupDelay();
     }
-    [PunRPC]
-    private void FireWeaponRPC()
-    {
-        m_animator.SetTrigger("Fire");
-    }
 
     public void OnHit(string damagedBy)
     {
-        photonView.RPC("OnHitRPC", RpcTarget.All, photonView.ViewID, damagedBy);
+        photonView.RPC("OnHitRPC", RpcTarget.All);
     }
     [PunRPC]
-    private void OnHitRPC(int viewID,string damagedBy)
+    private void OnHitRPC()
     {    
         DropCurrentWeapon();
 
         m_isAlive = false;
+        photonView.Synchronization = ViewSynchronization.Off;
         gameObject.SetActive(false);
+
+        // Call the player death action last
         m_onPlayerDeath?.Invoke();
     }
 
@@ -307,7 +303,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
 
-    #endregion
 
 
     #region Input

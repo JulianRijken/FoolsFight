@@ -8,9 +8,15 @@ using UnityEngine;
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private int m_ammountOfRound;
+    [SerializeField] private float m_spawnDistance;
 
+    // Synced variable
     private int m_currentRound = 1;
     private PlayerData[] m_playerData = new PlayerData[0];
+
+
+    private bool m_gameReady = false;
+
     private List<PlayerData> m_playersLoadedIn = new List<PlayerData>();
 
     private Player[] m_playersInRoom;
@@ -23,14 +29,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Create A singelton of this game manager
         Instance = this;
 
+        // Create a local variable
+        m_playersInRoom = PhotonNetwork.PlayerList;
+
         // Only Run On Functions if this is the master client
         if (PhotonNetwork.IsMasterClient)
         {
             PlayerController.m_onPlayerStarted += OnPlayerStarted;
             PlayerController.m_onPlayerDeath += OnPlayerDeath;
-
-            // Create a local variable
-            m_playersInRoom = PhotonNetwork.PlayerList;
         }
     }
 
@@ -115,11 +121,40 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Count the rounds up
         m_currentRound++;
 
+        // Maybe change later for a diffrend way of finding the weapon
+        Weapon weapon = FindObjectOfType<Weapon>();
+        // Reset the weapon
+        weapon.ResetWeapon();
+
+        // Load nex round for all clients
+        photonView.RPC("LoadNextRoundRPC", RpcTarget.All);
+    }
+    [PunRPC] 
+    private void LoadNextRoundRPC()
+    {
         for (int i = 0; i < m_playerData.Length; i++)
         {
-            m_playerData[i].m_playerController.ReSpawn();
+            /* Spawn Players in a circle */
+
+            // Distance around the circle 
+            float radians = 2 * Mathf.PI / m_playerData.Length * i;
+
+            // Get the vector direction
+            Vector3 spawnDirection = new Vector3(Mathf.Cos(radians), 0, Mathf.Sin(radians));
+
+            // Get the spawn position, center + direction * distance (how far away from the center)
+            Vector3 spawnPosition = transform.position + spawnDirection * m_spawnDistance;
+
+
+            // Apply the spawn position
+            m_playerData[i].m_playerController.transform.position = spawnPosition;
+
+
+            // Reset the player
+            m_playerData[i].m_playerController.ResetToDefalt();
         }
     }
+
 
 
     private void OnPlayerStarted(PlayerController m_playerController)
@@ -154,6 +189,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         // Close the room
         PhotonNetwork.CurrentRoom.IsOpen = false;
+        m_gameReady = true;
     }
 
 

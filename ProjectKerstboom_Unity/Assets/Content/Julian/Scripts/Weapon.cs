@@ -101,15 +101,15 @@ public class Weapon : MonoBehaviourPunCallbacks
 
             // Check if the collider is an player
             if (player == null)
-                return;
+                continue;
 
             // Check if the player is the local one
             if (!player.photonView.IsMine)
-                return;
+                continue;
 
             // Check if the player is the local one
             if (!player.CanPickup)
-                return;
+                continue;
 
             PickupWeapon(player);
 
@@ -123,7 +123,6 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         photonView.RPC("PickupWeaponRPC", RpcTarget.All, player.gameObject.GetPhotonView().ViewID);    
     }
-
     [PunRPC] private void PickupWeaponRPC(int targetView)
     {
         if (!m_allowedToPickUp)
@@ -156,7 +155,6 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         photonView.RPC("DropWeaponRPC", RpcTarget.All, GetNextPoint());
     }
-
     [PunRPC] private void DropWeaponRPC(Vector3 nextPoint)
     {
         if (m_allowedToPickUp)
@@ -182,6 +180,33 @@ public class Weapon : MonoBehaviourPunCallbacks
         m_allowedToPickUp = true;
     }
 
+
+    public void ResetWeapon()
+    {
+        photonView.RPC("ResetWeaponRPC", RpcTarget.All);
+    }
+    [PunRPC] private void ResetWeaponRPC()
+    {
+        // Kill old movement
+        m_weaponModel.DOKill();
+        transform.DOKill();
+
+        // Reset the local weapon transform rotations
+        transform.SetParent(null);
+        m_weaponModel.localRotation = Quaternion.identity;
+        transform.localRotation = Quaternion.identity;
+
+        StopAllCoroutines();
+
+        // Zero the position
+        transform.position = Vector3.zero;
+
+        // Reset the rotate speed
+        m_rotateSpeed = m_toRotationSpeed;
+
+        m_allowedToPickUp = true;
+
+    }
 
 
     private Vector3 GetNextPoint()
