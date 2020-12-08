@@ -174,8 +174,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public void ResetToDefalt()
     {
-        m_canPickup = true;
         StopAllCoroutines();
+        m_canPickup = true;
         m_isAlive = true;
         gameObject.SetActive(true);
         photonView.Synchronization = ViewSynchronization.UnreliableOnChange;
@@ -261,7 +261,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     [PunRPC]
     private void OnHitRPC()
-    {    
+    {   
+        
         DropCurrentWeapon();
 
         m_isAlive = false;
@@ -270,6 +271,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         // Call the player death action last
         m_onPlayerDeath?.Invoke();
+
     }
 
 

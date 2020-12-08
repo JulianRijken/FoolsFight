@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private int m_ammountOfRound;
     [SerializeField] private float m_spawnDistance;
+    private Weapon m_weapon;
 
     // Synced variable
     private int m_currentRound = 1;
@@ -38,6 +39,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             PlayerController.m_onPlayerStarted += OnPlayerStarted;
             PlayerController.m_onPlayerDeath += OnPlayerDeath;
         }
+    }
+
+    private void Start()
+    {
+        m_weapon = FindObjectOfType<Weapon>();
     }
 
     private void OnDestroy()
@@ -88,6 +94,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void OnPlayerDeath()
     {
+        Debug.Log("OnPlayerDeath Called");
+
         // Create a list of the surviving players
         List<int> playersAliveIndex = new List<int>();
 
@@ -121,10 +129,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Count the rounds up
         m_currentRound++;
 
-        // Maybe change later for a diffrend way of finding the weapon
-        Weapon weapon = FindObjectOfType<Weapon>();
-        // Reset the weapon
-        weapon.ResetWeapon();
+        if (m_weapon != null)
+        {
+            // Reset the weapon
+            m_weapon.ResetWeapon();
+        }
 
         // Load nex round for all clients
         photonView.RPC("LoadNextRoundRPC", RpcTarget.All);
