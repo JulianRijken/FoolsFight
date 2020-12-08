@@ -19,6 +19,11 @@ public class RoomListing : MonoBehaviour
 
     public void Onclick()
     {
+        if (info.MaxPlayers == info.PlayerCount)
+        {
+            Debug.Log("full");
+        }
+        else 
         PhotonMulti.Instance.JoinRoom(info);
     }
 }

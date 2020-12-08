@@ -61,6 +61,18 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		
 
 	}
+	public void CreatePrivateRoom()
+	{
+
+		if (string.IsNullOrEmpty(roomNameInputField.text))
+		{
+			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s" + " game ", new RoomOptions { MaxPlayers = playerCount });
+		}
+		else
+			PhotonNetwork.CreateRoom(" * " +roomNameInputField.text +  " players: ", new RoomOptions { MaxPlayers = playerCount,});
+
+
+	}
 	public override void OnCreateRoomFailed(short returnCode, string message)
 	{
 		base.OnCreateRoomFailed(returnCode, message);
@@ -79,6 +91,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		Player[] players = PhotonNetwork.PlayerList;
 
 		//SetPlayerName();
+
 
 		foreach (Transform child in playerListContent)
 		{
@@ -155,7 +168,6 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 	public override void OnRoomListUpdate(List<RoomInfo> roomList)
 	{
-
 		foreach (Transform trans in roomListContent)
 		{
 			Destroy(trans.gameObject);
@@ -179,17 +191,17 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	public void DropDownInput(int info)
 	{
 		Debug.Log("list ");
-		if (info == 0)
+		if (info == 1)
 		{
 			playerCount = 2;
 			Debug.Log("list 0");
 		}
-		if (info == 1)
+		if (info == 2)
 		{
 			playerCount = 4;
 			Debug.Log("list 1");
 		}
-		if (info == 2)
+		if (info == 3)
 		{
 			playerCount = 6;
 			Debug.Log("list 2");
