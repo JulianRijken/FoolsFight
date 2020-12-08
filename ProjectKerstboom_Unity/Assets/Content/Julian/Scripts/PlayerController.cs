@@ -282,15 +282,30 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_currentWeapon = newWeapon;
     }
 
-    public Transform GetWeaponPivotPoint()
+    public Transform WeaponPivotPoint
     {
-        return m_weaponPivotPoint;
+        get
+        {
+            return m_weaponPivotPoint;
+        }
     }
 
-    public bool CanPickup()
+    public bool CanPickup
     {
-        return m_canPickup;
+        get
+        {
+            return m_canPickup;
+        }
     }
+
+    public bool IsAlive 
+    { 
+        get 
+        {
+            return m_isAlive; 
+        } 
+    }
+
 
     #endregion
 

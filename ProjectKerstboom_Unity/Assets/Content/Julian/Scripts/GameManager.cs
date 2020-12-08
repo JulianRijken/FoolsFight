@@ -82,9 +82,45 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void OnPlayerDeath()
     {
-        m_currentRound++;
-        m_playerData[0].score++;
+        // Create a list of the surviving players
+        List<int> playersAliveIndex = new List<int>();
+
+        // Loop and add them to a list
+        for (int i = 0; i < m_playerData.Length; i++)
+        {
+            if (m_playerData[i].m_playerController.IsAlive)
+            {
+                playersAliveIndex.Add(i);
+            }
+        }
+
+        // Check if there is only one person alive
+        if (playersAliveIndex.Count == 1)
+        {
+            // So yes end the round
+            OnRoundEnd(playersAliveIndex[0]);
+        }
     }
+
+    private void OnRoundEnd(int playerDataIndex)
+    {
+        // Add a point to the score
+        m_playerData[playerDataIndex].score++;
+
+        LoadNextRound();
+    }
+
+    private void LoadNextRound()
+    {
+        // Count the rounds up
+        m_currentRound++;
+
+        for (int i = 0; i < m_playerData.Length; i++)
+        {
+            m_playerData[i].m_playerController.ReSpawn();
+        }
+    }
+
 
     private void OnPlayerStarted(PlayerController m_playerController)
     {

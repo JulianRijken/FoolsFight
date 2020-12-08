@@ -108,7 +108,7 @@ public class Weapon : MonoBehaviourPunCallbacks
                 return;
 
             // Check if the player is the local one
-            if (!player.CanPickup())
+            if (!player.CanPickup)
                 return;
 
             PickupWeapon(player);
@@ -139,7 +139,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         player.SetCurrentWeapon(this);
 
         // Set the parant of the weapon
-        transform.SetParent(player.GetWeaponPivotPoint());
+        transform.SetParent(player.WeaponPivotPoint);
 
         // Move to hand
         m_weaponModel.DOLocalMove(Vector3.zero, m_pickupSpeed);
