@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [Header("General")]
     private bool m_isAlive = true;
+    private PlayerState m_playerState = PlayerState.InActive;
 
 
     // Action for other scripts to use to check when new players spawn
@@ -80,13 +81,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Update()
     {
-        // If this is my character move it
-        if (m_isMine)
-        {
-            HandleMovement();
-            HandleRotation();
-            HandleGroundCheck();
-        }
+        if (!m_isMine)
+            return;
+
+        HandleMovement();
+        HandleRotation();
+        HandleGroundCheck();
     }
 
 
@@ -122,6 +122,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleMovement()
     {
+
+        // Cancle teh movment if the player isent active
+        if (m_playerState != PlayerState.Active)
+        {
+            // Apply the velocitys
+            m_rigidbody.velocity = Vector3.zero;
+            return;
+        }
+
         // Player Input
         Vector2 i = m_movementInput;
         // Current Veloctiy
@@ -165,21 +174,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (!Physics.SphereCast(ray, m_radius,m_maxGroundCheckDistance,m_groundLayer))
         {
-            OnHit("The ground");
+            OnDeath("The ground");
         }
        
     }
 
-
-
-    public void ResetToDefalt()
-    {
-        StopAllCoroutines();
-        m_canPickup = true;
-        m_isAlive = true;
-        gameObject.SetActive(true);
-        photonView.Synchronization = ViewSynchronization.UnreliableOnChange;
-    }
 
     #endregion
 
@@ -248,30 +247,24 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 continue;
 
             // then hit the object
-            damageable.OnHit($"{photonView.Owner.NickName} {gameObject.name} Hammer");
+            damageable.OnDeath($"{photonView.Owner.NickName} {gameObject.name} Hammer");
         }
 
         DropCurrentWeapon();
         AddPickupDelay();
     }
 
-    public void OnHit(string damagedBy)
+    public void OnDeath(string damagedBy)
     {
-        photonView.RPC("OnHitRPC", RpcTarget.All);
+        photonView.RPC("OnDeathRPC", RpcTarget.All);
     }
     [PunRPC]
-    private void OnHitRPC()
-    {   
-        
-        DropCurrentWeapon();
-
-        m_isAlive = false;
-        photonView.Synchronization = ViewSynchronization.Off;
-        gameObject.SetActive(false);
+    private void OnDeathRPC()
+    {
+        SetPlayerState(PlayerState.Dead);
 
         // Call the player death action last
         m_onPlayerDeath?.Invoke();
-
     }
 
 
@@ -304,6 +297,42 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         } 
     }
 
+    public void SetPlayerState(PlayerState newState)
+    {
+        m_playerState = newState;
+
+        switch (newState)
+        {
+            case PlayerState.Active:
+
+                StopAllCoroutines();
+                m_canPickup = true;
+                m_isAlive = true; 
+                gameObject.SetActive(true);
+
+                break;
+            case PlayerState.InActive:
+
+                m_movementInput = Vector3.zero;
+                m_canPickup = false;
+                m_isAlive = true;
+                gameObject.SetActive(true);
+
+                break;
+            case PlayerState.Dead:
+
+                DropCurrentWeapon();
+
+                m_canPickup = false;
+                m_isAlive = false;
+                gameObject.SetActive(false);
+
+                break;
+            default:
+                break;
+        }
+
+    }
 
 
 
@@ -317,6 +346,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void OnAttackInput(InputAction.CallbackContext context)
     {
         if (!context.performed)
+            return;
+
+        if (m_playerState == PlayerState.InActive)
             return;
 
         FireWeapon();
@@ -333,5 +365,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Gizmos.DrawWireSphere(transform.position, m_maxMovementSpeed);
     }
 #endif
+
+    public enum PlayerState
+    {
+        Active,
+        InActive,
+        Dead
+    }
+
 
 }

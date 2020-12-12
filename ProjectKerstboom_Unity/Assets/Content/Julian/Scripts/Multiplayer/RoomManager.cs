@@ -45,15 +45,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "GameManager"), transform.position, Quaternion.identity);
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "GameManager"), Vector3.zero, Quaternion.identity);
             }
 
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), transform.position, Quaternion.identity);
-        }
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Weapon_Hammer"), transform.position + (Vector3.up * 4) + (Vector3.right * 4), Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity);
         }
     }
 

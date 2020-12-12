@@ -1,28 +1,30 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private int m_ammountOfRound;
     [SerializeField] private float m_spawnDistance;
-    private Weapon m_weapon;
+    [SerializeField] private int m_roundStartDelay;
 
     // Synced variable
     private int m_currentRound = 1;
     private PlayerData[] m_playerData = new PlayerData[0];
 
-
     private bool m_gameReady = false;
-
+    private Weapon m_weapon;
     private List<PlayerData> m_playersLoadedIn = new List<PlayerData>();
-
     private Player[] m_playersInRoom;
-
     private static GameManager Instance;
+
+
+    public static Action m_onGameReady;
+    public static Action<int> m_onRoundCountdown;
 
 
     private void Awake()
@@ -41,17 +43,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    private void Start()
-    {
-        m_weapon = FindObjectOfType<Weapon>();
-    }
-
     private void OnDestroy()
     {
         PlayerController.m_onPlayerStarted -= OnPlayerStarted;
         PlayerController.m_onPlayerDeath -= OnPlayerDeath;
     }
-
 
 
     /// <summary>
@@ -92,8 +88,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
 
+    // Only Master
     private void OnPlayerDeath()
     {
+        // Make sure the game is ready before doing any game logic with the player
+        if (!m_gameReady)
+            return;
+
         Debug.Log("OnPlayerDeath Called");
 
         // Create a list of the surviving players
@@ -116,56 +117,83 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    // Only Master
     private void OnRoundEnd(int playerDataIndex)
     {
         // Add a point to the score
         m_playerData[playerDataIndex].score++;
 
-        LoadNextRound();
+        LoadNewRound(m_currentRound + 1);
     }
 
-    private void LoadNextRound()
+    private void LoadNewRound(int round)
     {
         // Count the rounds up
-        m_currentRound++;
+        m_currentRound = round;
 
-        if (m_weapon != null)
-        {
-            // Reset the weapon
-            m_weapon.ResetWeapon();
-        }
+        // Reset the weapon
+        m_weapon.ResetWeapon();
 
-        // Load nex round for all clients
-        photonView.RPC("LoadNextRoundRPC", RpcTarget.All);
-    }
-    [PunRPC] 
-    private void LoadNextRoundRPC()
-    {
+
+        // Get a list of all the spawn positions
+        List<Vector3> spawnPositions = new List<Vector3>();
+
         for (int i = 0; i < m_playerData.Length; i++)
         {
-            /* Spawn Players in a circle */
-
             // Distance around the circle 
             float radians = 2 * Mathf.PI / m_playerData.Length * i;
 
             // Get the vector direction
             Vector3 spawnDirection = new Vector3(Mathf.Cos(radians), 0, Mathf.Sin(radians));
 
-            // Get the spawn position, center + direction * distance (how far away from the center)
-            Vector3 spawnPosition = transform.position + spawnDirection * m_spawnDistance;
+            // Add the spawn position, center + direction * distance (how far away from the center)
+            spawnPositions.Add(transform.position + spawnDirection * m_spawnDistance);
+        }
 
+
+        // Load nex round for all clients
+        photonView.RPC("LoadNewRoundRPC", RpcTarget.All, spawnPositions.ToArray());
+    }
+    [PunRPC] 
+    private void LoadNewRoundRPC(Vector3[] spawnPositions)
+    {
+        Debug.Log("Load New Round RPC Called");
+        Debug.Log("Round Countdown player data: " + m_playerData.Length);
+
+        // Set all the players to the correct positions etc
+        for (int i = 0; i < m_playerData.Length; i++)
+        {
+            // Make sure all players are inactive
+            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.InActive);
 
             // Apply the spawn position
-            m_playerData[i].m_playerController.transform.position = spawnPosition;
+            m_playerData[i].m_playerController.transform.position = spawnPositions[i];
 
+            Debug.Log("Player Controller Moved");
+        }
 
-            // Reset the player
-            m_playerData[i].m_playerController.ResetToDefalt();
+        // Start the countdown to start the round
+        StartCoroutine(RoundCountdown());
+    }
+
+    private IEnumerator RoundCountdown()
+    {
+        m_onRoundCountdown?.Invoke(m_roundStartDelay);
+        yield return new WaitForSeconds(m_roundStartDelay);
+
+        Debug.Log("Round Countdown player data: " + m_playerData.Length);
+
+        for (int i = 0; i < m_playerData.Length; i++)
+        {
+            // Set every player to active
+            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.Active);
         }
     }
 
 
 
+
+    // Only Master
     private void OnPlayerStarted(PlayerController m_playerController)
     {
 
@@ -189,6 +217,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    // Only Master
     private void OnGameReady()
     {
         Debug.Log("On Game Ready");
@@ -198,7 +227,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         // Close the room
         PhotonNetwork.CurrentRoom.IsOpen = false;
+        
+        // Spawn The weapon
+        GameObject weaponGameObject = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Weapon_Hammer"), Vector3.zero, Quaternion.identity);
+        m_weapon = weaponGameObject.GetComponent<Weapon>();
+
+        LoadNewRound(1);
+
         m_gameReady = true;
+        m_onGameReady?.Invoke();
     }
 
 
@@ -206,45 +243,52 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (stream.IsWriting)
         {
-            // Send the player data count
-            stream.SendNext(m_playerData.Length);
-
-            for (int i = 0; i < m_playerData.Length; i++)
+            // Only Write if this is the master
+            if (PhotonNetwork.IsMasterClient)
             {
-                // Send the player controller view id
-                stream.SendNext(m_playerData[i].m_playerController.photonView.ViewID);
+                // Send the player data count
+                stream.SendNext(m_playerData.Length);
 
-                // Send the player data score
-                stream.SendNext(m_playerData[i].score);
+                for (int i = 0; i < m_playerData.Length; i++)
+                {
+                    // Send the player controller view id
+                    stream.SendNext(m_playerData[i].m_playerController.photonView.ViewID);
+
+                    // Send the player data score
+                    stream.SendNext(m_playerData[i].score);
+                }
+
+                // send the currend round
+                stream.SendNext(m_currentRound);
             }
-
-
-            // send the currend round
-            stream.SendNext(m_currentRound);
         }
         else
         {
-            int playerDataCount = (int)stream.ReceiveNext();
-
-            List<PlayerData> playerDataList = new List<PlayerData>();
-            for (int i = 0; i < playerDataCount; i++)
+            // Only read if this is not the master
+            if (!PhotonNetwork.IsMasterClient)
             {
-                PlayerData playerData = new PlayerData();
+                int playerDataCount = (int)stream.ReceiveNext();
 
-                // Get the player controller
-                playerData.m_playerController =  PhotonNetwork.GetPhotonView((int)stream.ReceiveNext()).GetComponent<PlayerController>();
+                List<PlayerData> playerDataList = new List<PlayerData>();
+                for (int i = 0; i < playerDataCount; i++)
+                {
+                    PlayerData playerData = new PlayerData();
 
-                // Get the score 
-                playerData.score = (int)stream.ReceiveNext();
+                    // Get the player controller
+                    playerData.m_playerController = PhotonNetwork.GetPhotonView((int)stream.ReceiveNext()).GetComponent<PlayerController>();
 
-                // Add the player data back
-                playerDataList.Add(playerData);
+                    // Get the score 
+                    playerData.score = (int)stream.ReceiveNext();
+
+                    // Add the player data back
+                    playerDataList.Add(playerData);
+                }
+
+                // Replace the player data array
+                m_playerData = playerDataList.ToArray();
+
+                m_currentRound = (int)stream.ReceiveNext();
             }
-
-            // Replace the player data array
-            m_playerData = playerDataList.ToArray();
-
-            m_currentRound = (int)stream.ReceiveNext();
         }
     }
 

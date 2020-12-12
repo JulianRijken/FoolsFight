@@ -51,8 +51,6 @@ public class Weapon : MonoBehaviourPunCallbacks
         m_points = new List<Vector3>();
         for (int i = 0; i < m_spawnPointParent.childCount; i++)
             m_points.Add(m_spawnPointParent.GetChild(i).position);
-
-        transform.position = Vector3.zero;
     }
 
     private void Update()
@@ -187,6 +185,10 @@ public class Weapon : MonoBehaviourPunCallbacks
     }
     [PunRPC] private void ResetWeaponRPC()
     {
+
+        // Set the hammer active
+        gameObject.SetActive(true);
+
         // Kill old movement
         m_weaponModel.DOKill();
         transform.DOKill();

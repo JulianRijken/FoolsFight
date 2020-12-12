@@ -48,6 +48,7 @@ public class PlayerMovementSynce : MonoBehaviourPun, IPunObservable
             currentPacketTime = info.SentServerTime;
             positionAtLastPacket = transform.position;
             rotationAtLastPacket = transform.rotation;
+
         }
     }
 
