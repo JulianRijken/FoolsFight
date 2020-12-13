@@ -52,4 +52,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel(0);
+    }
 }

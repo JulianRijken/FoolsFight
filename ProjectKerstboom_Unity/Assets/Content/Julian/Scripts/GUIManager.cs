@@ -17,10 +17,11 @@ public class GUIManager : MonoBehaviour
     {
         GameManager.m_onRoundCountdown += OnRoundCountdown;
 
-        m_countdownTextGUI.gameObject.SetActive(false);
+        m_roundTextGUI.gameObject.SetActive(true);
         m_playerScoresTextGUI.gameObject.SetActive(true);
-        m_countdownTextGUI.gameObject.SetActive(true);
+        m_countdownTextGUI.gameObject.SetActive(false);
     }
+
 
     private void OnDestroy()
     {
@@ -33,6 +34,8 @@ public class GUIManager : MonoBehaviour
         UpdatePlayerScoresText();
         UpdateRoundText();
     }
+
+
 
     private void OnRoundCountdown(int secondsDelay)
     {

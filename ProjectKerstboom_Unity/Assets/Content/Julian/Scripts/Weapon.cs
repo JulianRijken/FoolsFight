@@ -259,10 +259,6 @@ public class Weapon : MonoBehaviourPunCallbacks
         transform.position = toPoint;
     }
 
-
-
-
-
 }
 
 public enum WeaponType

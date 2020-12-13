@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
 
-        m_canPickup = true;
+        SetPlayerState(PlayerState.InActive);
 
         // Checking if this is mine
         if (photonView != null)
@@ -77,6 +77,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         // Always call player started even if not mine
         m_onPlayerStarted?.Invoke(this);
+    }
+
+    private void OnDestroy()
+    {
+        if (m_currentWeapon != null)
+            m_currentWeapon.DropWeapon();
     }
 
     private void Update()
