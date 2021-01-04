@@ -14,12 +14,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private float m_rotationSpeed;
     [SerializeField] private float m_dashDistance;
     [SerializeField] private float m_dashSpeed;
+    [SerializeField] private float m_dashCooldown;
     [SerializeField] private LayerMask m_levelBlocklayer;
     private Vector2 m_movementInput;
     private Rigidbody m_rigidbody;
     private Quaternion m_lookRotation;
     private PlayerInput m_playerInput;
-
+    private bool m_canDash = true;
 
     [Header("Ground Check")]
     [SerializeField] private float m_maxGroundCheckDistance;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [Header("General")]
     private bool m_isAlive = true;
     private PlayerState m_playerState = PlayerState.InActive;
+    private CapsuleCollider m_collider;
 
 
     // Action for other scripts to use to check when new players spawn
@@ -65,6 +67,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // Getting All componenets
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
+        m_collider = GetComponent<CapsuleCollider>();
 
         SetPlayerState(PlayerState.InActive);
 
@@ -128,6 +131,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleRotation()
     {
+        // Dont move the player if he is dashing
+        if (m_playerState == PlayerState.Dashing)
+            return;
+
         if (m_movementInput != Vector2.zero)
             m_lookRotation = Quaternion.LookRotation(new Vector3(m_movementInput.x, 0, m_movementInput.y), Vector3.up);
 
@@ -136,9 +143,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleMovement()
     {
+        // Dont move the player if he is dashing
+        if (m_playerState == PlayerState.Dashing)
+            return;
 
         // Cancle teh movment if the player isent active
-        if (m_playerState != PlayerState.Active)
+        if (m_playerState == PlayerState.InActive || m_playerState == PlayerState.Dead)
         {
             // Apply the velocitys
             m_rigidbody.velocity = Vector3.zero;
@@ -179,6 +189,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleGroundCheck()
     {
+        // Only ground check when the player is active
+        if (m_playerState == PlayerState.InActive)
+            return;
+
         Ray ray = new Ray(transform.position + m_groundCastOffset, Vector3.down);
 
 #if UNITY_EDITOR
@@ -226,42 +240,50 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Dash()
     {
+
+        // Only dash if the player is waking
+        if (m_playerState != PlayerState.Walking)
+            return;
+
+        // make sure the player can dash
+        if (!m_canDash)
+            return;
+
+        SetPlayerState(PlayerState.Dashing);
+
         // Create a variable for the final destination 
         Vector3 destination;
+        Vector3 origin = m_collider.center + transform.position;
+        Vector3 direction = transform.forward;
 
         // Check with a raycast if there is a wall in the way of the destination
         RaycastHit raycastHit;
-        if(Physics.Raycast(transform.position, transform.forward, out raycastHit, m_dashDistance, m_levelBlocklayer))
+        if (Physics.Raycast(origin, direction, out raycastHit, m_dashDistance, m_levelBlocklayer))
         {
-            // if the raycast hit a wall then move the player untill the wall
-            destination = raycastHit.point;
+            // If the raycast hit a wall then move the player untill the wall
+            destination = raycastHit.point - (direction * m_collider.radius);
         }
         else
         {
             // if the raycast hit nothing move the max distance
-            destination = transform.forward * m_dashDistance;
+            destination = origin + (direction * m_dashDistance);
         }
 
-        photonView.RPC("DashRPC", RpcTarget.All, destination);
+        // Debug the dash ray
+        Debug.DrawLine(origin, destination, Color.cyan, 10f);
 
-    }
-    [PunRPC]
-    private void DashRPC(Vector3 destination)
-    {
         StartCoroutine(DashEnumerator(destination));
     }
-
 
     private IEnumerator DashEnumerator(Vector3 destination)
     {
         // Set the lerp positon to the local start position
         Vector3 lerpPosition = transform.position;
 
-        while(true)
+        while (true)
         {
             // move the lerp position up
-            Vector3.MoveTowards(lerpPosition, destination, Time.deltaTime * m_dashSpeed);
-
+            lerpPosition = Vector3.MoveTowards(lerpPosition, destination, Time.deltaTime * m_dashSpeed);
 
             // Get a final position and flatten the y
             Vector3 movePosition = lerpPosition;
@@ -270,15 +292,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             // Move the actual player rigidbody 
             m_rigidbody.MovePosition(movePosition);
 
-
             // Breake out of the loop as soon as the position is reached 
             if (lerpPosition == destination)
+            {
                 break;
+            }
 
 
             // wait for the eind of the frame to create a frame loop
             yield return new WaitForEndOfFrame();
         }
+
+        // End the dash
+        SetPlayerState(PlayerState.Walking);
+        AddDashDelay();
     }
 
     private void AddPickupDelay()
@@ -286,12 +313,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if(gameObject.activeSelf)
             StartCoroutine(PickupDelay());
     }
-
     private IEnumerator PickupDelay()
     {
         m_canPickup = false;
         yield return new WaitForSeconds(m_pickupCooldown);
         m_canPickup = true;
+    }
+
+    private void AddDashDelay()
+    {
+        StartCoroutine(DashDelay());
+    }
+    private IEnumerator DashDelay()
+    {
+        m_canDash = false;
+        yield return new WaitForSeconds(m_dashCooldown);
+        m_canDash = true;
     }
 
 
@@ -373,11 +410,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         switch (newState)
         {
-            case PlayerState.Active:
+            case PlayerState.Walking:
 
                 StopAllCoroutines();
                 m_canPickup = true;
                 m_isAlive = true; 
+                gameObject.SetActive(true);
+
+                break;
+            case PlayerState.Dashing:
+
+                StopAllCoroutines();
+                m_canPickup = true;
+                m_isAlive = true;
                 gameObject.SetActive(true);
 
                 break;
@@ -449,9 +494,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public enum PlayerState
     {
-        Active,
+        Walking,
         InActive,
-        Dead
+        Dead,
+        Dashing
     }
 
 
