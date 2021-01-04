@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private float m_accelerationSpeed;
     [SerializeField] private float m_deccelerationSpeed;
     [SerializeField] private float m_rotationSpeed;
+    [SerializeField] private float m_dashDistance;
+    [SerializeField] private float m_dashSpeed;
+    [SerializeField] private LayerMask m_levelBlocklayer;
     private Vector2 m_movementInput;
     private Rigidbody m_rigidbody;
     private Quaternion m_lookRotation;
@@ -21,14 +24,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [Header("Ground Check")]
     [SerializeField] private float m_maxGroundCheckDistance;
     [SerializeField] private float m_radius;
-    [SerializeField] private Vector3 m_castOffset;
+    [SerializeField] private Vector3 m_groundCastOffset;
     [SerializeField] private LayerMask m_groundLayer;
 
 
     [Header("Weapons")]
     [SerializeField] private float m_pickupCooldown;
-    [SerializeField] private LayerMask m_damageLayer;
     [SerializeField] private Transform m_weaponPivotPoint;
+
+    [SerializeField] private LayerMask m_damageLayer;
+    [SerializeField] private LayerMask m_weaponBlockLayer;
+
+    [SerializeField] private float m_hammerHitSize;
+    [SerializeField] private float m_hammerDistanceOffset;
+
     private Weapon m_currentWeapon = null;
     private bool m_canPickup = true;
 
@@ -39,7 +48,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [Header("Multiplayer")]
     private bool m_isMine = true;
-
 
     [Header("General")]
     private bool m_isAlive = true;
@@ -171,7 +179,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleGroundCheck()
     {
-        Ray ray = new Ray(transform.position + m_castOffset, Vector3.down);
+        Ray ray = new Ray(transform.position + m_groundCastOffset, Vector3.down);
 
 #if UNITY_EDITOR
         // Check the ray
@@ -216,6 +224,63 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_animator.SetTrigger("Fire");
     }
 
+    private void Dash()
+    {
+        // Create a variable for the final destination 
+        Vector3 destination;
+
+        // Check with a raycast if there is a wall in the way of the destination
+        RaycastHit raycastHit;
+        if(Physics.Raycast(transform.position, transform.forward, out raycastHit, m_dashDistance, m_levelBlocklayer))
+        {
+            // if the raycast hit a wall then move the player untill the wall
+            destination = raycastHit.point;
+        }
+        else
+        {
+            // if the raycast hit nothing move the max distance
+            destination = transform.forward * m_dashDistance;
+        }
+
+        photonView.RPC("DashRPC", RpcTarget.All, destination);
+
+    }
+    [PunRPC]
+    private void DashRPC(Vector3 destination)
+    {
+        StartCoroutine(DashEnumerator(destination));
+    }
+
+
+    private IEnumerator DashEnumerator(Vector3 destination)
+    {
+        // Set the lerp positon to the local start position
+        Vector3 lerpPosition = transform.position;
+
+        while(true)
+        {
+            // move the lerp position up
+            Vector3.MoveTowards(lerpPosition, destination, Time.deltaTime * m_dashSpeed);
+
+
+            // Get a final position and flatten the y
+            Vector3 movePosition = lerpPosition;
+            movePosition.y = 0;
+
+            // Move the actual player rigidbody 
+            m_rigidbody.MovePosition(movePosition);
+
+
+            // Breake out of the loop as soon as the position is reached 
+            if (lerpPosition == destination)
+                break;
+
+
+            // wait for the eind of the frame to create a frame loop
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
     private void AddPickupDelay()
     {
         if(gameObject.activeSelf)
@@ -232,14 +297,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void OnWeaponUsed()
     {
-        Vector3 orgin = transform.position;
-        Vector3 halfExtends = Vector3.one;
-        Vector3 direction = transform.forward;
-        Quaternion rotation = Quaternion.identity;
-        float distance = 2;
 
-        RaycastHit[] hits = Physics.BoxCastAll(orgin, halfExtends, direction, rotation, distance, m_damageLayer);
+        Collider[] hits;
+        Vector3 checkPosition = transform.position + (transform.forward * m_hammerDistanceOffset);
+        hits = Physics.OverlapSphere(checkPosition, m_hammerHitSize);
 
+        if (Physics.Linecast(transform.position, checkPosition, m_weaponBlockLayer))
+            return;
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -248,7 +312,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 continue;
 
             // Check if what is hit is a damageble object
-            IDamageable damageable = hits[i].collider.GetComponent<IDamageable>();
+            IDamageable damageable = hits[i].GetComponent<IDamageable>();
             if (damageable == null)
                 continue;
 
@@ -358,6 +422,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         FireWeapon();
+    }
+
+    public void OnDashInput(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        if (m_playerState == PlayerState.InActive)
+            return;
+
+        Dash();
     }
 
     #endregion
