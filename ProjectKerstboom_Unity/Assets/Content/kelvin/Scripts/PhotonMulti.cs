@@ -24,6 +24,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	[SerializeField] GameObject PlayerListItemPrefab;
 	[SerializeField] GameObject startGameButton;
 	[SerializeField] TMP_Text errorText;
+	[SerializeField] GameObject privateRoom;
+	[SerializeField] TMP_InputField codeInputField;
 
 	void Awake()
 	{
@@ -58,19 +60,18 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		}
 		else
 		PhotonNetwork.CreateRoom(roomNameInputField.text + " players: ", new RoomOptions { MaxPlayers = playerCount});
-		
 
 	}
 	public void CreatePrivateRoom()
 	{
-
+		
 		if (string.IsNullOrEmpty(roomNameInputField.text))
 		{
-			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s" + " game ", new RoomOptions { MaxPlayers = playerCount });
+			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsOpen = false});
 		}
 		else
-			PhotonNetwork.CreateRoom(" * " +roomNameInputField.text +  " players: ", new RoomOptions { MaxPlayers = playerCount,});
-
+			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsOpen = false});
+		
 
 	}
 	public override void OnCreateRoomFailed(short returnCode, string message)
@@ -115,7 +116,6 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		PhotonNetwork.JoinRoom(info.Name);
 		hostCanvas.SetActive(false);
 		findRoomCanvas.SetActive(false);
-        
     }
 	
 	private void SetPlayerName()
@@ -177,7 +177,6 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		{
 			if (roomList[i].RemovedFromList)
 				continue;
-
 			Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListing>().SetRoomInfo(roomList[i]);
 			//Debug.Log("list update");
 		}
@@ -207,4 +206,13 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			Debug.Log("list 2");
 		}
 	}
+
+	public void JoinprivateRoom(RoomInfo info)
+	{
+		Debug.Log(codeInputField.text);
+		hostCanvas.SetActive(false);
+		findRoomCanvas.SetActive(true);
+		PhotonNetwork.JoinRoom(info.Name);
+	}
+
 }
