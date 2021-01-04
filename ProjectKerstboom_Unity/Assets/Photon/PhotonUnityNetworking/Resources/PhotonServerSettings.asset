@@ -43,6 +43,7 @@ MonoBehaviour:
   - ResetWeaponRPC
   - LoadNewRoundRPC
   - OnDeathRPC
+  - DashRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
