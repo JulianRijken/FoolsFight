@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         for (int i = 0; i < m_playerData.Length; i++)
         {
             // Set every player to active
-            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.Active);
+            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.Walking);
 
         }
     }

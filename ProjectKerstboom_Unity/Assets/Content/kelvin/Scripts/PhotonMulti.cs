@@ -26,7 +26,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	[SerializeField] TMP_Text errorText;
 	[SerializeField] GameObject privateRoom;
 	[SerializeField] TMP_InputField codeInputField;
-
+	string room;
 	void Awake()
 	{
 		Instance = this;
@@ -67,10 +67,10 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		
 		if (string.IsNullOrEmpty(roomNameInputField.text))
 		{
-			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsOpen = false});
+			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsVisible = false});
 		}
 		else
-			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsOpen = false});
+			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsVisible = false});
 		
 
 	}
@@ -207,12 +207,13 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		}
 	}
 
-	public void JoinprivateRoom(RoomInfo info)
+	public void JoinprivateRoom()
 	{
 		Debug.Log(codeInputField.text);
+		room = codeInputField.text;
 		hostCanvas.SetActive(false);
-		findRoomCanvas.SetActive(true);
-		PhotonNetwork.JoinRoom(info.Name);
+		findRoomCanvas.SetActive(false);
+		PhotonNetwork.JoinRoom(room);
 	}
-
+	
 }
