@@ -11512,6 +11512,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4931011395054595537}
     m_Modifications:
+    - target: {fileID: 826784976840590971, guid: 463863ac776071a40b73ec465cf95326, type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.5007361
+      objectReference: {fileID: 0}
+    - target: {fileID: 826784976840590971, guid: 463863ac776071a40b73ec465cf95326, type: 3}
+      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
+      value: 0.30251938
+      objectReference: {fileID: 0}
+    - target: {fileID: 826784976840590971, guid: 463863ac776071a40b73ec465cf95326, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.15204033
+      objectReference: {fileID: 0}
     - target: {fileID: 2670940151825036346, guid: 463863ac776071a40b73ec465cf95326, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -11602,26 +11614,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4931011395054595537}
     m_Modifications:
-    - target: {fileID: 533815220903416789, guid: b286c0650e9131b4a8eaccc968749210, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7f6a0d25814bfdd44988dec1a13614b8, type: 2}
-    - target: {fileID: 3834686427038977294, guid: b286c0650e9131b4a8eaccc968749210, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7f6a0d25814bfdd44988dec1a13614b8, type: 2}
-    - target: {fileID: 4383054871406291414, guid: b286c0650e9131b4a8eaccc968749210, type: 3}
-      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.35291484
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383054871406291414, guid: b286c0650e9131b4a8eaccc968749210, type: 3}
-      propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.14665517
-      objectReference: {fileID: 0}
-    - target: {fileID: 7695524551264833417, guid: b286c0650e9131b4a8eaccc968749210, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7f6a0d25814bfdd44988dec1a13614b8, type: 2}
     - target: {fileID: 8197239801318556701, guid: b286c0650e9131b4a8eaccc968749210, type: 3}
       propertyPath: m_Name
       value: SM_RoundWallMiddle
