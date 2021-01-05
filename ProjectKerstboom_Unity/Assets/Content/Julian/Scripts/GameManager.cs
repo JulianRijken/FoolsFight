@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private int m_ammountOfRound;
     [SerializeField] private float m_spawnDistance;
-    [SerializeField] private int m_roundStartDelay;
+    [SerializeField] private int m_normalRoundStartDelay;
+    [SerializeField] private int m_firstRoundStartDelay;
 
     // Synced variable
     private int m_currentRound = 1;
@@ -164,10 +165,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
 
         // Load nex round for all clients
-        photonView.RPC("LoadNewRoundRPC", RpcTarget.All, spawnPositions.ToArray());
+        photonView.RPC("LoadNewRoundRPC", RpcTarget.All, spawnPositions.ToArray(),round);
     }
     [PunRPC] 
-    private void LoadNewRoundRPC(Vector3[] spawnPositions)
+    private void LoadNewRoundRPC(Vector3[] spawnPositions, int round)
     {
 
         Debug.Log("Load New Round RPC Called");
@@ -187,15 +188,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             Debug.Log("Player Controller Moved");
         }
 
-        // Start the countdown to start the round
-        StartCoroutine(RoundCountdown());
+        // Start the countdown to start the round, also set the delay based on what round it is
+        StartCoroutine(RoundCountdown(round == 1 ? m_firstRoundStartDelay : m_normalRoundStartDelay));
     }
 
 
-    private IEnumerator RoundCountdown()
+    private IEnumerator RoundCountdown(int countdownTime)
     {
-        m_onRoundCountdown?.Invoke(m_roundStartDelay);
-        yield return new WaitForSeconds(m_roundStartDelay);
+        m_onRoundCountdown?.Invoke(countdownTime);
+        yield return new WaitForSeconds(countdownTime);
 
         Debug.Log("Round Countdown player data: " + m_playerData.Length);
 
