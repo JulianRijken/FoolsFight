@@ -412,7 +412,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             case PlayerState.Walking:
 
-                StopAllCoroutines();
+                //StopAllCoroutines();
+
                 m_canPickup = true;
                 m_isAlive = true; 
                 gameObject.SetActive(true);
@@ -420,7 +421,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 break;
             case PlayerState.Dashing:
 
-                StopAllCoroutines();
                 m_canPickup = true;
                 m_isAlive = true;
                 gameObject.SetActive(true);
