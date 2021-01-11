@@ -9,6 +9,10 @@ public class PauzeMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauzeMenu ;
     [SerializeField]  RectTransform pauzeMenuTran;
+    [SerializeField] GameObject backRoomBut;
+    [SerializeField] GameObject roomMenu;
+    [SerializeField] GameObject mainMenu;
+
     public bool IsPaused;
     Keyboard keyBoard;
     // Start is called before the first frame update
@@ -34,7 +38,10 @@ public class PauzeMenu : MonoBehaviour
                 IsPaused = true;
             }
         }
-
+        if (PhotonNetwork.IsMasterClient)
+        {
+            backRoomBut.SetActive(true);
+        }
       
     }
 
@@ -47,5 +54,7 @@ public class PauzeMenu : MonoBehaviour
     {
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel(0);
+        mainMenu.SetActive(false);
+        roomMenu.SetActive(true);
     }
 }
