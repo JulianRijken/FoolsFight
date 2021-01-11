@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
 
     public static Action<int> m_onRoundCountdown;
+    public static Action m_onLoadNewRound;
 
 
     private void Awake()
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
 
     // Only Master
-    private void OnPlayerDeath()
+    private void OnPlayerDeath(PlayerController playerController)
     {
         // Make sure the game is ready before doing any game logic with the player
         if (!m_gameReady)
@@ -175,6 +176,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         Debug.Log("Round Countdown player data: " + m_playerData.Length);
 
         Debug.LogWarning("Probeer het probleem met een docent op te lossen dat de data niet verzonden kan worden en dat de game te snel start");
+
+
+        m_onLoadNewRound?.Invoke();
 
         // Set all the players to the correct positions etc
         for (int i = 0; i < m_playerData.Length; i++)

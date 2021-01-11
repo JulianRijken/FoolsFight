@@ -59,7 +59,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // Action for other scripts to use to check when new players spawn
     public static System.Action<PlayerController> m_onPlayerStarted;
     // Action for other scripts to check if the player died
-    public static System.Action m_onPlayerDeath;
+    public static System.Action<PlayerController> m_onPlayerDeath;
+    // Action for other scripts to check if the player got Destroyed
+    public static System.Action<PlayerController> m_onPlayerDestroyed;
 
 
     private void Awake()
@@ -93,7 +95,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private void OnDestroy()
     {
         if (m_currentWeapon != null)
+        {
+            m_onPlayerDestroyed?.Invoke(this);
             m_currentWeapon.DropWeapon();
+        }
     }
 
     private void Update()
@@ -371,7 +376,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         SetPlayerState(PlayerState.Dead);
 
         // Call the player death action last
-        m_onPlayerDeath?.Invoke();
+        m_onPlayerDeath?.Invoke(this);
     }
 
 
@@ -412,8 +417,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             case PlayerState.Walking:
 
-                //StopAllCoroutines();
-
                 m_canPickup = true;
                 m_isAlive = true; 
                 gameObject.SetActive(true);
@@ -431,11 +434,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 m_movementInput = Vector3.zero;
                 m_canPickup = false;
                 m_isAlive = true;
+                m_canDash = true;
                 gameObject.SetActive(true);
 
                 break;
             case PlayerState.Dead:
 
+                StopAllCoroutines();
                 DropCurrentWeapon();
 
                 m_canPickup = false;
