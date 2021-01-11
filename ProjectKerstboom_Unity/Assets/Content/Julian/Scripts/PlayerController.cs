@@ -448,6 +448,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 gameObject.SetActive(false);
 
                 break;
+            case PlayerState.Disabled:
+
+                StopAllCoroutines();
+                gameObject.SetActive(false);
+                photonView.Synchronization = ViewSynchronization.Off;
+
+                break;
             default:
                 break;
         }
@@ -502,7 +509,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Walking,
         InActive,
         Dead,
-        Dashing
+        Dashing,
+        Disabled
     }
 
 

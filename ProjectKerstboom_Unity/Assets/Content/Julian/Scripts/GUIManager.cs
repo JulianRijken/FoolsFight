@@ -11,23 +11,33 @@ public class GUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_roundTextGUI;
     [SerializeField] private TextMeshProUGUI m_playerScoresTextGUI;
     [SerializeField] private TextMeshProUGUI m_countdownTextGUI;
+    [SerializeField] private GameObject m_InGameUI;
+    [SerializeField] private GameObject m_GameEndUI;
 
 
     private void Awake()
     {
-        GameManager.m_onRoundCountdown += OnRoundCountdown;
-
         m_roundTextGUI.gameObject.SetActive(true);
         m_playerScoresTextGUI.gameObject.SetActive(true);
         m_countdownTextGUI.gameObject.SetActive(false);
+
+        m_InGameUI.SetActive(true);
+        m_GameEndUI.SetActive(false);
     }
 
 
-    private void OnDestroy()
+    private void OnEnable()
+    {
+        GameManager.m_onRoundCountdown += OnRoundCountdown;
+        GameManager.m_onGameEnd += OnGameEnd;
+    }
+
+    private void OnDisable()
     {
         GameManager.m_onRoundCountdown -= OnRoundCountdown;
-    }
+        GameManager.m_onGameEnd -= OnGameEnd;
 
+    }
 
     private void LateUpdate()
     {
@@ -42,7 +52,6 @@ public class GUIManager : MonoBehaviour
         StartCoroutine(OnRoundCountdownEnumerator(secondsDelay));
     }
 
-    // Can also be done with a animation
     private IEnumerator OnRoundCountdownEnumerator(int secondsDelay)
     {
         m_countdownTextGUI.gameObject.SetActive(true);
@@ -62,7 +71,7 @@ public class GUIManager : MonoBehaviour
     {
         string scores = "";
 
-        GameManager.PlayerData[] playerData = GameManager.GetPlayerData;
+        PlayerData[] playerData = GameManager.GetPlayerData;
 
         for (int i = 0; i < playerData.Length; i++)
         {
@@ -78,6 +87,12 @@ public class GUIManager : MonoBehaviour
     private void UpdateRoundText()
     {
         m_roundTextGUI.text = $"Round {GameManager.GetCurrentRound}";
+    }
+
+    private void OnGameEnd(PlayerData[] playerData)
+    {
+        m_InGameUI.SetActive(false);
+        m_GameEndUI.SetActive(true);
     }
 
 }

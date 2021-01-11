@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [SerializeField] private int m_ammountOfRound;
+    [SerializeField] private int m_ammountOfRounds;
     [SerializeField] private float m_spawnDistance;
     [SerializeField] private int m_normalRoundStartDelay;
     [SerializeField] private int m_firstRoundStartDelay;
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public static Action<int> m_onRoundCountdown;
     public static Action m_onLoadNewRound;
+    public static Action<PlayerData[]> m_onGameEnd;
 
 
     private void Awake()
@@ -125,13 +126,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Add a point to the score
         m_playerData[playerDataIndex].score++;
 
-        LoadNewRound(m_currentRound + 1);
+        // Count the rounds up
+        m_currentRound++;
+
+        if (m_currentRound > m_ammountOfRounds)
+        {
+            EndGame();
+        }
+        else
+        {
+            LoadNewRound(m_currentRound);
+        }
     }
 
     private void LoadNewRound(int round)
     {
-        // Count the rounds up
-        m_currentRound = round;
 
         // Reset the weapon
         m_weapon.ResetWeapon();
@@ -213,6 +222,22 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
 
+    private void EndGame()
+    {
+        photonView.RPC("EndGameRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void EndGameRPC()
+    {
+        m_onGameEnd?.Invoke(m_playerData);
+
+        for (int i = 0; i < m_playerData.Length; i++)
+        {
+            // Make sure all players are inactive
+            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.Disabled);
+        }
+    }
 
 
     // Only Master
@@ -302,6 +327,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             m_playerData = playerDataList.ToArray();
 
             m_currentRound = (int)stream.ReceiveNext();
+
         }
     }
 
@@ -328,11 +354,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
 
-    public struct PlayerData
-    {
-        public int score;
-        public PlayerController m_playerController;
-    }
+
+}
+
+public struct PlayerData
+{
+    public int score;
+    public PlayerController m_playerController;
 }
 
 
