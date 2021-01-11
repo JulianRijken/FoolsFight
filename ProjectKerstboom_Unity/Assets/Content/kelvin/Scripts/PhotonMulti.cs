@@ -56,10 +56,10 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 		if (string.IsNullOrEmpty(roomNameInputField.text))
 		{
-			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s"+ " game ", new RoomOptions { MaxPlayers = playerCount});
+			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s"+ " game ");
 		}
 		else
-		PhotonNetwork.CreateRoom(roomNameInputField.text + " players: ", new RoomOptions { MaxPlayers = playerCount});
+		PhotonNetwork.CreateRoom(roomNameInputField.text + " players: ");
 
 	}
 	public void CreatePrivateRoom()
@@ -67,10 +67,10 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		
 		if (string.IsNullOrEmpty(roomNameInputField.text))
 		{
-			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsVisible = false});
+			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { IsVisible = false});
 		}
 		else
-			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { MaxPlayers = playerCount, IsVisible = false});
+			PhotonNetwork.CreateRoom(Random.Range(0, 1000).ToString("0000"), new RoomOptions { IsVisible = false});
 		
 
 	}
@@ -185,6 +185,23 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	public override void OnPlayerEnteredRoom(Player newPlayer)
 	{
 		Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+	}
+
+	public override void OnPlayerLeftRoom(Player otherPlayer)
+	{
+		Player[] players = PhotonNetwork.PlayerList;
+
+		foreach (Transform child in playerListContent)
+		{
+			Destroy(child.gameObject);
+		}
+
+
+		for (int i = 0; i < players.Count(); i++)
+		{
+			//PhotonNetwork.NickName = players.ToString();
+			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
+		}
 	}
 
 	public void DropDownInput(int info)
