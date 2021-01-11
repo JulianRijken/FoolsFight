@@ -27,6 +27,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	[SerializeField] GameObject privateRoom;
 	[SerializeField] TMP_InputField codeInputField;
 	string room;
+
+
 	void Awake()
 	{
 		Instance = this;
@@ -204,25 +206,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		}
 	}
 
-	public void DropDownInput(int info)
-	{
-		Debug.Log("list ");
-		if (info == 1)
-		{
-			playerCount = 2;
-			Debug.Log("list 0");
-		}
-		if (info == 2)
-		{
-			playerCount = 4;
-			Debug.Log("list 1");
-		}
-		if (info == 3)
-		{
-			playerCount = 6;
-			Debug.Log("list 2");
-		}
-	}
+	
 
 	public void JoinprivateRoom()
 	{
@@ -232,5 +216,5 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		findRoomCanvas.SetActive(false);
 		PhotonNetwork.JoinRoom(room);
 	}
-	
+
 }

@@ -7,6 +7,7 @@ using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using Photon.Realtime;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
@@ -75,6 +76,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public void Startgame()
     {
         PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
     public void BackToMain()
