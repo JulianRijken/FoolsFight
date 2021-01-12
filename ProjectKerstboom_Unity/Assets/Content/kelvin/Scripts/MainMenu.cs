@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
@@ -82,6 +83,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     public void BackToMain()
     {
+        SceneManager.LoadScene(0);
         hostMenu.SetActive(false);
         optionMenu.SetActive(false);
         findRoomMenu.SetActive(false);
@@ -90,10 +92,12 @@ public class MainMenu : MonoBehaviourPunCallbacks
     }
     public void LeaveRoom()
     {
+        SceneManager.LoadScene(0);
         RoomMenuTran.DOAnchorPos(new Vector2(0, -1500), 0.50f);
         RoomMenu.SetActive(false);
         mainMenu.SetActive(true);
         mainMenuTran.DOAnchorPos(new Vector2(0, 0), 0.50f);
         PhotonNetwork.LeaveRoom();
     }
+
 }

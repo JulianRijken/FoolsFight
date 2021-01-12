@@ -8,6 +8,7 @@ using Photon.Realtime;
 using System.Linq;
 using System.Security.Principal;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PhotonMulti : MonoBehaviourPunCallbacks 
 {
@@ -38,6 +39,12 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	{
 		//Debug.Log("Connecting to Master");
 		PhotonNetwork.ConnectUsingSettings();
+		if (PauzeMenu.inRoom)
+		{
+			OnJoinedRoom();
+			Debug.Log(PhotonNetwork.CurrentRoom.Name);
+			PauzeMenu.inRoom = false;
+		}
 	}
 
 	public override void OnConnectedToMaster()
@@ -91,6 +98,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 		roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
+		
 		Player[] players = PhotonNetwork.PlayerList;
 
 		//SetPlayerName();
@@ -119,6 +127,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		hostCanvas.SetActive(false);
 		findRoomCanvas.SetActive(false);
     }
+	
+	
 	
 	private void SetPlayerName()
 	{
@@ -183,6 +193,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			//Debug.Log("list update");
 		}
 	}
+
+	
 
 	public override void OnPlayerEnteredRoom(Player newPlayer)
 	{

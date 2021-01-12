@@ -1246,7 +1246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &226434391
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5137,8 +5137,6 @@ MonoBehaviour:
   pauzeMenu: {fileID: 1418755848}
   pauzeMenuTran: {fileID: 1418755849}
   backRoomBut: {fileID: 1779777608}
-  roomMenu: {fileID: 1957493563}
-  mainMenu: {fileID: 226434390}
   IsPaused: 0
 --- !u!1 &909923095
 GameObject:

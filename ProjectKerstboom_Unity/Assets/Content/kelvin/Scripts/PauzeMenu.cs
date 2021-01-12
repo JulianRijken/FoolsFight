@@ -1,17 +1,20 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauzeMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauzeMenu ;
     [SerializeField]  RectTransform pauzeMenuTran;
     [SerializeField] GameObject backRoomBut;
-    [SerializeField] GameObject roomMenu;
-    [SerializeField] GameObject mainMenu;
+
+    public static bool inRoom;
 
     public bool IsPaused;
     Keyboard keyBoard;
@@ -53,8 +56,12 @@ public class PauzeMenu : MonoBehaviour
     public void BackToLobby()
     {
         PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(0);
+    }
+    
+    public void BackToRoom()
+    {
+        inRoom = true;
         PhotonNetwork.LoadLevel(0);
-        mainMenu.SetActive(false);
-        roomMenu.SetActive(true);
     }
 }
