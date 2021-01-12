@@ -114,9 +114,10 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			//PhotonNetwork.NickName = players.ToString();
 			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
 		}
-		
-			startGameButton.SetActive(PhotonNetwork.IsMasterClient);
 
+		startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+		
+		Debug.Log(players.Length);
 		
 	}
 
@@ -215,9 +216,11 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			//PhotonNetwork.NickName = players.ToString();
 			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
 		}
+		Debug.Log(players.Length);
+
 	}
 
-	
+
 
 	public void JoinprivateRoom()
 	{

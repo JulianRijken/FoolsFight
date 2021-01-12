@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class SliderValue : MonoBehaviour
 {
 	public Slider sliderval;
-	float roundsSlect;
+	float wins;
 	public TMP_Text text;
 
 	public GameObject sliderobj;
@@ -21,9 +21,9 @@ public class SliderValue : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		text.text = roundsSlect + "  rounds";
-		roundsSlect = sliderval.value;
-		Slidervalue();
+		text.text =  "score points to win: " + wins ;
+		wins = sliderval.value;
+
 		if (PhotonNetwork.IsMasterClient)
 		{
 			sliderobj.SetActive(true);
@@ -33,28 +33,4 @@ public class SliderValue : MonoBehaviour
 		}
 	}
 
-	void Slidervalue()
-	{
-		if (PhotonNetwork.IsMasterClient)
-		{
-			if (sliderval.value == 1)
-			{
-				roundsSlect = 3;
-			}
-			if (sliderval.value == 2)
-			{
-				roundsSlect = 5;
-			}
-			if (sliderval.value == 3)
-			{
-				roundsSlect = 7;
-			}
-			if (sliderval.value == 4)
-			{
-				roundsSlect = 9;
-			}
-		}
-		
-	}
-	
 }
