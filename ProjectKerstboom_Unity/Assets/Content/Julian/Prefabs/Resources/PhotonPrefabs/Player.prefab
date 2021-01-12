@@ -477,6 +477,8 @@ MonoBehaviour:
   m_hammerHitSize: 1
   m_hammerDistanceOffset: 1.25
   m_animator: {fileID: 5190420692798660474}
+  m_possibleCharacterMeshes: []
+  m_possibleCharacterMaterials: []
 --- !u!114 &565116830397706917
 MonoBehaviour:
   m_ObjectHideFlags: 0

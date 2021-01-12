@@ -61,7 +61,6 @@ public class PauzeMenu : MonoBehaviour
     
     public void BackToRoom()
     {
-        inRoom = true;
         PhotonNetwork.LoadLevel(0);
     }
 }

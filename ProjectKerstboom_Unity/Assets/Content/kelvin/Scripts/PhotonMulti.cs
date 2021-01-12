@@ -39,11 +39,9 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	{
 		//Debug.Log("Connecting to Master");
 		PhotonNetwork.ConnectUsingSettings();
-		if (PauzeMenu.inRoom)
+		if (PhotonNetwork.InRoom)
 		{
 			OnJoinedRoom();
-			Debug.Log(PhotonNetwork.CurrentRoom.Name);
-			PauzeMenu.inRoom = false;
 		}
 	}
 
@@ -92,6 +90,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 
 	public override void OnJoinedRoom()
 	{
+		mainCanvas.SetActive(false);
 		hostCanvas.SetActive(false);
 		RoomCanvas.SetActive(true);
 		roomMenutran.DOAnchorPos(new Vector2(0, 0), 0.50f);
