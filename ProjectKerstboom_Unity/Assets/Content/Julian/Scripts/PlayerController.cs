@@ -50,6 +50,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [Header("Multiplayer")]
     private bool m_isMine = true;
 
+    [Header("Model")]
+    [SerializeField] private Mesh[] m_possibleCharacterMeshes;
+    [SerializeField] private Material[] m_possibleCharacterMaterials;
+    private SkinnedMeshRenderer m_playerSkinnedMeshRender;
+
+
     [Header("General")]
     private bool m_isAlive = true;
     private PlayerState m_playerState = PlayerState.InActive;
@@ -70,6 +76,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
         m_collider = GetComponent<CapsuleCollider>();
+        m_playerSkinnedMeshRender = GetComponent<SkinnedMeshRenderer>();
+
+        // Give the player a random skin
+        m_playerSkinnedMeshRender.material = m_possibleCharacterMaterials[Random.Range(0, m_possibleCharacterMaterials.Length)];
+        m_playerSkinnedMeshRender.sharedMesh = m_possibleCharacterMeshes[Random.Range(0, m_possibleCharacterMeshes.Length)];
+
 
         SetPlayerState(PlayerState.InActive);
 
@@ -407,6 +419,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             return m_isAlive; 
         } 
+    }
+
+    public SkinnedMeshRenderer PlayerMeshRenderer
+    {
+        get
+        {
+            return m_playerSkinnedMeshRender;
+        }
     }
 
     public void SetPlayerState(PlayerState newState)

@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Podium : MonoBehaviour
 {
+
+    [SerializeField] private SkinnedMeshRenderer[] m_skinnedMeshRenderers;
+    [SerializeField] private TextMeshPro[] m_playerNames;
+
 
     private void OnEnable()
     {
@@ -55,7 +60,21 @@ public class Podium : MonoBehaviour
         }
 
 
-        // Nu kan je hier custom players laten dansen
+        for (int i = 0; i < m_skinnedMeshRenderers.Length; i++)
+        {
+            if(sortedPlayers.Count < i)
+            {
+                SkinnedMeshRenderer skinnedMeshRenderer = sortedPlayers[i].m_playerController.PlayerMeshRenderer;
+                m_skinnedMeshRenderers[i].material = skinnedMeshRenderer.material;
+                m_skinnedMeshRenderers[i].sharedMesh = skinnedMeshRenderer.sharedMesh;
+
+                m_playerNames[i].text = sortedPlayers[i].m_playerController.photonView.name;
+            }
+            else
+            {
+                m_skinnedMeshRenderers[i].enabled = false;
+            }
+        }
 
 
     }
