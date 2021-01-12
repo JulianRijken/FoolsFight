@@ -33,7 +33,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_21B0C9FD:
-        m_Texture: {fileID: 2800000, guid: 0d49e68613dd7f04b99661836bbeb372, type: 3}
+        m_Texture: {fileID: 2800000, guid: a1ed991c3661adc46b43361946fa9ebc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_6235F101:
@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_A0CF19AB:
-        m_Texture: {fileID: 2800000, guid: 8f63f2047d85fe940b7a60ef91372d05, type: 3}
+        m_Texture: {fileID: 2800000, guid: 70d2423eead87204c8054a76e4a6ca76, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_A6911868:
@@ -61,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_B98BF1B3:
-        m_Texture: {fileID: 2800000, guid: 3006d493c9e616d448754af731ea5fdc, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8b7c196f25872fc4794a204f1bb91b9e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_C1065EE3:
@@ -69,15 +69,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_E46EE5A0:
-        m_Texture: {fileID: 2800000, guid: d4bf109a55d0c9c4bb192c25b186b116, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6c64d8fbfd22208439296fa3c28bd471, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_E761F814:
-        m_Texture: {fileID: 2800000, guid: c85d9b2f0f2c48d48bac9169f0712ec4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6bed35fc1910d5b4c8d2b9a57ff9865c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_E9B8F5E0:
-        m_Texture: {fileID: 2800000, guid: 8c34d4d94fa7b804986e38181bcfb204, type: 3}
+        m_Texture: {fileID: 2800000, guid: ca5a38cfac4f5694595b5e63b7db3b7c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -113,8 +113,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Boolean_40696D5: 1
     - Boolean_CDB59A0F: 0
-    - Vector1_5F7B8F92: 1.5
+    - Vector1_5F7B8F92: 2
     - Vector1_95C5AC3E: 0.18
     - Vector1_F140C5F0: 1.15
     - _AlphaClip: 0
@@ -141,7 +142,7 @@ Material:
     m_Colors:
     - Color_35E82C8A: {r: 1, g: 1, b: 1, a: 1}
     - Color_5BC8546D: {r: 1, g: 1, b: 1, a: 1}
-    - Color_AC2FC7A4: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+    - Color_AC2FC7A4: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
     - Color_B67D7C11: {r: 1, g: 1, b: 1, a: 1}
     - Color_CCCFC508: {r: 1, g: 1, b: 1, a: 1}
     - Color_EAB4BF67: {r: 1, g: 1, b: 1, a: 1}
