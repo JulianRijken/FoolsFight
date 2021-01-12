@@ -11,18 +11,19 @@ public class Podium : MonoBehaviour
     [SerializeField] private TextMeshPro[] m_playerNames;
 
 
-    private void OnEnable()
+    private void Awake()
     {
         GameManager.m_onGameEnd += OnGameEnd;
     }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.m_onGameEnd -= OnGameEnd;
+
     }
 
     private void OnGameEnd(PlayerData[] playerData)
     {
+        Debug.Log("Game End");
         SetupPodium(playerData);
     }
 
@@ -59,20 +60,23 @@ public class Podium : MonoBehaviour
             playersToPickFrom.RemoveAt(playerWithBestScore);
         }
 
-
         for (int i = 0; i < m_skinnedMeshRenderers.Length; i++)
         {
-            if(sortedPlayers.Count < i)
+            if(sortedPlayers.Count > i)
             {
+                // Set the skin
                 SkinnedMeshRenderer skinnedMeshRenderer = sortedPlayers[i].m_playerController.PlayerMeshRenderer;
                 m_skinnedMeshRenderers[i].material = skinnedMeshRenderer.material;
                 m_skinnedMeshRenderers[i].sharedMesh = skinnedMeshRenderer.sharedMesh;
 
-                m_playerNames[i].text = sortedPlayers[i].m_playerController.photonView.name;
+                // Set the name
+                m_playerNames[i].text = sortedPlayers[i].m_playerController.photonView.Owner.NickName;
             }
             else
             {
+                // Disable if there are not enough players
                 m_skinnedMeshRenderers[i].enabled = false;
+                m_playerNames[i].enabled = false;
             }
         }
 

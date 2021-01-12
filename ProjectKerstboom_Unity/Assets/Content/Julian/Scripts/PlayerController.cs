@@ -72,16 +72,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Awake()
     {
-        // Getting All componenets
+        // Getting all components
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
         m_collider = GetComponent<CapsuleCollider>();
-        m_playerSkinnedMeshRender = GetComponent<SkinnedMeshRenderer>();
-
-        // Give the player a random skin
-        m_playerSkinnedMeshRender.material = m_possibleCharacterMaterials[Random.Range(0, m_possibleCharacterMaterials.Length)];
-        m_playerSkinnedMeshRender.sharedMesh = m_possibleCharacterMeshes[Random.Range(0, m_possibleCharacterMeshes.Length)];
-
+        m_playerSkinnedMeshRender = GetComponentInChildren<SkinnedMeshRenderer>();  
 
         SetPlayerState(PlayerState.InActive);
 
@@ -91,7 +86,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             m_isMine = photonView.IsMine;
         }
 
-        if(!m_isMine)
+        if(m_isMine)
+        {
+            int randomCharacter = Random.Range(0, m_possibleCharacterMaterials.Length);
+            SetPlayerSkin(randomCharacter);
+        }
+        else 
         {
             Destroy(m_playerInput);
             Destroy(m_rigidbody);
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleRotation()
     {
-        // Dont move the player if he is dashing
+        // Don't move the player if he is dashing
         if (m_playerState == PlayerState.Dashing)
             return;
 
@@ -160,21 +160,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleMovement()
     {
-        // Dont move the player if he is dashing
+        // Don't move the player if he is dashing
         if (m_playerState == PlayerState.Dashing)
             return;
 
-        // Cancle teh movment if the player isent active
+        // Cancel the moment if the player is not active
         if (m_playerState == PlayerState.InActive || m_playerState == PlayerState.Dead)
         {
-            // Apply the velocitys
+            // Apply the velocity
             m_rigidbody.velocity = Vector3.zero;
             return;
         }
 
         // Player Input
         Vector2 i = m_movementInput;
-        // Current Veloctiy
+        // Current Velocity
         Vector3 v = m_rigidbody.velocity;
 
         // Check if there is input && (if input is more then check if velocity is more, else check if less)
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         finalVelocity.z = Mathf.MoveTowards(finalVelocity.z, toVelocity.y, speedZ * Time.deltaTime);
 
 
-        // Apply the velocitys
+        // Apply the velocity
         m_rigidbody.velocity = finalVelocity;
 
 #if UNITY_EDITOR
@@ -227,6 +227,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     #endregion
 
+    private void SetPlayerSkin(int skin)
+    {
+        SetPlayerSkinRPC(skin);
+        photonView.RPC("SetPlayerSkinRPC", RpcTarget.Others, skin);
+    }
+    [PunRPC]
+    private void SetPlayerSkinRPC(int skin)
+    {
+        // Give the player a random skin
+        m_playerSkinnedMeshRender.material = m_possibleCharacterMaterials[skin];
+        m_playerSkinnedMeshRender.sharedMesh = m_possibleCharacterMeshes[skin];
+    }
 
     private void DropCurrentWeapon()
     {
@@ -277,7 +289,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         RaycastHit raycastHit;
         if (Physics.Raycast(origin, direction, out raycastHit, m_dashDistance, m_levelBlocklayer))
         {
-            // If the raycast hit a wall then move the player untill the wall
+            // If the raycast hit a wall then move the player until the wall
             destination = raycastHit.point - (direction * m_collider.radius);
         }
         else
@@ -294,7 +306,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private IEnumerator DashEnumerator(Vector3 destination)
     {
-        // Set the lerp positon to the local start position
+        // Set the lerp position to the local start position
         Vector3 lerpPosition = transform.position;
 
         while (true)
@@ -309,14 +321,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             // Move the actual player rigidbody 
             m_rigidbody.MovePosition(movePosition);
 
-            // Breake out of the loop as soon as the position is reached 
+            // Break out of the loop as soon as the position is reached 
             if (lerpPosition == destination)
             {
                 break;
             }
 
 
-            // wait for the eind of the frame to create a frame loop
+            // wait for the end of the frame to create a frame loop
             yield return new WaitForEndOfFrame();
         }
 
@@ -365,7 +377,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if (hits[i].transform == transform)
                 continue;
 
-            // Check if what is hit is a damageble object
+            // Check if what is hit is a damageable object
             IDamageable damageable = hits[i].GetComponent<IDamageable>();
             if (damageable == null)
                 continue;
@@ -480,6 +492,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
 
     }
+
 
 
 

@@ -477,8 +477,14 @@ MonoBehaviour:
   m_hammerHitSize: 1
   m_hammerDistanceOffset: 1.25
   m_animator: {fileID: 5190420692798660474}
-  m_possibleCharacterMeshes: []
-  m_possibleCharacterMaterials: []
+  m_possibleCharacterMeshes:
+  - {fileID: 3333550462495121341, guid: 51cd43453aaed674b9110effdac20b7e, type: 3}
+  - {fileID: 610470145407619197, guid: 93e9d972c5952a64084eb7313152e333, type: 3}
+  - {fileID: -6796089189981371552, guid: a641fe72800b39b4ab46bce06de1584d, type: 3}
+  m_possibleCharacterMaterials:
+  - {fileID: 2100000, guid: 3ca18ff71e83d5f4da5ebf255f4424b4, type: 2}
+  - {fileID: 2100000, guid: e59cda5668418684984530337d56ceec, type: 2}
+  - {fileID: 2100000, guid: 1ff222047e663cb4287315d99bd76df8, type: 2}
 --- !u!114 &565116830397706917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,7 +1733,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3ca18ff71e83d5f4da5ebf255f4424b4, type: 2}
+  - {fileID: 2100000, guid: e59cda5668418684984530337d56ceec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1752,7 +1758,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 3333550462495121341, guid: 23376ee5ac1399d49accb84e888296bc, type: 3}
+  m_Mesh: {fileID: 610470145407619197, guid: 93e9d972c5952a64084eb7313152e333, type: 3}
   m_Bones:
   - {fileID: 4562161902827719288}
   - {fileID: 6878872334622929053}

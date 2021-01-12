@@ -9,7 +9,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [SerializeField] private int m_ammountOfRounds;
+
+    [SerializeField] private int m_roundsRequierdForWin;
     [SerializeField] private float m_spawnDistance;
     [SerializeField] private int m_normalRoundStartDelay;
     [SerializeField] private int m_firstRoundStartDelay;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
-        // Create A singelton of this game manager
+        // Create A singleton of this game manager
         Instance = this;
 
         // Create a local variable
@@ -129,7 +130,19 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Count the rounds up
         m_currentRound++;
 
-        if (m_currentRound > m_ammountOfRounds)
+
+        bool gameWon = false;
+
+        for (int i = 0; i < m_playerData.Length; i++)
+        {
+            // Check if the player has enough rounds won to win the game
+            if(m_playerData[i].score >= m_roundsRequierdForWin)
+            {
+                gameWon = true;
+            }
+        }
+
+        if (gameWon)
         {
             EndGame();
         }
@@ -141,10 +154,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void LoadNewRound(int round)
     {
-
         // Reset the weapon
         m_weapon.ResetWeapon();
-
 
         // Get a list of all the spawn positions
         List<Vector3> spawnPositions = new List<Vector3>();
@@ -174,19 +185,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
 
 
-        // Load nex round for all clients
+        // Load next round for all clients
         photonView.RPC("LoadNewRoundRPC", RpcTarget.All, spawnPositions.ToArray(),round);
     }
     [PunRPC] 
     private void LoadNewRoundRPC(Vector3[] spawnPositions, int round)
     {
-
-        Debug.Log("Load New Round RPC Called");
-        Debug.Log("Round Countdown player data: " + m_playerData.Length);
-
-        Debug.LogWarning("Probeer het probleem met een docent op te lossen dat de data niet verzonden kan worden en dat de game te snel start");
-
-
         m_onLoadNewRound?.Invoke();
 
         // Set all the players to the correct positions etc
@@ -231,12 +235,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private void EndGameRPC()
     {
         m_onGameEnd?.Invoke(m_playerData);
-
-        for (int i = 0; i < m_playerData.Length; i++)
-        {
-            // Make sure all players are inactive
-            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.Disabled);
-        }
     }
 
 
@@ -253,7 +251,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Add the player data to the list
         m_playersLoadedIn.Add(playerData);
 
-        // Check if there is a same ammount of players in the game as there sould be based on the room.
+        // Check if there is a same amount of players in the game as there should be based on the room.
         if (m_playersInRoom.Length == m_playersLoadedIn.Count)
         {
             OnGameReady();
@@ -285,6 +283,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
 
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -301,7 +300,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 stream.SendNext(m_playerData[i].score);
             }
 
-            // send the currend round
+            // send the curred round
             stream.SendNext(m_currentRound);
         }
         else

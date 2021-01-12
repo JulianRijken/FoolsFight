@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902ef4f107cf32247ab3b4b59501c20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ammountOfRounds: 3
+  m_roundsRequierdForWin: 3
   m_spawnDistance: 7
   m_normalRoundStartDelay: 3
   m_firstRoundStartDelay: 10

@@ -36,16 +36,14 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - DropWeaponRPC
+  - EndGameRPC
   - FireWeaponRPC
-  - LoadNextRoundRPC
-  - OnHitRPC
-  - PickupWeaponRPC
-  - ResetWeaponRPC
   - LoadNewRoundRPC
   - OnDeathRPC
-  - DashRPC
-  - GameEndRPC
-  - EndGameRPC
+  - OnHidePlayersRPC
+  - PickupWeaponRPC
+  - ResetWeaponRPC
+  - SetPlayerSkinRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -8,6 +8,7 @@ using System.IO;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
+    [SerializeField] private Transform m_playersParent;
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "GameManager"), Vector3.zero, Quaternion.identity);
             }
 
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), Vector3.zero, Quaternion.identity).transform.SetParent(m_playersParent);
         }
     }
 
