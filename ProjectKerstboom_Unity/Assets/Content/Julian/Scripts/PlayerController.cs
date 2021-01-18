@@ -466,8 +466,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public void SetPlayerState(PlayerState newState)
     {
-        m_playerState = newState;
-
         switch (newState)
         {
             case PlayerState.Walking:
@@ -497,13 +495,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 break;
             case PlayerState.Dead:
 
+                // Only set ragdoll on local player
+                if(m_isMine)
+                    RagdollPlayer(true, m_rigidbody.velocity);
+
                 StopAllCoroutines();
                 DropCurrentWeapon();
 
                 m_canPickup = false;
                 m_isAlive = false;
 
-                RagdollPlayer(true, m_rigidbody.velocity);
                 m_playerTag.HideTag();
                 //gameObject.SetActive(false);
 
@@ -518,6 +519,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             default:
                 break;
         }
+
+        m_playerState = newState;
 
     }
 
