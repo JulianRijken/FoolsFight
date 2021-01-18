@@ -67,7 +67,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s"+ " game ");
 		}
 		else
-		PhotonNetwork.CreateRoom(roomNameInputField.text + " players: ");
+		PhotonNetwork.CreateRoom(roomNameInputField.text);
 
 	}
 	public void CreatePrivateRoom()

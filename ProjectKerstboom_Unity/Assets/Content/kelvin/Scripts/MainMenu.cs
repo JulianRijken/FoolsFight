@@ -25,6 +25,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         roomNameInputField.characterLimit = 10;
         nameInput.characterLimit = 10;
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public void HostGame()
