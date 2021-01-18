@@ -49,11 +49,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [Header("Multiplayer")]
     private bool m_isMine = true;
+    private PlayerTag m_playerTag;
 
     [Header("Model")]
     [SerializeField] private Mesh[] m_possibleCharacterMeshes;
     [SerializeField] private Material[] m_possibleCharacterMaterials;
     private SkinnedMeshRenderer m_playerSkinnedMeshRender;
+    private PlayerRig m_playerRig;
 
 
     [Header("General")]
@@ -76,9 +78,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
         m_collider = GetComponent<CapsuleCollider>();
-        m_playerSkinnedMeshRender = GetComponentInChildren<SkinnedMeshRenderer>();  
-
-        SetPlayerState(PlayerState.InActive);
+        m_playerRig = GetComponentInChildren<PlayerRig>();
+        m_playerTag = GetComponentInChildren<PlayerTag>();
+        m_playerSkinnedMeshRender = GetComponentInChildren<SkinnedMeshRenderer>(); 
 
         // Checking if this is mine
         if (photonView != null)
@@ -100,6 +102,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Start()
     {
+        SetPlayerState(PlayerState.InActive);
+        m_playerRig.SetRagdoll(false);
+
         // Always call player started even if not mine
         m_onPlayerStarted?.Invoke(this);
     }
@@ -467,7 +472,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 m_canPickup = false;
                 m_isAlive = true;
                 m_canDash = true;
+                m_playerRig.SetRagdoll(false);
                 gameObject.SetActive(true);
+                m_playerTag.ShowTag();
 
                 break;
             case PlayerState.Dead:
@@ -477,7 +484,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
                 m_canPickup = false;
                 m_isAlive = false;
-                gameObject.SetActive(false);
+
+                m_playerRig.SetRagdoll(true);
+                m_playerTag.HideTag();
+                //gameObject.SetActive(false);
 
                 break;
             case PlayerState.Disabled:

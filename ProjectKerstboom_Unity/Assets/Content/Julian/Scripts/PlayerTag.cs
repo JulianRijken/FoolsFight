@@ -25,4 +25,14 @@ public class PlayerTag : MonoBehaviour
     { 
         transform.rotation = m_mainCamera.transform.rotation;
     }
+
+    public void ShowTag()
+    {
+        m_text.enabled = true;
+    }
+
+    public void HideTag()
+    {
+        m_text.enabled = false;
+    }
 }
