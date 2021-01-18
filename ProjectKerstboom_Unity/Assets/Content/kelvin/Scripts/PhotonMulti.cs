@@ -15,7 +15,6 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	public static PhotonMulti Instance;
 
 	[SerializeField] GameObject mainCanvas, optionCanvas, hostCanvas, findRoomCanvas, RoomCanvas;
-	[SerializeField] byte playerCount; 
 	[SerializeField] RectTransform roomMenutran;
     [SerializeField] TMP_InputField roomNameInputField;
 	[SerializeField] TMP_Text roomNameText;
@@ -42,6 +41,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		if (PhotonNetwork.InRoom)
 		{
 			OnJoinedRoom();
+			PhotonNetwork.CurrentRoom.IsOpen = true;
+			PhotonNetwork.CurrentRoom.IsVisible = true;
 		}
 	}
 
@@ -115,10 +116,11 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
 		}
 
-		startGameButton.SetActive(PhotonNetwork.IsMasterClient);
-		
-		Debug.Log(players.Length);
-		
+		if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+		{
+			startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+		}
+
 	}
 
 	public void JoinRoom(RoomInfo info)
@@ -199,6 +201,11 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	public override void OnPlayerEnteredRoom(Player newPlayer)
 	{
 		Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+
+		if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+		{
+			startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+		}
 	}
 
 	public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -216,8 +223,10 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			//PhotonNetwork.NickName = players.ToString();
 			Instantiate(PlayerListItemPrefab, playerListContent).GetComponent<PlayerListItem>().SetUp(players[i]);
 		}
-		Debug.Log(players.Length);
-
+		if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
+		{
+			startGameButton.SetActive(false);
+		}
 	}
 
 
@@ -228,7 +237,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 		room = codeInputField.text;
 		hostCanvas.SetActive(false);
 		findRoomCanvas.SetActive(false);
-		PhotonNetwork.JoinRoom(room);
+		Debug.Log(roomListContent);
+
 	}
 
 }
