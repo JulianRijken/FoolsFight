@@ -93,6 +93,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	{
 		mainCanvas.SetActive(false);
 		hostCanvas.SetActive(false);
+		findRoomCanvas.SetActive(false);
 		RoomCanvas.SetActive(true);
 		roomMenutran.DOAnchorPos(new Vector2(0, 0), 0.50f);
 
@@ -126,8 +127,6 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	public void JoinRoom(RoomInfo info)
 	{
 		PhotonNetwork.JoinRoom(info.Name);
-		hostCanvas.SetActive(false);
-		findRoomCanvas.SetActive(false);
     }
 	
 	
@@ -194,6 +193,8 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 			Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListing>().SetRoomInfo(roomList[i]);
 			//Debug.Log("list update");
 		}
+
+
 	}
 
 	
@@ -235,10 +236,7 @@ public class PhotonMulti : MonoBehaviourPunCallbacks
 	{
 		Debug.Log(codeInputField.text);
 		room = codeInputField.text;
-		hostCanvas.SetActive(false);
-		findRoomCanvas.SetActive(false);
-		Debug.Log(roomListContent);
-
+		PhotonNetwork.JoinRoom(room);
 	}
 
 }
