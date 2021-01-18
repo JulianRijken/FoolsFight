@@ -11,7 +11,7 @@ public class PlayerRig : MonoBehaviour
         m_animator = GetComponent<Animator>();
     }
 
-    public void SetRagdoll(bool ragdoll)
+    public void SetRagdoll(bool ragdoll, Vector3 velocity)
     {
         if(m_animator != null)
         {
@@ -19,7 +19,6 @@ public class PlayerRig : MonoBehaviour
         }
 
 
-        //CharacterJoint[] m_joints = transform.GetComponentsInChildren<CharacterJoint>();
         Rigidbody[] m_rigidbodys = transform.GetComponentsInChildren<Rigidbody>();
         Collider[] m_colliders = transform.GetComponentsInChildren<Collider>();
 
@@ -27,6 +26,7 @@ public class PlayerRig : MonoBehaviour
         for (int i = 0; i < m_rigidbodys.Length; i++)
         {
             m_rigidbodys[i].isKinematic = !ragdoll;
+            m_rigidbodys[i].velocity = velocity;
         }
 
         for (int i = 0; i < m_colliders.Length; i++)

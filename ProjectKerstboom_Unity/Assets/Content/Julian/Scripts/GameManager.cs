@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private int m_currentRound = 1;
     private PlayerData[] m_playerData = new PlayerData[0];
 
+    private bool m_loadingNewRound = false;
     private bool m_gameReady = false;
     private Weapon m_weapon;
     private List<PlayerData> m_playersLoadedIn = new List<PlayerData>();
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             PlayerController.m_onPlayerStarted += OnPlayerStarted;
+            PlayerController.m_onPlayerDeath += OnPlayerDeath;
             PlayerController.m_onPlayerDeath += OnPlayerDeath;
         }
     }
@@ -96,10 +98,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private void OnPlayerDeath(PlayerController playerController)
     {
         // Make sure the game is ready before doing any game logic with the player
-        if (!m_gameReady)
+        if (!m_gameReady || m_loadingNewRound == true)
             return;
 
-        Debug.Log("OnPlayerDeath Called");
 
         // Create a list of the surviving players
         List<int> playersAliveIndex = new List<int>();
@@ -191,22 +192,29 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC] 
     private void LoadNewRoundRPC(Vector3[] spawnPositions, int round)
     {
+        StartCoroutine(DelayLoadnewRoundRPC(spawnPositions, round));
+    }
+
+    private IEnumerator DelayLoadnewRoundRPC(Vector3[] spawnPositions, int round)
+    {
+        m_loadingNewRound = true;
+
+        yield return new WaitForSeconds(3);
+
+
         m_onLoadNewRound?.Invoke();
 
-        // Set all the players to the correct positions etc
+        // Reset all the players
         for (int i = 0; i < m_playerData.Length; i++)
         {
-            // Make sure all players are inactive
-            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.InActive);
-
-            // Apply the spawn position
             m_playerData[i].m_playerController.transform.position = spawnPositions[i];
-
-            Debug.Log("Player Controller Moved");
+            m_playerData[i].m_playerController.SetPlayerState(PlayerController.PlayerState.InActive);
         }
 
         // Start the countdown to start the round, also set the delay based on what round it is
         StartCoroutine(RoundCountdown(round == 1 ? m_firstRoundStartDelay : m_normalRoundStartDelay));
+
+        m_loadingNewRound = false;
     }
 
 

@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private void Start()
     {
         SetPlayerState(PlayerState.InActive);
-        m_playerRig.SetRagdoll(false);
+        RagdollPlayer(false,Vector3.zero);
 
         // Always call player started even if not mine
         m_onPlayerStarted?.Invoke(this);
@@ -153,6 +153,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void HandleRotation()
     {
+
+        // Cancel the rotation if the player is dead
+        if (m_playerState == PlayerState.Dead)
+            return;
+
         // Don't move the player if he is dashing
         if (m_playerState == PlayerState.Dashing)
             return;
@@ -212,7 +217,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private void HandleGroundCheck()
     {
         // Only ground check when the player is active
-        if (m_playerState == PlayerState.InActive)
+        if (m_playerState == PlayerState.InActive || m_playerState == PlayerState.Dead)
             return;
 
         Ray ray = new Ray(transform.position + m_groundCastOffset, Vector3.down);
@@ -231,6 +236,19 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
 
     #endregion
+
+    private void RagdollPlayer(bool ragdoll, Vector3 velocity)
+    {
+        RagdollPlayerRPC(ragdoll,velocity);
+        photonView.RPC("RagdollPlayerRPC", RpcTarget.Others, ragdoll, velocity);
+    }
+    [PunRPC]
+    private void RagdollPlayerRPC(bool ragdoll, Vector3 velocity)
+    {
+        if (m_playerRig != null)
+            m_playerRig.SetRagdoll(ragdoll, velocity);
+    }
+
 
     private void SetPlayerSkin(int skin)
     {
@@ -472,7 +490,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 m_canPickup = false;
                 m_isAlive = true;
                 m_canDash = true;
-                m_playerRig.SetRagdoll(false);
+                RagdollPlayer(false,Vector3.zero);
                 gameObject.SetActive(true);
                 m_playerTag.ShowTag();
 
@@ -485,7 +503,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 m_canPickup = false;
                 m_isAlive = false;
 
-                m_playerRig.SetRagdoll(true);
+                RagdollPlayer(true, m_rigidbody.velocity);
                 m_playerTag.HideTag();
                 //gameObject.SetActive(false);
 
@@ -503,7 +521,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     }
 
-
+    public PlayerState GetPlayerState()
+    {
+        return m_playerState;
+    }
 
 
     #region Input
