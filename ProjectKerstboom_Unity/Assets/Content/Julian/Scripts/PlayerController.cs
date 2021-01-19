@@ -39,8 +39,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private float m_hammerHitSize;
     [SerializeField] private float m_hammerDistanceOffset;
 
+    [SerializeField] private GameObject m_hammerHitVFX;
+
     private Weapon m_currentWeapon = null;
     private bool m_canPickup = true;
+    private bool m_usingWeapon = false;
 
 
     [Header("Animator")]
@@ -280,7 +283,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (m_currentWeapon == null)
             return;
 
+        if (m_usingWeapon)
+            return;
+
         m_animator.SetTrigger("Fire");
+        m_usingWeapon = true;
 
         photonView.RPC("FireWeaponRPC", RpcTarget.Others);
     }
@@ -386,6 +393,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void OnWeaponUsed()
     {
+        m_usingWeapon = false;
 
         Collider[] hits;
         Vector3 checkPosition = transform.position + (transform.forward * m_hammerDistanceOffset);
@@ -409,8 +417,27 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             damageable.OnDeath($"{photonView.Owner.NickName} {gameObject.name} Hammer");
         }
 
+        // Show hammer hit effect
+        Vector3 spawnPosition = checkPosition;
+        spawnPosition.y = 0.1f;
+        SpawnHammerHitVFX(spawnPosition);
+
         DropCurrentWeapon();
         AddPickupDelay();
+    }
+
+    private void SpawnHammerHitVFX(Vector3 position)
+    {
+        // Send Local
+        SpawnHammerHitVFXRPC(position);
+
+        // Send to others
+        photonView.RPC("SpawnHammerHitVFXRPC", RpcTarget.Others, position);
+    }
+    [PunRPC]
+    private void SpawnHammerHitVFXRPC(Vector3 position)
+    {
+        Instantiate(m_hammerHitVFX, position, Quaternion.identity);
     }
 
     public void OnDeath(string damagedBy)
