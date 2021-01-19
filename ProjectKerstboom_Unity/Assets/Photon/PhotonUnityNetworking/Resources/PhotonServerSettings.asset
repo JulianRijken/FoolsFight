@@ -47,6 +47,8 @@ MonoBehaviour:
   - RagdollPlayerRPC
   - SetWinsRPC
   - OnSliderUpdateRPC
+  - InstantiateSyncedRPC
+  - SpawnHammerHitVFXRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

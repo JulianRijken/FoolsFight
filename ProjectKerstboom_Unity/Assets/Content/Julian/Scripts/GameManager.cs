@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private float m_spawnDistance;
     [SerializeField] private int m_normalRoundStartDelay;
     [SerializeField] private int m_firstRoundStartDelay;
+    [SerializeField] private int m_SecondsDelayBitweenRounds;
 
     // Synced variable
     private int m_currentRound = 1;
@@ -155,8 +156,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void LoadNewRound(int round)
     {
-        // Reset the weapon
-        m_weapon.ResetWeapon();
 
         // Get a list of all the spawn positions
         List<Vector3> spawnPositions = new List<Vector3>();
@@ -199,8 +198,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         m_loadingNewRound = true;
 
-        yield return new WaitForSeconds(3);
-
+        // Add delay
+        yield return new WaitForSeconds(m_SecondsDelayBitweenRounds);
 
         m_onLoadNewRound?.Invoke();
 
@@ -213,6 +212,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         // Start the countdown to start the round, also set the delay based on what round it is
         StartCoroutine(RoundCountdown(round == 1 ? m_firstRoundStartDelay : m_normalRoundStartDelay));
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            // Reset the weapon
+            m_weapon.ResetWeapon();
+        }
+
 
         m_loadingNewRound = false;
     }
