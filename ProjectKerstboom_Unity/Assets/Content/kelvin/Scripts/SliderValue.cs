@@ -24,6 +24,7 @@ public class SliderValue : MonoBehaviourPunCallbacks
 		// slider always visible 
 		slider.gameObject.SetActive(true);
 		winsRequierdText.gameObject.SetActive(true);
+		winsRequierdText.text = $"{textInforont} {slider.value}";
 
 		slider.onValueChanged.AddListener(delegate { OnSliderUpdate(); });
 	}
