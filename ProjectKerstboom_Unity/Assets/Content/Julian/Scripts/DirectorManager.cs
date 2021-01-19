@@ -30,7 +30,9 @@ public class DirectorManager : MonoBehaviour
 
     public void SetPlayersBackToRoom()
     {
-        PhotonNetwork.LoadLevel(0);
+        // Check if the player sending everyone back is the master
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel(0);
     }
 
     public void HideGameplay()

@@ -5,35 +5,66 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using DG.Tweening;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI m_roundTextGUI;
-    [SerializeField] private TextMeshProUGUI m_playerScoresTextGUI;
-    [SerializeField] private TextMeshProUGUI m_countdownTextGUI;
+    [Header("Windows")]
     [SerializeField] private GameObject m_InGameUI;
     [SerializeField] private GameObject m_GameEndUI;
+    [SerializeField] private GameObject m_PauseMenuUI;
+
+    [Header("Rounds")]
+    [SerializeField] private TextMeshProUGUI m_roundTextGUI;
+    [SerializeField] private TextMeshProUGUI m_countdownTextGUI;
+
+    [Header("Score")]
+    [SerializeField] private TextMeshProUGUI m_playerScoresTextGUI;
+
+    [Header("Pause Menu")]
+    [SerializeField] private Button m_returnToLobbyButton;
+
+
+    private Controls controls;
+    private bool m_isPaused = false;
 
 
     private void Awake()
     {
+        controls = new Controls();
+
         m_roundTextGUI.gameObject.SetActive(true);
         m_playerScoresTextGUI.gameObject.SetActive(true);
         m_countdownTextGUI.gameObject.SetActive(false);
 
         m_InGameUI.SetActive(true);
         m_GameEndUI.SetActive(false);
+        m_PauseMenuUI.SetActive(false);
     }
 
+    private void Start()
+    {
+        // Only allow the master to interact with the button
+        m_returnToLobbyButton.interactable = PhotonNetwork.IsMasterClient;     
+    }
 
     private void OnEnable()
     {
+        controls.Enable();
+        controls.UI.PauseGame.performed += OnPauseGameInput;
+
         GameManager.m_onRoundCountdown += OnRoundCountdown;
         GameManager.m_onGameEnd += OnGameEnd;
+
     }
 
     private void OnDisable()
     {
+        controls.Disable();
+        controls.UI.PauseGame.performed -= OnPauseGameInput;
+
         GameManager.m_onRoundCountdown -= OnRoundCountdown;
         GameManager.m_onGameEnd -= OnGameEnd;
 
@@ -94,5 +125,39 @@ public class GUIManager : MonoBehaviour
         m_InGameUI.SetActive(false);
         m_GameEndUI.SetActive(true);
     }
+
+
+    #region PauseMenu
+
+    private void OnPauseGameInput(InputAction.CallbackContext context)
+    {
+        ToggleGamePaused();
+    }
+
+    private void ToggleGamePaused()
+    {
+        m_isPaused = !m_isPaused;
+        m_PauseMenuUI.SetActive(m_isPaused);
+    }
+
+
+    public void OnResumeButton()
+    {
+        ToggleGamePaused();
+    }
+
+    public void OnQuitGameButton()
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnReturnToLobbyButton()
+    {
+        PhotonNetwork.LoadLevel(0);
+    }
+
+
+    #endregion
 
 }

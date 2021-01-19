@@ -340,7 +340,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log("Player Left The Room");
 
         // Remove the player from the player data
         for (int i = 0; i < m_playerData.Length; i++)
@@ -359,6 +358,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if (m_playersInRoom.Length < 2)
             PhotonNetwork.LeaveRoom();
     }
+
 
 
 
