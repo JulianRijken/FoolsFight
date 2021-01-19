@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 1979ab71120a7f64cb4a57eba0b665a0
+guid: c96b7bfd1d2434444affa256a74c712c
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Hammer_SK_Hammer_SK_HammerPivotRig_Character1_SK_RigMat
-    second: {fileID: 2100000, guid: 777e663cc61534e4bba2efb444031e88, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -39,7 +34,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.35
+    globalScale: 35
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
