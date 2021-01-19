@@ -4504,10 +4504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146febc65eee0ed4a8ed01413a659af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauzeMenu: {fileID: 1418755848}
-  pauzeMenuTran: {fileID: 1418755849}
-  backRoomBut: {fileID: 1779777608}
-  IsPaused: 0
 --- !u!1 &909923095
 GameObject:
   m_ObjectHideFlags: 0
@@ -6461,10 +6457,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 2135933233}
   m_HandleRect: {fileID: 804870465}
   m_Direction: 0
-  m_MinValue: 1
-  m_MaxValue: 10
+  m_MinValue: 3
+  m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

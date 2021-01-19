@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Create A singleton of this game manager
         Instance = this;
 
+        // Get the rounds needed to win
+        m_roundsRequierdForWin = PlayerPrefs.GetInt("RoundsToWin");
+
         // Create a local variable
         m_playersInRoom = PhotonNetwork.PlayerList;
 

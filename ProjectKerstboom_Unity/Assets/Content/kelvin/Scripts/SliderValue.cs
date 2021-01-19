@@ -21,6 +21,12 @@ public class SliderValue : MonoBehaviourPunCallbacks
 		// Only enable slider for master
 		slider.interactable = PhotonNetwork.IsMasterClient;
 
+		if(PhotonNetwork.IsMasterClient)
+		{
+			slider.value = PlayerPrefs.GetInt("RoundsToWin",(int)slider.value);
+			PlayerPrefs.SetInt("RoundsToWin", (int)slider.value);
+		}
+
 		// slider always visible 
 		slider.gameObject.SetActive(true);
 		winsRequierdText.gameObject.SetActive(true);
@@ -52,9 +58,11 @@ public class SliderValue : MonoBehaviourPunCallbacks
 			return;
 
 		int winsRequierd = (int)slider.value;
-
 		winsRequierdText.text = $"{textInforont} {winsRequierd}";
+		PlayerPrefs.SetInt("RoundsToWin", winsRequierd);
+
 		photonView.RPC("OnSliderUpdateRPC", RpcTarget.Others, winsRequierd);
+
 	}
 	[PunRPC]
 	public void OnSliderUpdateRPC(int winsRequierd)
