@@ -1,4 +1,6 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,31 +8,57 @@ using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
-public class SliderValue : MonoBehaviour
+public class SliderValue : MonoBehaviourPunCallbacks
 {
-	public Slider sliderval;
-	float wins;
-	public TMP_Text text;
 
-	public GameObject sliderobj;
-	public GameObject textobj;
+	[SerializeField] private Slider slider;
+	[SerializeField] private TMP_Text winsRequierdText;
+	[SerializeField] private string textInforont;
 
-	public GameObject prisliderobj;
-	public GameObject pritextobj;
+	
+	public override void OnJoinedRoom()
+	{
+		// Only enable slider for master
+		slider.interactable = PhotonNetwork.IsMasterClient;
 
-	// Update is called once per frame
-	void Update()
-    {
-		text.text =  "score points to win: " + wins ;
-		wins = sliderval.value;
+		// slider always visible 
+		slider.gameObject.SetActive(true);
+		winsRequierdText.gameObject.SetActive(true);
 
-		if (PhotonNetwork.IsMasterClient)
-		{
-			sliderobj.SetActive(true);
-			textobj.SetActive(true);
-			prisliderobj.SetActive(true);
-			pritextobj.SetActive(true);
-		}
+		slider.onValueChanged.AddListener(delegate { OnSliderUpdate(); });
 	}
 
+	// Only run on master
+	public override void OnPlayerEnteredRoom(Player newPlayer)
+	{
+		if (!PhotonNetwork.IsMasterClient)	
+			return;
+		
+		//OnSliderUpdate();
+	}
+
+	public override void OnPlayerLeftRoom(Player otherPlayer)
+	{
+		// If the master leaves check the slider interaction
+			slider.interactable = PhotonNetwork.IsMasterClient;
+	}
+
+
+	// Only run on master
+	public void OnSliderUpdate()
+    {
+		if (!PhotonNetwork.IsMasterClient)
+			return;
+
+		int winsRequierd = (int)slider.value;
+
+		winsRequierdText.text = $"{textInforont} {winsRequierd}";
+		photonView.RPC("OnSliderUpdateRPC", RpcTarget.Others, winsRequierd);
+	}
+	[PunRPC]
+	public void OnSliderUpdateRPC(int winsRequierd)
+    {
+		winsRequierdText.text = $"{textInforont} {winsRequierd}"; 
+		slider.value = winsRequierd;
+	}
 }
