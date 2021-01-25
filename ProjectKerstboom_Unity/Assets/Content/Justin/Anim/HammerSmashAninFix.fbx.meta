@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 12fae833e93d99941b310c99500532c2
+guid: d75d011726f44f946977b25688644a7c
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: HammerSmash
+    second: HammerSmashFix
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: HammerSmash
+      name: HammerSmashFix
       takeName: Take 001
       internalID: 0
       firstFrame: 0
@@ -117,7 +117,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.35
+    globalScale: 35
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
