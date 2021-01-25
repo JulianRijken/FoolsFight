@@ -273,10 +273,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         if (m_isMine)
+        {
             m_currentWeapon.DropWeapon();
+
+            photonView.RPC("SetHasHammerAnimationBool", RpcTarget.Others, false);
+            SetHasHammerAnimationBool(false); // Set animation local
+        }
 
         m_currentWeapon = null;
     }
+    [PunRPC]
+    private void SetHasHammerAnimationBool(bool hasHammer)
+    {
+        m_animator.SetBool("HasHammer",hasHammer);
+    }
+
 
     private void FireWeapon()
     {
@@ -286,13 +297,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (m_usingWeapon)
             return;
 
-        m_animator.SetTrigger("Fire");
         m_usingWeapon = true;
 
-        photonView.RPC("FireWeaponRPC", RpcTarget.Others);
+        // Trigger animation
+        photonView.RPC("TriggerWeaponFireAnimation", RpcTarget.Others);
+        TriggerWeaponFireAnimation(); // Trigger local
     }
     [PunRPC]
-    private void FireWeaponRPC()
+    private void TriggerWeaponFireAnimation()
     {
         m_animator.SetTrigger("Fire");
     }
@@ -331,7 +343,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // Debug the dash ray
         Debug.DrawLine(origin, destination, Color.cyan, 10f);
 
+        // Trigger dash animation
+        photonView.RPC("TriggerDashAnimation", RpcTarget.Others);
+        TriggerDashAnimation(); // Trigger local
+
         StartCoroutine(DashEnumerator(destination));
+    }
+
+    [PunRPC]
+    private void TriggerDashAnimation()
+    {
+        m_animator.SetTrigger("Dash");
     }
 
     private IEnumerator DashEnumerator(Vector3 destination)
@@ -457,6 +479,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void SetCurrentWeapon(Weapon newWeapon)
     {
         m_currentWeapon = newWeapon;
+
+        if (photonView.IsMine)
+        {
+            photonView.RPC("SetHasHammerAnimationBool", RpcTarget.Others, true);
+            SetHasHammerAnimationBool(true); // Set animation local
+        }
     }
 
     public Transform WeaponPivotPoint
@@ -518,6 +546,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 RagdollPlayer(false,Vector3.zero);
                 gameObject.SetActive(true);
                 m_playerTag.ShowTag();
+                m_collider.enabled = true;
+                DropCurrentWeapon();
+
 
                 break;
             case PlayerState.Dead:
@@ -534,6 +565,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
                 m_playerTag.HideTag();
                 //gameObject.SetActive(false);
+
+                m_collider.enabled = false;
 
                 break;
             case PlayerState.Disabled:
