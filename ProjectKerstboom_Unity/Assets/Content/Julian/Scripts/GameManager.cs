@@ -131,9 +131,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Add a point to the score
         m_playerData[playerDataIndex].score++;
 
-        // Count the rounds up
-        m_currentRound++;
-
 
         bool gameWon = false;
 
@@ -202,6 +199,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         // Add delay
         yield return new WaitForSeconds(m_SecondsDelayBitweenRounds);
+
+        // Count the rounds up
+        m_currentRound++;
 
         m_onLoadNewRound?.Invoke();
 
