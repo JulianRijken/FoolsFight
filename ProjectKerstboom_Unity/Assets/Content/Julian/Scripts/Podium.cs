@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -23,42 +24,14 @@ public class Podium : MonoBehaviour
 
     private void OnGameEnd(PlayerData[] playerData)
     {
-        Debug.Log("Game End");
         SetupPodium(playerData);
     }
 
     private void SetupPodium(PlayerData[] playerData)
     {
-        // Add all the players to a list
-        List<PlayerData> playersToPickFrom = new List<PlayerData>();
-        for (int a = 0; a < playerData.Length; a++)
-        {
-            playersToPickFrom.Add(playerData[a]);
-        }
 
+        List<PlayerData> sortedPlayers = SortPlayers(playerData);
 
-        // Create a list for all the sorted players
-        List<PlayerData> sortedPlayers = new List<PlayerData>();
-
-
-        // While there are players not sorted sort
-        while(playersToPickFrom.Count > 0)
-        {
-            int playerWithBestScore = 0;
-
-            // loop all the players left to pick from and get the heighest one
-            for (int i = 0; i < playersToPickFrom.Count; i++)
-            {
-                if (playerData[i].score > playerData[playerWithBestScore].score)
-                {
-                    playerWithBestScore = i;
-                }
-            }
-
-            // add and remove the heighest player
-            sortedPlayers.Add(playerData[playerWithBestScore]);
-            playersToPickFrom.RemoveAt(playerWithBestScore);
-        }
 
         for (int i = 0; i < m_skinnedMeshRenderers.Length; i++)
         {
@@ -79,8 +52,51 @@ public class Podium : MonoBehaviour
                 m_playerNames[i].enabled = false;
             }
         }
-
-
     }
+
+    private List<PlayerData> SortPlayers(PlayerData[] originalPlayerData)
+    {
+
+        // Create the lists
+        List<PlayerData> playersToPickFrom = new List<PlayerData>();
+        List<PlayerData> sortedPlayers = new List<PlayerData>();
+
+        // Add all the players to the players to pick from list
+        for (int i = 0; i < originalPlayerData.Length; i++)
+        {
+            playersToPickFrom.Add(originalPlayerData[i]);
+        }
+
+
+        // Quick check if it's only one player
+        if (originalPlayerData.Length == 1)
+        {
+            return playersToPickFrom;
+        }
+
+
+        // Bubble sort the player list into the sorted players list
+        while (playersToPickFrom.Count > 0)
+        {
+            int bestPlayerIndex = 0;
+
+            // loop all the players left to pick from and get the highest one
+            for (int i = 1; i < playersToPickFrom.Count; i++)
+            {
+                if (playersToPickFrom[i].score >= playersToPickFrom[bestPlayerIndex].score)
+                {
+                    bestPlayerIndex = i;
+                }
+            }
+
+            // add and remove the highest player
+            sortedPlayers.Add(playersToPickFrom[bestPlayerIndex]);
+            playersToPickFrom.RemoveAt(bestPlayerIndex);
+        }
+
+        // Return the final list
+        return sortedPlayers;
+    }
+
 
 }

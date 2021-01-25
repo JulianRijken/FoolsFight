@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             PlayerController.m_onPlayerStarted += OnPlayerStarted;
             PlayerController.m_onPlayerDeath += OnPlayerDeath;
-            PlayerController.m_onPlayerDeath += OnPlayerDeath;
         }
     }
 
@@ -231,8 +230,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         m_onRoundCountdown?.Invoke(countdownTime);
         yield return new WaitForSeconds(countdownTime);
-
-        Debug.Log("Round Countdown player data: " + m_playerData.Length);
 
         for (int i = 0; i < m_playerData.Length; i++)
         {
