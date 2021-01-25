@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerRig : MonoBehaviour
 {
     private Animator m_animator;
+    private List<Vector3> m_oldLocalPositions = new List<Vector3>();
+    private List<Quaternion> m_oldLocalQuaternions = new List<Quaternion>();
 
     private void Awake()
     {
@@ -32,6 +34,35 @@ public class PlayerRig : MonoBehaviour
         for (int i = 0; i < m_colliders.Length; i++)
         {
             m_colliders[i].enabled = ragdoll;
+        }
+
+
+
+        if (m_oldLocalPositions.Count == 0)
+        {
+            for (int i = 0; i < m_rigidbodys.Length; i++)
+            {
+                m_oldLocalPositions.Add(m_rigidbodys[i].transform.localPosition);
+            }
+        }
+
+        if (m_oldLocalQuaternions.Count == 0)
+        {
+            for (int i = 0; i < m_rigidbodys.Length; i++)
+            {
+                m_oldLocalQuaternions.Add(m_rigidbodys[i].transform.localRotation);
+            }
+        }
+
+
+        // If going out of ragdoll reset the player transforms
+        if (!ragdoll)
+        {
+            for (int i = 0; i < m_rigidbodys.Length; i++)
+            {
+                m_rigidbodys[i].transform.localPosition = m_oldLocalPositions[i];
+                m_rigidbodys[i].transform.localRotation = m_oldLocalQuaternions[i];
+            }
         }
 
     }
