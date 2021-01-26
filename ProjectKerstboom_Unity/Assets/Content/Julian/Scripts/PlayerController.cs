@@ -211,10 +211,29 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // Apply the velocity
         m_rigidbody.velocity = finalVelocity;
 
+        float velocity = Mathf.Abs(m_rigidbody.velocity.magnitude);
+        SetAnimatorVelocity(velocity);
+
+
 #if UNITY_EDITOR
         Debug.DrawRay(transform.position, new Vector3(toVelocity.x, 0, toVelocity.y), Color.red);
         Debug.DrawRay(transform.position, m_rigidbody.velocity, Color.green);
 #endif
+    }
+
+    private void SetAnimatorVelocity(float velocity)
+    {
+        if (m_isMine)
+        {
+            photonView.RPC("SetAnimationVelocityRPC", RpcTarget.Others, velocity);
+            SetAnimationVelocityRPC(velocity); // Set the animator locally
+        }
+
+    }
+    [PunRPC]
+    private void SetAnimationVelocityRPC(float velocity)
+    {
+        m_animator.SetFloat("VelocityMagnitude", velocity);
     }
 
     private void HandleGroundCheck()
@@ -540,6 +559,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             case PlayerState.InActive:
 
                 m_movementInput = Vector3.zero;
+                SetAnimatorVelocity(0);
                 m_canPickup = false;
                 m_isAlive = true;
                 m_canDash = true;
