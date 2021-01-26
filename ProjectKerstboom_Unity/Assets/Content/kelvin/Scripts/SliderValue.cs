@@ -41,7 +41,7 @@ public class SliderValue : MonoBehaviourPunCallbacks
 		if (!PhotonNetwork.IsMasterClient)	
 			return;
 		
-		//OnSliderUpdate();
+		OnSliderUpdate();
 	}
 
 	public override void OnPlayerLeftRoom(Player otherPlayer)
