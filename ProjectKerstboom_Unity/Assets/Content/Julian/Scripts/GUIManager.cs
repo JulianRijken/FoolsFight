@@ -109,7 +109,7 @@ public class GUIManager : MonoBehaviour
             PhotonView playerPhotonView = playerData[i].m_playerController.photonView;
             string nickName = playerPhotonView.Owner == null ? "Error" : playerPhotonView.Owner.NickName;
 
-            scores += $"Name:{nickName} Score: {playerData[i].score}\n";
+            scores += $"{nickName} {playerData[i].score}\n";
         }
 
         m_playerScoresTextGUI.text = scores;
