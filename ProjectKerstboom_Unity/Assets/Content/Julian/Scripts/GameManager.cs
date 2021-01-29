@@ -15,9 +15,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private int m_normalRoundStartDelay;
     [SerializeField] private int m_firstRoundStartDelay;
     [SerializeField] private int m_SecondsDelayBitweenRounds;
+    [SerializeField] private int m_RandomActiveSpawnChance;
 
     // Synced variable
-    private int m_currentRound = 1;
+    private int m_currentRound = 0;
     private PlayerData[] m_playerData = new PlayerData[0];
 
     private bool m_loadingNewRound = false;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public static Action m_onLoadNewRound;
     public static Action<PlayerData[]> m_onGameEnd;
 
+    private GameObject[] randomActiveObstacles;
 
     private void Awake()
     {
@@ -51,6 +53,44 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             PlayerController.m_onPlayerDeath += OnPlayerDeath;
         }
     }
+
+    private void SetRandomActive()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (randomActiveObstacles == null)
+            {
+                randomActiveObstacles = GameObject.FindGameObjectsWithTag("RandomActive");
+            }
+
+
+            bool[] objectivesActive = new bool[randomActiveObstacles.Length];
+            
+            for (int i = 0; i < objectivesActive.Length; i++)
+            {
+                objectivesActive[i] = UnityEngine.Random.Range(0f, 100f) < m_RandomActiveSpawnChance;
+            }
+
+            photonView.RPC("SetRandomActiveRPC", RpcTarget.All, objectivesActive);
+        }
+    }
+
+    [PunRPC]
+    private void SetRandomActiveRPC(bool[] objectsActive)
+    {
+
+        if (randomActiveObstacles == null)
+        {
+            randomActiveObstacles = GameObject.FindGameObjectsWithTag("RandomActive");
+        }
+
+        for (int i = 0; i < randomActiveObstacles.Length; i++)
+        {
+            randomActiveObstacles[i].SetActive(objectsActive[i]);
+        }
+    }
+
+
 
     private void OnDestroy()
     {
@@ -200,6 +240,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         // Add delay
         yield return new WaitForSeconds(m_SecondsDelayBitweenRounds);
 
+        // Set the random obstacles
+        SetRandomActive();
+
         // Count the rounds up
         m_currentRound++;
 
@@ -229,6 +272,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     private IEnumerator RoundCountdown(int countdownTime)
     {
         m_onRoundCountdown?.Invoke(countdownTime);
+
         yield return new WaitForSeconds(countdownTime);
 
         for (int i = 0; i < m_playerData.Length; i++)

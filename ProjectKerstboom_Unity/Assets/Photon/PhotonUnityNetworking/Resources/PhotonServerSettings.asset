@@ -54,6 +54,7 @@ MonoBehaviour:
   - SetHasHammerAnimationBool
   - SetAnimationVelocity
   - SetAnimationVelocityRPC
+  - SetRandomActiveRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

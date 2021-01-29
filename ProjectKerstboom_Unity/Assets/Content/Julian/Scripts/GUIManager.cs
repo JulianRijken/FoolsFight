@@ -117,7 +117,7 @@ public class GUIManager : MonoBehaviour
 
     private void UpdateRoundText()
     {
-        m_roundTextGUI.text = $"Round {GameManager.GetCurrentRound}";
+        m_roundTextGUI.text = $"{GameManager.GetCurrentRound}";
     }
 
     private void OnGameEnd(PlayerData[] playerData)

@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] private float m_hammerHitSize;
     [SerializeField] private float m_hammerDistanceOffset;
+    [SerializeField] private float m_effectHeightOffset;
 
     [SerializeField] private GameObject m_hammerHitVFX;
 
@@ -251,7 +252,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (!Physics.SphereCast(ray, m_radius,m_maxGroundCheckDistance,m_groundLayer))
         {
-            OnDeath("The ground");
+            OnDeath("ground");
         }
        
     }
@@ -455,12 +456,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 continue;
 
             // then hit the object
-            damageable.OnDeath($"{photonView.Owner.NickName} {gameObject.name} Hammer");
+            damageable.OnDeath("hammer");
         }
 
         // Show hammer hit effect
         Vector3 spawnPosition = checkPosition;
-        spawnPosition.y = 0.1f;
+        spawnPosition.y = m_effectHeightOffset;
         SpawnHammerHitVFX(spawnPosition);
 
         DropCurrentWeapon();
@@ -483,11 +484,25 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public void OnDeath(string damagedBy)
     {
-        photonView.RPC("OnDeathRPC", RpcTarget.All);
+        photonView.RPC("OnDeathRPC", RpcTarget.All, damagedBy);
     }
     [PunRPC]
-    private void OnDeathRPC()
+    private void OnDeathRPC(string damagedBy)
     {
+
+        // Only set ragdoll on local player
+        if (m_isMine)
+        {
+            Vector3 velocity = m_rigidbody.velocity;
+            if(damagedBy == "hammer")
+            {
+                velocity += Vector3.up * 10.0f;
+            }
+
+            RagdollPlayer(true, velocity);
+        }
+
+
         SetPlayerState(PlayerState.Dead);
 
         // Call the player death action last
@@ -572,10 +587,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
                 break;
             case PlayerState.Dead:
-
-                // Only set ragdoll on local player
-                if(m_isMine)
-                    RagdollPlayer(true, m_rigidbody.velocity);
 
                 StopAllCoroutines();
                 DropCurrentWeapon();

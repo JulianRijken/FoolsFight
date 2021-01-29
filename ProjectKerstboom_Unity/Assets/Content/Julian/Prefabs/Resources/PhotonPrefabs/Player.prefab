@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50062477}
   m_LocalRotation: {x: 0.016733581, y: -0.49060473, z: 0.009423608, w: 0.8711706}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 0.20742102, y: 0.20742102, z: 0.207421}
   m_Children: []
   m_Father: {fileID: 565116830397706916}
@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 2.201, y: -58.773, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.5499997}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchoredPosition: {x: -0, y: 2.5499997}
+  m_SizeDelta: {x: 100, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &50062480
 MeshRenderer:
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -260,6 +260,7 @@ MonoBehaviour:
     m_Bits: 1025
   m_hammerHitSize: 1.75
   m_hammerDistanceOffset: 1.35
+  m_effectHeightOffset: 0.35
   m_hammerHitVFX: {fileID: 2742310369050824967, guid: 657632503aad5204388fe3edef028340, type: 3}
   m_animator: {fileID: 5190420692798660474}
   m_possibleCharacterMeshes:
