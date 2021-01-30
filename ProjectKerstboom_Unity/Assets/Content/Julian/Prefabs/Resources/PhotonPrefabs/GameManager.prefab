@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_roundsRequierdForWin: 3
-  m_spawnDistance: 7
+  m_spawnDistance: 8
   m_normalRoundStartDelay: 3
   m_firstRoundStartDelay: 10
   m_SecondsDelayBitweenRounds: 3

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8853423534191980124}
   - component: {fileID: 8853423534191980113}
   - component: {fileID: 8853423534191980114}
-  - component: {fileID: 8853423534191980115}
   m_Layer: 0
   m_Name: Clouds_1 (1)
   m_TagString: Untagged
@@ -82,20 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534191980115
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534191980125}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534219200239
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +92,6 @@ GameObject:
   - component: {fileID: 8853423534219200238}
   - component: {fileID: 8853423534219200227}
   - component: {fileID: 8853423534219200236}
-  - component: {fileID: 8853423534219200237}
   m_Layer: 0
   m_Name: Clouds_1 (5)
   m_TagString: Untagged
@@ -178,20 +162,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534219200237
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534219200239}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534238149416
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +173,6 @@ GameObject:
   - component: {fileID: 8853423534238149423}
   - component: {fileID: 8853423534238149420}
   - component: {fileID: 8853423534238149421}
-  - component: {fileID: 8853423534238149422}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -274,20 +243,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534238149422
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534238149416}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534256842381
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +254,6 @@ GameObject:
   - component: {fileID: 8853423534256842380}
   - component: {fileID: 8853423534256842369}
   - component: {fileID: 8853423534256842370}
-  - component: {fileID: 8853423534256842371}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -370,20 +324,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534256842371
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534256842381}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534310923300
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +335,6 @@ GameObject:
   - component: {fileID: 8853423534310923739}
   - component: {fileID: 8853423534310923736}
   - component: {fileID: 8853423534310923737}
-  - component: {fileID: 8853423534310923738}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -466,20 +405,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534310923738
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534310923300}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534335901862
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +450,6 @@ GameObject:
   - component: {fileID: 8853423534336588244}
   - component: {fileID: 8853423534336588233}
   - component: {fileID: 8853423534336588234}
-  - component: {fileID: 8853423534336588235}
   m_Layer: 0
   m_Name: Clouds_1 (2)
   m_TagString: Untagged
@@ -596,20 +520,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534336588235
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534336588245}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534351453132
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +531,6 @@ GameObject:
   - component: {fileID: 8853423534351453123}
   - component: {fileID: 8853423534351453120}
   - component: {fileID: 8853423534351453121}
-  - component: {fileID: 8853423534351453122}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -692,20 +601,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534351453122
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534351453132}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534398459373
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +612,6 @@ GameObject:
   - component: {fileID: 8853423534398459372}
   - component: {fileID: 8853423534398459361}
   - component: {fileID: 8853423534398459362}
-  - component: {fileID: 8853423534398459363}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -788,20 +682,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534398459363
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534398459373}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534413321593
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +693,6 @@ GameObject:
   - component: {fileID: 8853423534413321592}
   - component: {fileID: 8853423534413321597}
   - component: {fileID: 8853423534413321598}
-  - component: {fileID: 8853423534413321599}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -884,20 +763,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534413321599
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534413321593}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534495871372
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +808,6 @@ GameObject:
   - component: {fileID: 8853423534502626977}
   - component: {fileID: 8853423534502626982}
   - component: {fileID: 8853423534502626983}
-  - component: {fileID: 8853423534502626976}
   m_Layer: 0
   m_Name: Clouds_1 (1)
   m_TagString: Untagged
@@ -1014,20 +878,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534502626976
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534502626978}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534520262114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,7 +889,6 @@ GameObject:
   - component: {fileID: 8853423534520262113}
   - component: {fileID: 8853423534520262118}
   - component: {fileID: 8853423534520262119}
-  - component: {fileID: 8853423534520262112}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -1110,20 +959,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534520262112
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534520262114}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534540778747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,7 +970,6 @@ GameObject:
   - component: {fileID: 8853423534540778746}
   - component: {fileID: 8853423534540778751}
   - component: {fileID: 8853423534540778744}
-  - component: {fileID: 8853423534540778745}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -1206,20 +1040,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534540778745
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534540778747}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534592043308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,7 +1087,6 @@ GameObject:
   - component: {fileID: 8853423534602026171}
   - component: {fileID: 8853423534602026168}
   - component: {fileID: 8853423534602026169}
-  - component: {fileID: 8853423534602026170}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -1338,20 +1157,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534602026170
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534602026116}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534608337529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,7 +1202,6 @@ GameObject:
   - component: {fileID: 8853423534649311368}
   - component: {fileID: 8853423534649311373}
   - component: {fileID: 8853423534649311374}
-  - component: {fileID: 8853423534649311375}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -1468,20 +1272,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534649311375
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534649311369}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534726730909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,7 +1283,6 @@ GameObject:
   - component: {fileID: 8853423534726730908}
   - component: {fileID: 8853423534726730896}
   - component: {fileID: 8853423534726730897}
-  - component: {fileID: 8853423534726730898}
   - component: {fileID: 8853423534726730899}
   m_Layer: 0
   m_Name: Clouds_1 (5)
@@ -1565,20 +1354,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534726730898
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534726730909}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423534726730899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2104,7 +1879,6 @@ GameObject:
   - component: {fileID: 8853423534751329333}
   - component: {fileID: 8853423534751329322}
   - component: {fileID: 8853423534751329323}
-  - component: {fileID: 8853423534751329332}
   m_Layer: 0
   m_Name: Clouds_1 (6)
   m_TagString: Untagged
@@ -2175,20 +1949,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534751329332
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534751329334}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534751736119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,7 +1994,6 @@ GameObject:
   - component: {fileID: 8853423534832648393}
   - component: {fileID: 8853423534832648397}
   - component: {fileID: 8853423534832648398}
-  - component: {fileID: 8853423534832648399}
   - component: {fileID: 8853423534832648392}
   m_Layer: 0
   m_Name: Clouds_1
@@ -2306,20 +2065,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534832648399
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534832648394}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423534832648392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2845,7 +2590,6 @@ GameObject:
   - component: {fileID: 8853423534848039465}
   - component: {fileID: 8853423534848039469}
   - component: {fileID: 8853423534848039470}
-  - component: {fileID: 8853423534848039471}
   - component: {fileID: 8853423534848039464}
   m_Layer: 0
   m_Name: Clouds_1
@@ -2917,20 +2661,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534848039471
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534848039466}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423534848039464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3456,7 +3186,6 @@ GameObject:
   - component: {fileID: 8853423534874265411}
   - component: {fileID: 8853423534874265408}
   - component: {fileID: 8853423534874265409}
-  - component: {fileID: 8853423534874265410}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -3527,20 +3256,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534874265410
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534874265420}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534888297587
 GameObject:
   m_ObjectHideFlags: 0
@@ -3552,7 +3267,6 @@ GameObject:
   - component: {fileID: 8853423534888297586}
   - component: {fileID: 8853423534888297591}
   - component: {fileID: 8853423534888297584}
-  - component: {fileID: 8853423534888297585}
   m_Layer: 0
   m_Name: Clouds_1 (1)
   m_TagString: Untagged
@@ -3623,20 +3337,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534888297585
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534888297587}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534891028473
 GameObject:
   m_ObjectHideFlags: 0
@@ -3648,7 +3348,6 @@ GameObject:
   - component: {fileID: 8853423534891028472}
   - component: {fileID: 8853423534891028477}
   - component: {fileID: 8853423534891028478}
-  - component: {fileID: 8853423534891028479}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -3719,20 +3418,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534891028479
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534891028473}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534919251710
 GameObject:
   m_ObjectHideFlags: 0
@@ -3744,7 +3429,6 @@ GameObject:
   - component: {fileID: 8853423534919251709}
   - component: {fileID: 8853423534919251698}
   - component: {fileID: 8853423534919251699}
-  - component: {fileID: 8853423534919251708}
   m_Layer: 0
   m_Name: Clouds_1 (6)
   m_TagString: Untagged
@@ -3815,20 +3499,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534919251708
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534919251710}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534937758596
 GameObject:
   m_ObjectHideFlags: 0
@@ -3840,7 +3510,6 @@ GameObject:
   - component: {fileID: 8853423534937758651}
   - component: {fileID: 8853423534937758648}
   - component: {fileID: 8853423534937758649}
-  - component: {fileID: 8853423534937758650}
   m_Layer: 0
   m_Name: Clouds_1 (7)
   m_TagString: Untagged
@@ -3911,20 +3580,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534937758650
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534937758596}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534943248312
 GameObject:
   m_ObjectHideFlags: 0
@@ -3936,7 +3591,6 @@ GameObject:
   - component: {fileID: 8853423534943248319}
   - component: {fileID: 8853423534943248316}
   - component: {fileID: 8853423534943248317}
-  - component: {fileID: 8853423534943248318}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -4007,20 +3661,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534943248318
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534943248312}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534965362193
 GameObject:
   m_ObjectHideFlags: 0
@@ -4032,7 +3672,6 @@ GameObject:
   - component: {fileID: 8853423534965362192}
   - component: {fileID: 8853423534965362197}
   - component: {fileID: 8853423534965362198}
-  - component: {fileID: 8853423534965362199}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -4103,20 +3742,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534965362199
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534965362193}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534987713141
 GameObject:
   m_ObjectHideFlags: 0
@@ -4128,7 +3753,6 @@ GameObject:
   - component: {fileID: 8853423534987713140}
   - component: {fileID: 8853423534987713129}
   - component: {fileID: 8853423534987713130}
-  - component: {fileID: 8853423534987713131}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -4199,20 +3823,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534987713131
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534987713141}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423534993241228
 GameObject:
   m_ObjectHideFlags: 0
@@ -4224,7 +3834,6 @@ GameObject:
   - component: {fileID: 8853423534993241219}
   - component: {fileID: 8853423534993241216}
   - component: {fileID: 8853423534993241217}
-  - component: {fileID: 8853423534993241218}
   m_Layer: 0
   m_Name: Clouds_1 (1)
   m_TagString: Untagged
@@ -4295,20 +3904,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423534993241218
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423534993241228}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535031595471
 GameObject:
   m_ObjectHideFlags: 0
@@ -4320,7 +3915,6 @@ GameObject:
   - component: {fileID: 8853423535031595470}
   - component: {fileID: 8853423535031595459}
   - component: {fileID: 8853423535031595468}
-  - component: {fileID: 8853423535031595469}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -4391,20 +3985,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535031595469
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535031595471}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535095215858
 GameObject:
   m_ObjectHideFlags: 0
@@ -4416,7 +3996,6 @@ GameObject:
   - component: {fileID: 8853423535095215857}
   - component: {fileID: 8853423535095215862}
   - component: {fileID: 8853423535095215863}
-  - component: {fileID: 8853423535095215856}
   m_Layer: 0
   m_Name: Clouds_1 (5)
   m_TagString: Untagged
@@ -4487,20 +4066,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535095215856
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535095215858}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535139012566
 GameObject:
   m_ObjectHideFlags: 0
@@ -4512,7 +4077,6 @@ GameObject:
   - component: {fileID: 8853423535139012565}
   - component: {fileID: 8853423535139012554}
   - component: {fileID: 8853423535139012555}
-  - component: {fileID: 8853423535139012564}
   m_Layer: 0
   m_Name: Clouds_1 (6)
   m_TagString: Untagged
@@ -4583,20 +4147,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535139012564
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535139012566}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535162114459
 GameObject:
   m_ObjectHideFlags: 0
@@ -4608,7 +4158,6 @@ GameObject:
   - component: {fileID: 8853423535162114458}
   - component: {fileID: 8853423535162114463}
   - component: {fileID: 8853423535162114456}
-  - component: {fileID: 8853423535162114457}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -4679,20 +4228,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535162114457
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535162114459}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535179244855
 GameObject:
   m_ObjectHideFlags: 0
@@ -4704,7 +4239,6 @@ GameObject:
   - component: {fileID: 8853423535179244854}
   - component: {fileID: 8853423535179244843}
   - component: {fileID: 8853423535179244852}
-  - component: {fileID: 8853423535179244853}
   m_Layer: 0
   m_Name: Clouds_1 (6)
   m_TagString: Untagged
@@ -4775,20 +4309,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535179244853
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535179244855}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535194346265
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,7 +4320,6 @@ GameObject:
   - component: {fileID: 8853423535194346264}
   - component: {fileID: 8853423535194346269}
   - component: {fileID: 8853423535194346270}
-  - component: {fileID: 8853423535194346271}
   m_Layer: 0
   m_Name: Clouds_1 (1)
   m_TagString: Untagged
@@ -4871,20 +4390,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535194346271
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535194346265}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535201305249
 GameObject:
   m_ObjectHideFlags: 0
@@ -4896,7 +4401,6 @@ GameObject:
   - component: {fileID: 8853423535201305248}
   - component: {fileID: 8853423535201305253}
   - component: {fileID: 8853423535201305254}
-  - component: {fileID: 8853423535201305255}
   m_Layer: 0
   m_Name: Clouds_1 (2)
   m_TagString: Untagged
@@ -4967,20 +4471,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535201305255
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535201305249}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535234309826
 GameObject:
   m_ObjectHideFlags: 0
@@ -4992,7 +4482,6 @@ GameObject:
   - component: {fileID: 8853423535234309825}
   - component: {fileID: 8853423535234309829}
   - component: {fileID: 8853423535234309830}
-  - component: {fileID: 8853423535234309831}
   - component: {fileID: 8853423535234309824}
   m_Layer: 0
   m_Name: Clouds_1 (5)
@@ -5064,20 +4553,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535234309831
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535234309826}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423535234309824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5639,7 +5114,6 @@ GameObject:
   - component: {fileID: 8853423535260714713}
   - component: {fileID: 8853423535260714717}
   - component: {fileID: 8853423535260714718}
-  - component: {fileID: 8853423535260714719}
   - component: {fileID: 8853423535260714712}
   m_Layer: 0
   m_Name: Clouds_1 (5)
@@ -5711,20 +5185,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535260714719
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535260714714}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423535260714712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6250,7 +5710,6 @@ GameObject:
   - component: {fileID: 8853423535288809857}
   - component: {fileID: 8853423535288809862}
   - component: {fileID: 8853423535288809863}
-  - component: {fileID: 8853423535288809856}
   m_Layer: 0
   m_Name: Clouds_1 (1)
   m_TagString: Untagged
@@ -6321,20 +5780,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535288809856
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535288809858}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535332183111
 GameObject:
   m_ObjectHideFlags: 0
@@ -6346,7 +5791,6 @@ GameObject:
   - component: {fileID: 8853423535332183110}
   - component: {fileID: 8853423535332183163}
   - component: {fileID: 8853423535332183108}
-  - component: {fileID: 8853423535332183109}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -6417,20 +5861,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535332183109
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535332183111}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535372115292
 GameObject:
   m_ObjectHideFlags: 0
@@ -6442,7 +5872,6 @@ GameObject:
   - component: {fileID: 8853423535372115283}
   - component: {fileID: 8853423535372115287}
   - component: {fileID: 8853423535372115280}
-  - component: {fileID: 8853423535372115281}
   - component: {fileID: 8853423535372115282}
   m_Layer: 0
   m_Name: Clouds_1 (5)
@@ -6514,20 +5943,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535372115281
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535372115292}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423535372115282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7053,7 +6468,6 @@ GameObject:
   - component: {fileID: 8853423535412335966}
   - component: {fileID: 8853423535412335955}
   - component: {fileID: 8853423535412335964}
-  - component: {fileID: 8853423535412335965}
   m_Layer: 0
   m_Name: Clouds_1 (2)
   m_TagString: Untagged
@@ -7124,20 +6538,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535412335965
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535412335967}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535466276789
 GameObject:
   m_ObjectHideFlags: 0
@@ -7149,7 +6549,6 @@ GameObject:
   - component: {fileID: 8853423535466276788}
   - component: {fileID: 8853423535466276777}
   - component: {fileID: 8853423535466276778}
-  - component: {fileID: 8853423535466276779}
   m_Layer: 0
   m_Name: Clouds_1 (5)
   m_TagString: Untagged
@@ -7220,20 +6619,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535466276779
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535466276789}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535576480986
 GameObject:
   m_ObjectHideFlags: 0
@@ -7245,7 +6630,6 @@ GameObject:
   - component: {fileID: 8853423535576480985}
   - component: {fileID: 8853423535576480989}
   - component: {fileID: 8853423535576480990}
-  - component: {fileID: 8853423535576480991}
   - component: {fileID: 8853423535576480984}
   m_Layer: 0
   m_Name: Clouds_1
@@ -7317,20 +6701,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535576480991
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535576480986}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423535576480984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7856,7 +7226,6 @@ GameObject:
   - component: {fileID: 8853423535593345886}
   - component: {fileID: 8853423535593345874}
   - component: {fileID: 8853423535593345875}
-  - component: {fileID: 8853423535593345884}
   - component: {fileID: 8853423535593345885}
   m_Layer: 0
   m_Name: Clouds_1
@@ -7928,20 +7297,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535593345884
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535593345887}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423535593345885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8467,7 +7822,6 @@ GameObject:
   - component: {fileID: 8853423535609802680}
   - component: {fileID: 8853423535609802685}
   - component: {fileID: 8853423535609802686}
-  - component: {fileID: 8853423535609802687}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -8538,20 +7892,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535609802687
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535609802681}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535615006505
 GameObject:
   m_ObjectHideFlags: 0
@@ -8563,7 +7903,6 @@ GameObject:
   - component: {fileID: 8853423535615006504}
   - component: {fileID: 8853423535615006508}
   - component: {fileID: 8853423535615006509}
-  - component: {fileID: 8853423535615006510}
   - component: {fileID: 8853423535615006511}
   m_Layer: 0
   m_Name: Clouds_1 (5)
@@ -8580,7 +7919,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8853423535615006505}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.24, z: 0}
+  m_LocalPosition: {x: 0, y: 4.21, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
   m_Father: {fileID: 8853423535725828708}
@@ -8635,20 +7974,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535615006510
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535615006505}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423535615006511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9324,7 +8649,6 @@ GameObject:
   - component: {fileID: 8853423535785393906}
   - component: {fileID: 8853423535785393911}
   - component: {fileID: 8853423535785393904}
-  - component: {fileID: 8853423535785393905}
   m_Layer: 0
   m_Name: Clouds_1 (2)
   m_TagString: Untagged
@@ -9395,20 +8719,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535785393905
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535785393907}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535795746396
 GameObject:
   m_ObjectHideFlags: 0
@@ -9452,7 +8762,6 @@ GameObject:
   - component: {fileID: 8853423535858025974}
   - component: {fileID: 8853423535858025963}
   - component: {fileID: 8853423535858025972}
-  - component: {fileID: 8853423535858025973}
   m_Layer: 0
   m_Name: Clouds_1 (2)
   m_TagString: Untagged
@@ -9523,20 +8832,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535858025973
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535858025975}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535873218988
 GameObject:
   m_ObjectHideFlags: 0
@@ -9548,7 +8843,6 @@ GameObject:
   - component: {fileID: 8853423535873218979}
   - component: {fileID: 8853423535873218976}
   - component: {fileID: 8853423535873218977}
-  - component: {fileID: 8853423535873218978}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -9619,20 +8913,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535873218978
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535873218988}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423535918374396
 GameObject:
   m_ObjectHideFlags: 0
@@ -9716,7 +8996,6 @@ GameObject:
   - component: {fileID: 8853423535985645364}
   - component: {fileID: 8853423535985645353}
   - component: {fileID: 8853423535985645354}
-  - component: {fileID: 8853423535985645355}
   m_Layer: 0
   m_Name: Clouds_1 (5)
   m_TagString: Untagged
@@ -9787,20 +9066,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423535985645355
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423535985645365}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536040550856
 GameObject:
   m_ObjectHideFlags: 0
@@ -9812,7 +9077,6 @@ GameObject:
   - component: {fileID: 8853423536040550863}
   - component: {fileID: 8853423536040550860}
   - component: {fileID: 8853423536040550861}
-  - component: {fileID: 8853423536040550862}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -9883,20 +9147,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536040550862
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536040550856}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536048167925
 GameObject:
   m_ObjectHideFlags: 0
@@ -9908,7 +9158,6 @@ GameObject:
   - component: {fileID: 8853423536048167924}
   - component: {fileID: 8853423536048167913}
   - component: {fileID: 8853423536048167914}
-  - component: {fileID: 8853423536048167915}
   m_Layer: 0
   m_Name: Clouds_1 (5)
   m_TagString: Untagged
@@ -9979,20 +9228,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536048167915
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536048167925}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536098543661
 GameObject:
   m_ObjectHideFlags: 0
@@ -10004,7 +9239,6 @@ GameObject:
   - component: {fileID: 8853423536098543660}
   - component: {fileID: 8853423536098543649}
   - component: {fileID: 8853423536098543650}
-  - component: {fileID: 8853423536098543651}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -10075,20 +9309,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536098543651
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536098543661}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536109399638
 GameObject:
   m_ObjectHideFlags: 0
@@ -10100,7 +9320,6 @@ GameObject:
   - component: {fileID: 8853423536109399637}
   - component: {fileID: 8853423536109399626}
   - component: {fileID: 8853423536109399627}
-  - component: {fileID: 8853423536109399636}
   m_Layer: 0
   m_Name: Clouds_1 (6)
   m_TagString: Untagged
@@ -10171,20 +9390,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536109399636
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536109399638}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536116101824
 GameObject:
   m_ObjectHideFlags: 0
@@ -10196,7 +9401,6 @@ GameObject:
   - component: {fileID: 8853423536116101831}
   - component: {fileID: 8853423536116101828}
   - component: {fileID: 8853423536116101829}
-  - component: {fileID: 8853423536116101830}
   m_Layer: 0
   m_Name: Clouds_1 (5)
   m_TagString: Untagged
@@ -10267,20 +9471,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536116101830
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536116101824}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536117562408
 GameObject:
   m_ObjectHideFlags: 0
@@ -10292,7 +9482,6 @@ GameObject:
   - component: {fileID: 8853423536117562415}
   - component: {fileID: 8853423536117562412}
   - component: {fileID: 8853423536117562413}
-  - component: {fileID: 8853423536117562414}
   m_Layer: 0
   m_Name: Clouds_1 (4)
   m_TagString: Untagged
@@ -10363,20 +9552,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536117562414
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536117562408}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536152390273
 GameObject:
   m_ObjectHideFlags: 0
@@ -10388,7 +9563,6 @@ GameObject:
   - component: {fileID: 8853423536152390272}
   - component: {fileID: 8853423536152390276}
   - component: {fileID: 8853423536152390277}
-  - component: {fileID: 8853423536152390278}
   - component: {fileID: 8853423536152390279}
   m_Layer: 0
   m_Name: Clouds_1 (5)
@@ -10460,20 +9634,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536152390278
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536152390273}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423536152390279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10999,7 +10159,6 @@ GameObject:
   - component: {fileID: 8853423536182908266}
   - component: {fileID: 8853423536182908271}
   - component: {fileID: 8853423536182908264}
-  - component: {fileID: 8853423536182908265}
   m_Layer: 0
   m_Name: Clouds_1 (3)
   m_TagString: Untagged
@@ -11070,20 +10229,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536182908265
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536182908267}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536191524517
 GameObject:
   m_ObjectHideFlags: 0
@@ -11128,7 +10273,6 @@ GameObject:
   - component: {fileID: 8853423536214470260}
   - component: {fileID: 8853423536214470249}
   - component: {fileID: 8853423536214470250}
-  - component: {fileID: 8853423536214470251}
   m_Layer: 0
   m_Name: Clouds_1 (6)
   m_TagString: Untagged
@@ -11199,20 +10343,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536214470251
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536214470261}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536230946993
 GameObject:
   m_ObjectHideFlags: 0
@@ -11224,7 +10354,6 @@ GameObject:
   - component: {fileID: 8853423536230946992}
   - component: {fileID: 8853423536230946997}
   - component: {fileID: 8853423536230946998}
-  - component: {fileID: 8853423536230946999}
   m_Layer: 0
   m_Name: Clouds_1 (2)
   m_TagString: Untagged
@@ -11295,20 +10424,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536230946999
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536230946993}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8853423536272008658
 GameObject:
   m_ObjectHideFlags: 0
@@ -11320,7 +10435,6 @@ GameObject:
   - component: {fileID: 8853423536272008657}
   - component: {fileID: 8853423536272008661}
   - component: {fileID: 8853423536272008662}
-  - component: {fileID: 8853423536272008663}
   - component: {fileID: 8853423536272008656}
   m_Layer: 0
   m_Name: Clouds_1
@@ -11392,20 +10506,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536272008663
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536272008658}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423536272008656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11931,7 +11031,6 @@ GameObject:
   - component: {fileID: 8853423536297244751}
   - component: {fileID: 8853423536297244748}
   - component: {fileID: 8853423536297244749}
-  - component: {fileID: 8853423536297244750}
   - component: {fileID: 8853423536297244739}
   m_Layer: 0
   m_Name: Clouds_1
@@ -12003,20 +11102,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536297244750
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536297244744}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &8853423536297244739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12542,7 +11627,6 @@ GameObject:
   - component: {fileID: 8853423536300735729}
   - component: {fileID: 8853423536300735734}
   - component: {fileID: 8853423536300735735}
-  - component: {fileID: 8853423536300735728}
   m_Layer: 0
   m_Name: Clouds_1 (8)
   m_TagString: Untagged
@@ -12613,17 +11697,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8853423536300735728
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853423536300735730}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}

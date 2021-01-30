@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private void Start()
     {
         SetPlayerState(PlayerState.InActive);
-        RagdollPlayer(false,Vector3.zero);
+        RagdollPlayer(false,Vector3.zero, 0f);
 
         // Always call player started even if not mine
         m_onPlayerStarted?.Invoke(this);
@@ -260,16 +260,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     #endregion
 
-    private void RagdollPlayer(bool ragdoll, Vector3 velocity)
+    private void RagdollPlayer(bool ragdoll, Vector3 velocity, float randomRotationForce)
     {
-        RagdollPlayerRPC(ragdoll,velocity);
-        photonView.RPC("RagdollPlayerRPC", RpcTarget.Others, ragdoll, velocity);
+        RagdollPlayerRPC(ragdoll,velocity,randomRotationForce);
+        photonView.RPC("RagdollPlayerRPC", RpcTarget.Others, ragdoll, velocity,randomRotationForce);
     }
     [PunRPC]
-    private void RagdollPlayerRPC(bool ragdoll, Vector3 velocity)
+    private void RagdollPlayerRPC(bool ragdoll, Vector3 velocity, float randomRotationForce)
     {
         if (m_playerRig != null)
-            m_playerRig.SetRagdoll(ragdoll, velocity);
+            m_playerRig.SetRagdoll(ragdoll, velocity, randomRotationForce);
     }
 
 
@@ -494,12 +494,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (m_isMine)
         {
             Vector3 velocity = m_rigidbody.velocity;
-            if(damagedBy == "hammer")
+            float randomRotationForce = 3f;
+            if (damagedBy == "hammer")
             {
                 velocity += Vector3.up * 10.0f;
+                randomRotationForce = 20f;
             }
 
-            RagdollPlayer(true, velocity);
+            RagdollPlayer(true, velocity, randomRotationForce);
         }
 
 
@@ -578,7 +580,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 m_canPickup = false;
                 m_isAlive = true;
                 m_canDash = true;
-                RagdollPlayer(false,Vector3.zero);
+                RagdollPlayer(false,Vector3.zero, 0f);
                 gameObject.SetActive(true);
                 m_playerTag.ShowTag();
                 m_collider.enabled = true;
